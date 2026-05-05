@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل الاستخدام الشامل | RoboVAI PRO POS</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .manual-hero { padding: 150px 0 80px; text-align: center; position: relative; }
+        .manual-step { display: flex; align-items: center; gap: 50px; margin-bottom: 80px; padding: 40px; border-radius: 24px; }
+        .manual-step:nth-child(even) { flex-direction: row-reverse; }
+        .step-content { flex: 1; }
+        .step-img { flex: 1; position: relative; }
+        .step-img img { border-radius: 16px; border: 1px solid var(--card-border); box-shadow: 0 20px 40px rgba(0,0,0,0.5); width: 100%; transition: transform 0.3s; }
+        .step-img img:hover { transform: scale(1.02); }
+        .step-number { font-size: 4rem; font-weight: 900; color: rgba(0, 229, 255, 0.2); position: absolute; top: -40px; right: 0; line-height: 1; font-family: 'Inter', sans-serif; }
+        
+        @media (max-width: 768px) {
+            .manual-step, .manual-step:nth-child(even) { flex-direction: column; }
+            .step-number { position: static; margin-bottom: 10px; display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-blue"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled" aria-label="Main Navigation">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <img src="assets/images/logo.png" alt="RoboVAI Logo" style="height: 45px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));">
+                <span style="font-family: 'Inter', sans-serif; font-size: 1.7rem; font-weight: 900; letter-spacing: -1px; color: #fff; line-height: 1;">
+                    ROBOVAI <span style="color: var(--primary); font-weight: 300;">PRO POS</span>
+                </span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">العودة للرئيسية</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="manual-hero">
+        <div class="container">
+            <h1 style="font-size: 3.5rem; font-weight: 900; margin-bottom: 20px;">دليل الاستخدام <span class="text-gradient">الشامل</span></h1>
+            <p style="font-size: 1.3rem; color: var(--text-muted); max-width: 700px; margin: 0 auto;">تعرف على كل تفصيلة في نظام الكاشير الأذكى. الدليل مزود بشاشات حقيقية من داخل النظام لسهولة التطبيق خطوة بخطوة.</p>
+        </div>
+    </header>
+
+    <!-- Manual Content -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+
+            <!-- Step 1: Dashboard -->
+            <div class="manual-step ios-glass-card">
+                <div class="step-content">
+                    <span class="step-number">01</span>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative; z-index: 2;">لوحة القيادة (الـ Dashboard)</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px;">بمجرد تسجيل الدخول، تظهر لك لوحة التحكم الذكية التي تلخص أداء محلك بالكامل.</p>
+                    <ul style="list-style: none; color: #ddd; font-size: 1.1rem; padding-right: 15px; border-right: 3px solid var(--primary);">
+                        <li style="margin-bottom: 10px;">📊 <strong>المبيعات اللحظية:</strong> راقب أرباحك وإجمالي الدخل اليومي.</li>
+                        <li style="margin-bottom: 10px;">📉 <strong>إحصائيات المنتجات:</strong> الأصناف الأكثر مبيعاً ونواقص المخزن.</li>
+                        <li>🚀 <strong>وصول سريع:</strong> أزرار اختصار تفتح لك (نقطة البيع، الموردين، التقارير) بضغطة واحدة.</li>
+                    </ul>
+                </div>
+                <div class="step-img"><img src="assets/images/dashboard.png" alt="لوحة التحكم"></div>
+            </div>
+
+            <!-- Step 2: Touch POS -->
+            <div class="manual-step ios-glass-card">
+                <div class="step-content">
+                    <span class="step-number">02</span>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative; z-index: 2;">شاشة المبيعات (نقطة البيع - POS)</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px;">الشاشة التي يقضي عليها الكاشير يومه، مصممة لتكون سريعة جداً ولا ترهق العين.</p>
+                    <ul style="list-style: none; color: #ddd; font-size: 1.1rem; padding-right: 15px; border-right: 3px solid var(--secondary);">
+                        <li style="margin-bottom: 10px;">👆 <strong>اللمس المباشر:</strong> اضغط على صورة القسم ثم الصنف لينزل في الفاتورة مباشرة (ممتاز للكافيهات).</li>
+                        <li style="margin-bottom: 10px;">🔍 <strong>الباركود:</strong> قم بتمرير الصنف على الإسكانر لإضافته في جزء من الثانية.</li>
+                        <li>💰 <strong>زر الدفع (Checkout):</strong> الزر الأخضر الكبير لإنهاء الفاتورة وطباعتها أوتوماتيكياً وفتح الدرج.</li>
+                    </ul>
+                </div>
+                <div class="step-img"><img src="assets/images/module-3.png" alt="شاشة المبيعات السريعة"></div>
+            </div>
+
+            <!-- Step 3: Sessions -->
+            <div class="manual-step ios-glass-card">
+                <div class="step-content">
+                    <span class="step-number">03</span>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative; z-index: 2;">إدارة الجلسات والطاولات</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px;">النظام المثالي لإدارة (وقت) البلايستيشن، وطاولات الكافيهات والمطاعم.</p>
+                    <ul style="list-style: none; color: #ddd; font-size: 1.1rem; padding-right: 15px; border-right: 3px solid var(--primary);">
+                        <li style="margin-bottom: 10px;">⏱️ <strong>فتح الجلسة:</strong> اضغط على أيقونة الطاولة ليبدأ العداد الزمني بالحساب.</li>
+                        <li style="margin-bottom: 10px;">🍔 <strong>إضافة طلبات:</strong> يمكنك إرسال طلبات للطاولة (مشاريب/أكل) لتُضاف على حساب الوقت.</li>
+                        <li>💳 <strong>الإغلاق والمحاسبة:</strong> اضغط إنهاء الجلسة، وسيقوم النظام بتجميع حساب الوقت + الطلبات في فاتورة واحدة.</li>
+                    </ul>
+                </div>
+                <div class="step-img"><img src="assets/images/module-5.png" alt="إدارة طاولات وجلسات"></div>
+            </div>
+
+            <!-- Step 4: Returns & Invoices -->
+            <div class="manual-step ios-glass-card">
+                <div class="step-content">
+                    <span class="step-number">04</span>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative; z-index: 2;">سجل الفواتير والمرتجعات</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px;">لا تقلق من الأخطاء أو استرجاع البضاعة، كل شيء مسجل بدقة.</p>
+                    <ul style="list-style: none; color: #ddd; font-size: 1.1rem; padding-right: 15px; border-right: 3px solid var(--secondary);">
+                        <li style="margin-bottom: 10px;">🔎 <strong>بحث سريع:</strong> ابحث برقم الفاتورة المطبوع على الريسيت.</li>
+                        <li style="margin-bottom: 10px;">↩️ <strong>إرجاع البضاعة:</strong> بضغطة واحدة، يتم إلغاء الفاتورة، ترجع البضاعة للمخزن، ويخصم المبلغ من درج الكاشير.</li>
+                        <li>🛡️ <strong>صلاحيات أمنية:</strong> يمكنك منع الكاشير من عمل مرتجع إلا بكلمة مرور المدير.</li>
+                    </ul>
+                </div>
+                <div class="step-img"><img src="assets/images/module-8.png" alt="المرتجعات والفواتير"></div>
+            </div>
+
+            <!-- Step 5: End of Shift -->
+            <div class="manual-step ios-glass-card">
+                <div class="step-content">
+                    <span class="step-number">05</span>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative; z-index: 2;">إغلاق الوردية والتقارير (Z-Report)</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px;">الخطوة الحاسمة في نهاية اليوم لمطابقة حسابات الدرج مع النظام.</p>
+                    <ul style="list-style: none; color: #ddd; font-size: 1.1rem; padding-right: 15px; border-right: 3px solid var(--primary);">
+                        <li style="margin-bottom: 10px;">💵 <strong>عد النقدية:</strong> يطلب النظام من الكاشير إدخال المبلغ الموجود بيده.</li>
+                        <li style="margin-bottom: 10px;">🖨️ <strong>طباعة التقرير:</strong> يتم طباعة ريسيت يوضح (المبيعات، المصروفات، المرتجعات).</li>
+                        <li>⚖️ <strong>الشفافية:</strong> يوضح التقرير فوراً ما إذا كان هناك "عجز" أو "زيادة" في الدرج مقارنة ببيانات البرنامج.</li>
+                    </ul>
+                </div>
+                <div class="step-img"><img src="assets/images/module-6.png" alt="إغلاق الوردية"></div>
+            </div>
+
+            <!-- Step 6: Suppliers -->
+            <div class="manual-step ios-glass-card">
+                <div class="step-content">
+                    <span class="step-number">06</span>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative; z-index: 2;">إدارة الموردين والمشتريات</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 15px;">التحكم الكامل في دورة رأس المال والديون الخاصة بالمحلات الكبرى.</p>
+                    <ul style="list-style: none; color: #ddd; font-size: 1.1rem; padding-right: 15px; border-right: 3px solid var(--secondary);">
+                        <li style="margin-bottom: 10px;">🚚 <strong>إضافة مورد:</strong> تسجيل أسماء وبيانات التجار والشركات التي تورد لك البضاعة.</li>
+                        <li style="margin-bottom: 10px;">📝 <strong>فاتورة مشتريات:</strong> إدخال البضاعة للمخزن وتحديث أسعار التكلفة آلياً.</li>
+                        <li>💸 <strong>كشف حساب:</strong> متابعة الدفعات النقدية والديون المتبقية لكل مورد بدقة.</li>
+                    </ul>
+                </div>
+                <div class="step-img"><img src="assets/images/module-12.png" alt="حسابات الموردين"></div>
+            </div>
+
+            <!-- Conclusion -->
+            <div style="text-align: center; margin-top: 100px;">
+                <h3 style="font-size: 2rem; margin-bottom: 20px;">مستعد لإدارة أعمالك باحترافية؟</h3>
+                <a href="https://wa.me/201121891913" class="btn btn-blue">تواصل مع الدعم الفني <i class="fab fa-whatsapp" style="margin-right: 10px;"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" style="padding: 40px 0; background: #000; border-top: 1px solid var(--card-border);">
+        <div class="container">
+            <div class="copyright" style="text-align: center; color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">
+                صُنع بكل حب وفخر في مصر 🇪🇬 من &copy; 2026 RoboVAI Solutions
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
