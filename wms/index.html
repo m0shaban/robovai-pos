@@ -30,7 +30,7 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-BPAG0O1y.js"></script>
+    <script type="module" crossorigin src="/wms/assets/index-QwJj16Yo.js"></script>
     <link rel="stylesheet" crossorigin href="/wms/assets/index-BRldyXOp.css">
   </head>
   <body>
@@ -885,6 +885,44 @@
         <span>إعدادات</span>
       </button>
     </nav>
+
+    <!-- Dispatch Modal -->
+    <div id="dispatch-modal" class="modal" style="display: none;">
+      <div class="glass modal-content" style="max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="margin: 0; display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="truck"></i> إعداد فاتورة صرف (Dispatch)</h3>
+          <button class="btn btn-outline" style="width: auto; padding: 0.5rem" onclick="document.getElementById('dispatch-modal').style.display='none'">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          حدد الكميات التي تريد صرفها للكنتين. الأصناف ذات الكمية 0 لن يتم إرسالها.
+        </p>
+        
+        <div class="input-group" style="margin-bottom: 1rem;">
+          <input type="text" id="dispatch-search" placeholder="بحث باسم الصنف أو الباركود..." onkeyup="filterDispatchList()" />
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+            <thead>
+              <tr style="background: rgba(255,255,255,0.1); text-align: right;">
+                <th style="padding: 0.5rem;">الصنف</th>
+                <th style="padding: 0.5rem;">الرصيد المتاح</th>
+                <th style="padding: 0.5rem; width: 100px;">كمية الصرف</th>
+              </tr>
+            </thead>
+            <tbody id="dispatch-items-list">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <button class="btn btn-primary" style="margin-top: 1.5rem; width: 100%;" onclick="confirmDispatchAndGenerate()">
+          <i data-lucide="qr-code"></i> اعتماد وتوليد QR
+        </button>
+      </div>
+    </div>
 
     <!-- Scanner Modal -->
     <div id="scanner-modal" class="modal">
