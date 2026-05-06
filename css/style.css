@@ -243,9 +243,10 @@ footer { border-top: 1px solid var(--card-border); padding: 100px 0 30px; backgr
         z-index: 999;
     }
     .nav-menu.active { 
-        display: flex; /* Show when active */
+        display: flex !important; /* Force show when active */
         right: 0; 
     }
+    .logo { flex: 1 !important; display: flex !important; justify-content: flex-start !important; } /* Force logo to stay right in RTL */
     .nav-links { flex-direction: column; gap: 20px; width: 100%; }
     .nav-links a { font-size: 1.2rem; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; display: block; }
     .nav-cta { width: 100%; justify-content: center; margin-top: 25px; }

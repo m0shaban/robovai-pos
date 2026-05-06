@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=1.2">
 </head>
 <body>
 
@@ -465,6 +465,24 @@
             // Assuming 3% daily loss/theft/errors, times 30 days = monthly savings
             const monthlySavings = dailySales * 0.03 * 30;
             savings.innerText = monthlySavings.toLocaleString() + ' ج.م';
+        }
+
+        // Navbar Mobile Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const hamburger = document.getElementById('hamburger');
+            if (menu && hamburger) {
+                menu.classList.toggle('active');
+                // Change icon if needed
+                const icon = hamburger.querySelector('i');
+                if (menu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
         }
     </script>
 
