@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="منصة مخزون احترافية تعمل بدون إنترنت لإدارة الأصناف والوارد والصادر والجرد باللغة العربية."
+    />
+    <title>مخزني الذكي Pro</title>
+    <!-- Favicon & PWA -->
+    <link rel="manifest" href="./app.webmanifest" />
+    <link rel="icon" href="/wms/assets/favicon-C3NwjYhP.ico" sizes="any" />
+    <link
+      rel="icon"
+      href="./icons/icon-32.png"
+      type="image/png"
+      sizes="32x32"
+    />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Custom Style -->
+    <script type="module" crossorigin src="/wms/assets/index-BDPiXZvy.js"></script>
+    <link rel="stylesheet" crossorigin href="/wms/assets/index-Yt6lRRfz.css">
+  </head>
+  <body>
+    <!-- Login Overlay -->
+    <div
+      id="login-overlay"
+      style="
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #0f172a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div class="glass" style="width: 100%; max-width: 400px; padding: 2rem">
+        <div
+          style="
+            text-align: center;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+        >
+          <img
+            src="./icons/icon-192.png"
+            alt="Smart Inventory Pro Logo"
+            width="96"
+            height="96"
+            style="
+              margin-bottom: 1rem;
+              border-radius: 1.25rem;
+              box-shadow: 0 0 24px rgba(0, 212, 255, 0.4);
+            "
+          />
+          <h2
+            style="
+              color: var(--text-main);
+              margin-bottom: 0.5rem;
+              font-family: 'Cairo', sans-serif;
+            "
+          >
+            مخزني الذكي Pro
+          </h2>
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.85rem;
+              letter-spacing: 1px;
+            "
+          >
+            RoboVAI WMS PLATFORM
+          </p>
+        </div>
+        <form id="login-form">
+          <div class="input-group">
+            <label>اسم المستخدم</label>
+            <input
+              type="text"
+              id="login-username"
+              required
+              dir="ltr"
+              style="text-align: left"
+            />
+          </div>
+          <div class="input-group">
+            <label>كلمة المرور</label>
+            <input
+              type="password"
+              id="login-password"
+              required
+              dir="ltr"
+              style="text-align: left"
+            />
+          </div>
+          <button
+            type="submit"
+            id="login-submit-btn"
+            class="btn btn-primary"
+            style="margin-top: 1rem; width: 100%"
+          >
+            <span id="login-btn-text">دخول</span>
+          </button>
+        </form>
+        <noscript>
+            <div style="margin-top: 1rem; color: #ef4444; font-size: 0.85rem; text-align: center; background: rgba(239, 68, 68, 0.1); padding: 0.5rem; border-radius: 8px;">
+                يتطلب هذا النظام تفعيل الجافاسكريبت والتشغيل عبر خادم ويب (Web Server) ليعمل بشكل صحيح.
+            </div>
+        </noscript>
+        <div style="margin-top: 1rem; text-align: center">
+          <a
+            href="user-guide.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+              color: var(--accent);
+              font-size: 0.82rem;
+              text-decoration: none;
+              opacity: 0.8;
+            "
+          >
+            📖 دليل الاستخدام
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="main-app-container" style="display: none">
+      <header>
+        <div style="display: flex; align-items: center; gap: 0.75rem">
+          <img
+            src="./icons/icon-96.png"
+            alt="Logo"
+            width="36"
+            height="36"
+            style="border-radius: 8px"
+          />
+          <div class="logo">مخزني الذكي Pro</div>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+          <div id="connection-status" class="badge badge-success">
+            يعمل محلياً
+          </div>
+          <a
+            href="user-guide.html"
+            rel="noopener noreferrer"
+            target="_blank"
+            class="btn btn-outline"
+            style="
+              width: auto;
+              padding: 0.4rem 0.7rem;
+              font-size: 0.8rem;
+              display: flex;
+              align-items: center;
+              gap: 0.3rem;
+              text-decoration: none;
+            "
+            title="دليل الاستخدام"
+          >
+            <i data-lucide="book-open"></i>
+            <span style="font-size: 0.75rem">دليل</span>
+          </a>
+          <button
+            class="btn btn-outline"
+            style="width: auto; padding: 0.4rem; font-size: 0.8rem"
+            onclick="handleLogout()"
+            title="تسجيل خروج"
+          >
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- DASHBOARD SECTION -->
+      <section id="dashboard" class="active">
+        <div class="stats-grid">
+          <div class="glass stat-card">
+            <span id="stat-total-products" class="stat-value">0</span>
+            <span class="stat-label">إجمالي الأصناف</span>
+          </div>
+          <div
+            class="glass stat-card"
+            style="border-color: rgba(245, 158, 11, 0.3)"
+          >
+            <span id="stat-low-stock" class="stat-value text-danger">0</span>
+            <span class="stat-label">نواقص (حد الطلب)</span>
+          </div>
+        </div>
+
+        <!-- Charts Area -->
+        <div class="charts-grid" style="margin-bottom: 2rem">
+          <div class="glass" style="padding: 1rem">
+            <h4 style="margin-bottom: 1rem; font-size: 0.9rem">
+              الوارد مقابل منصرف (آخر 7 أيام)
+            </h4>
+            <canvas id="txChart" height="200"></canvas>
+          </div>
+          <div class="glass" style="padding: 1rem">
+            <h4 style="margin-bottom: 1rem; font-size: 0.9rem">
+              توزيع الأصناف حسب الفئة
+            </h4>
+            <canvas id="catChart" height="200"></canvas>
+          </div>
+        </div>
+
+        <h3>أحدث الحركات</h3>
+        <div class="glass" style="padding: 1rem">
+          <div id="recent-activity-list" class="transaction-log">
+            <!-- Dynamic Activity -->
+          </div>
+        </div>
+
+        <!-- Intelligent Insights Layer -->
+        <div class="glass" style="padding: 1.5rem; margin-top: 1.5rem">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 1rem;
+            "
+          >
+            <h3 style="margin: 0; color: var(--text-main); font-size: 1.1rem">
+              <i data-lucide="alert-triangle" style="width: 18px"></i> النواقص
+              الذكية
+            </h3>
+            <button
+              class="btn btn-outline"
+              style="width: auto; padding: 0.4rem 0.75rem; font-size: 0.85rem"
+              onclick="exportReorderListExcel()"
+            >
+              <i data-lucide="file-spreadsheet" style="width: 16px"></i> تصدير
+              الطلبية
+            </button>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted)">
+            الأصناف التي وصلت لحد الطلب أو نفدت من المخزون، جاهزة للإرسال
+            للمورد.
+          </p>
+        </div>
+
+        <!-- Expiry Radar -->
+        <div class="glass" style="padding: 1.5rem; margin-top: 1.5rem">
+          <h3
+            style="
+              margin-top: 0;
+              margin-bottom: 1rem;
+              color: var(--text-main);
+              font-size: 1.1rem;
+            "
+          >
+            <i data-lucide="radar" style="width: 18px"></i> رادار الصلاحيات
+            (Expiry Radar)
+          </h3>
+          <div
+            id="expiry-radar-list"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS SECTION -->
+      <section id="products">
+        <!-- Analytics & Import/Export -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem">
+          <button
+            class="btn btn-outline"
+            style="flex: 1; padding: 0.5rem; font-size: 0.85rem"
+            onclick="exportToExcel()"
+          >
+            <i data-lucide="file-spreadsheet"></i> تصدير Excel
+          </button>
+          <label
+            class="btn btn-outline"
+            style="
+              flex: 1;
+              padding: 0.5rem;
+              font-size: 0.85rem;
+              cursor: pointer;
+            "
+          >
+            <i data-lucide="download"></i> استيراد CSV
+            <input
+              type="file"
+              id="csv-upload"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              style="display: none"
+              onchange="handleImportCSV(event)"
+            />
+          </label>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="glass" style="padding: 1rem; margin-bottom: 1rem">
+          <div class="input-group" style="margin-bottom: 0.5rem">
+            <div style="display: flex; gap: 0.5rem">
+              <input
+                type="text"
+                id="product-search"
+                placeholder="ابحث بالاسم أو الباركود..."
+              />
+              <button
+                class="btn btn-outline"
+                style="width: auto"
+                onclick="openScanner('product-search')"
+              >
+                <i data-lucide="scan-barcode"></i>
+              </button>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem">
+            <select
+              id="filter-category"
+              class="glass"
+              style="flex: 1; border: none; padding: 0.5rem"
+              onchange="renderProductsList()"
+            >
+              <option value="">كل الفئات</option>
+            </select>
+            <select
+              id="filter-stock"
+              class="glass"
+              style="flex: 1; border: none; padding: 0.5rem"
+              onchange="renderProductsList()"
+            >
+              <option value="">حالة المخزون</option>
+              <option value="low">نواقص (آقل من الحد)</option>
+              <option value="ok">متوفر</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="products-list">
+          <!-- Products will be rendered here -->
+        </div>
+
+        <a href="#" class="fab" onclick="switchView('add-product')">
+          <i data-lucide="plus"></i>
+        </a>
+      </section>
+
+      <!-- ADD PRODUCT SECTION -->
+      <section id="add-product">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+          "
+        >
+          <button
+            class="btn btn-outline"
+            style="width: auto; padding: 0.5rem"
+            onclick="switchView('products')"
+          >
+            <i data-lucide="chevron-right"></i>
+          </button>
+          <h2 style="margin: 0">إضافة صنف جديد</h2>
+        </div>
+
+        <form id="new-product-form" class="glass" style="padding: 1.5rem">
+          <div class="input-group">
+            <label>الباركود</label>
+            <div style="display: flex; gap: 0.5rem">
+              <input type="text" name="barcode" id="new-barcode" required />
+              <button
+                type="button"
+                class="btn btn-outline"
+                style="width: auto"
+                onclick="openScanner('new-product')"
+              >
+                <i data-lucide="scan"></i>
+              </button>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>اسم الصنف</label>
+            <input type="text" name="name" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+            <div class="input-group">
+              <label>الفئة (Category)</label>
+              <input type="text" name="category" value="عام" required />
+            </div>
+            <div class="input-group">
+              <label>المورد (Supplier)</label>
+              <input type="text" name="supplier" value="غير محدد" />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+            <div class="input-group">
+              <label>موقع التخزين (Bin Location)</label>
+              <input
+                type="text"
+                name="location_code"
+                placeholder="مثال: A1-S3"
+              />
+            </div>
+            <div class="input-group">
+              <label>السعر (جنية/ريال)</label>
+              <input type="number" name="price" step="0.01" required />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+            <div class="input-group">
+              <label>الكمية الافتتاحية</label>
+              <input type="number" name="stock" value="0" required />
+            </div>
+            <div class="input-group">
+              <label>تنبيه عند وصول الكمية لـ (الحد الأدني)</label>
+              <input type="number" name="min_stock" value="5" required />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">حفظ الصنف</button>
+        </form>
+      </section>
+
+      <!-- INBOUND SECTION -->
+      <section id="inbound">
+        <h2>إضافة كمية (وارد)</h2>
+        <form id="inbound-form" class="glass" style="padding: 1.5rem">
+          <div class="input-group">
+            <label>مسح أو كتابة الباركود</label>
+            <div style="display: flex; gap: 0.5rem">
+              <input type="text" id="in-barcode" required />
+              <button
+                type="button"
+                class="btn btn-outline"
+                style="width: auto"
+                onclick="openScanner('inbound')"
+              >
+                <i data-lucide="scan"></i>
+              </button>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>الكمية المضافة</label>
+            <input type="number" id="in-qty" value="1" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+            <div class="input-group">
+              <label>رقم التشغيلة (Batch Number)</label>
+              <input
+                type="text"
+                id="in-batch"
+                placeholder="اختياري (مثال: B-2023X)"
+              />
+            </div>
+            <div class="input-group">
+              <label>تاريخ الصلاحية (Expiry)</label>
+              <input type="date" id="in-expiry" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">تحديث المخزن</button>
+        </form>
+      </section>
+
+      <!-- OUTBOUND SECTION -->
+      <section id="outbound">
+        <h2>إذن صرف / تحويل</h2>
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <div class="input-group">
+            <label>الجهة المستلمة</label>
+            <select id="out-destination"></select>
+          </div>
+          <button class="btn btn-outline" onclick="openScanner('outbound')">
+            <i data-lucide="scan-line"></i> مسح الأصناف بالكاميرا
+          </button>
+        </div>
+
+        <div id="outbound-items-list" style="margin-bottom: 1.5rem">
+          <!-- Outbound items -->
+        </div>
+
+        <button
+          class="btn btn-primary"
+          id="btn-finalize-outbound"
+          onclick="finalizeOutbound()"
+        >
+          حفظ وإصدار PDF احترافي
+        </button>
+      </section>
+
+      <!-- STOCKTAKE SECTION -->
+      <section id="stocktake">
+        <h2>الجرد الفعلي</h2>
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-bottom: 1rem;
+            "
+          >
+            قم بمسح الصنف لإجراء المطابقة بين الرصيد الدفتري والكمية الفعلية على
+            الرف.
+          </p>
+          <div class="input-group" style="margin-bottom: 1rem">
+            <div style="display: flex; gap: 0.5rem">
+              <input
+                type="text"
+                id="stocktake-barcode"
+                placeholder="أدخل الباركود يدوياً أو استخدم الماسح..."
+              />
+              <button
+                type="button"
+                class="btn btn-outline"
+                style="width: auto"
+                onclick="handleStocktakeManualSearch()"
+              >
+                بحث
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="openScanner('stocktake')">
+            <i data-lucide="scan-barcode"></i> كاميرا الجرد
+          </button>
+        </div>
+
+        <div
+          id="stocktake-result"
+          style="display: none; padding: 1.5rem"
+          class="glass"
+        >
+          <!-- Dynamically injected via JS -->
+        </div>
+      </section>
+
+      <!-- SETTINGS SECTION -->
+      <section id="settings">
+        <h2>الإعدادات والنظام</h2>
+
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <h4 style="margin-bottom: 1rem">
+            <i data-lucide="smartphone"></i> تثبيت التطبيق
+          </h4>
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-bottom: 1rem;
+            "
+          >
+            ثبّت التطبيق على جهازك للحصول على أداء أسرع وعمل متواصل بدون إنترنت.
+          </p>
+          <button class="btn btn-primary" onclick="triggerInstallPrompt()">
+            <i data-lucide="download"></i> تثبيت التطبيق (Add to Home Screen)
+          </button>
+        </div>
+
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <h4 style="margin-bottom: 1rem">
+            <i data-lucide="webhook"></i> بوابات الأتمتة (Webhook Sync)
+          </h4>
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-bottom: 1rem;
+            "
+          >
+            قم بربط النظام مع n8n أو Make لدفع بيانات المخزون وإحصائيات الـ 7
+            أيام عبر الذكاء الاصطناعي.
+          </p>
+          <div class="input-group">
+            <label>رابط الـ Webhook للربط</label>
+            <input
+              type="url"
+              id="webhook-url"
+              placeholder="https://n8n.your-server.com/webhook/..."
+              dir="ltr"
+            />
+          </div>
+          <div style="display: flex; gap: 1rem; flex-direction: column">
+            <button class="btn btn-primary" onclick="triggerCloudSync()">
+              <i data-lucide="cloud-lightning"></i> مزامنة سحابية سريعة
+            </button>
+            <button class="btn btn-outline" onclick="saveWebhookSettings()">
+              <i data-lucide="save"></i> حفظ الإعدادات
+            </button>
+          </div>
+        </div>
+
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <h4 style="margin-bottom: 1rem">
+            <i data-lucide="database"></i> أمان البيانات (النسخ الاحتياطي)
+          </h4>
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-bottom: 1rem;
+            "
+          >
+            بما أن هذا التطبيق يعمل بدون إنترنت (محلياً)، يُنصح بأخذ نسخة
+            احتياطية من قواعد البيانات وحفظها خارج المتصفح بشكل دوري.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-direction: column">
+            <button class="btn btn-primary" onclick="exportDatabaseBackup()">
+              <i data-lucide="download-cloud"></i> تصدير البيانات (JSON)
+            </button>
+            <label
+              class="btn btn-outline"
+              style="cursor: pointer; display: flex; justify-content: center"
+            >
+              <i data-lucide="upload-cloud"></i> استعادة النسخة الاحتياطية
+              <input
+                type="file"
+                id="json-backup-upload"
+                accept=".json"
+                style="display: none"
+                onchange="importDatabaseBackup(event)"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div class="glass" style="padding: 1.5rem">
+          <h4 style="margin-bottom: 1rem">
+            <i data-lucide="info"></i> حول التطبيق
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted)">
+            تطبيق إدارة المخازن الاحترافي يعمل بتقنية Progressive Web App,
+            يستخدم Dexie.js لتخزين البيانات محلياً. إصدار: v2.6.0
+          </p>
+        </div>
+
+        <!-- USER MANAGEMENT (admin only) -->
+        <div
+          class="glass"
+          id="user-management-panel"
+          style="padding: 1.5rem; margin-top: 1.5rem; display: none"
+        >
+          <h4 style="margin-bottom: 1rem">
+            <i data-lucide="users"></i> إدارة المستخدمين
+          </h4>
+
+          <div id="users-list" style="margin-bottom: 1.5rem"></div>
+
+          <details style="cursor: pointer">
+            <summary style="font-weight: 600; margin-bottom: 0.75rem">
+              إضافة مستخدم جديد
+            </summary>
+            <form id="add-user-form" style="margin-top: 0.75rem">
+              <div class="input-group">
+                <label>اسم المستخدم</label>
+                <input
+                  type="text"
+                  id="new-user-username"
+                  required
+                  autocomplete="off"
+                />
+              </div>
+              <div class="input-group">
+                <label>كلمة المرور</label>
+                <input
+                  type="password"
+                  id="new-user-password"
+                  required
+                  autocomplete="new-password"
+                />
+              </div>
+              <div class="input-group">
+                <label>الصلاحية</label>
+                <select id="new-user-role" class="select-input">
+                  <option value="worker">عامل</option>
+                  <option value="supervisor">مشرف</option>
+                  <option value="admin">مدير</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="margin-top: 0.5rem"
+              >
+                <i data-lucide="user-plus"></i> إضافة
+              </button>
+            </form>
+          </details>
+        </div>
+      </section>
+
+      <!-- TRANSACTIONS SECTION -->
+      <section id="transactions">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+          "
+        >
+          <h2 style="margin: 0">سجل الحركات</h2>
+        </div>
+
+        <!-- Filters -->
+        <div
+          class="glass"
+          style="
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+          "
+        >
+          <select
+            id="tx-filter-type"
+            class="select-input"
+            style="flex: 1; min-width: 130px"
+          >
+            <option value="">كل الأنواع</option>
+            <option value="inbound">وارد</option>
+            <option value="outbound">صادر</option>
+            <option value="stocktake">تسوية جرد</option>
+          </select>
+          <input
+            type="date"
+            id="tx-filter-date"
+            class="select-input"
+            style="flex: 1; min-width: 130px"
+          />
+          <button
+            class="btn btn-outline"
+            style="width: auto; padding: 0.5rem 1rem"
+            onclick="renderTransactionHistory()"
+          >
+            <i data-lucide="search"></i> بحث
+          </button>
+        </div>
+
+        <div id="transactions-list">
+          <p style="text-align: center; color: var(--text-muted)">
+            جاري تحميل الحركات...
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar" id="main-nav-bar" style="display: none">
+      <button class="nav-item active" data-view="dashboard" id="nav-dashboard">
+        <i data-lucide="layout-dashboard"></i>
+        <span>الرئيسية</span>
+      </button>
+      <button class="nav-item" data-view="products" id="nav-products">
+        <i data-lucide="package"></i>
+        <span>الأصناف</span>
+      </button>
+      <button class="nav-item" data-view="inbound" id="nav-inbound">
+        <i data-lucide="log-in"></i>
+        <span>وارد</span>
+      </button>
+      <button class="nav-item" data-view="outbound" id="nav-outbound">
+        <i data-lucide="log-out"></i>
+        <span>صادر</span>
+      </button>
+      <button class="nav-item" data-view="stocktake" id="nav-stocktake">
+        <i data-lucide="clipboard-check"></i>
+        <span>جرد</span>
+      </button>
+      <button class="nav-item" data-view="settings" id="nav-settings">
+        <i data-lucide="settings"></i>
+        <span>إعدادات</span>
+      </button>
+      <button class="nav-item" data-view="transactions" id="nav-transactions">
+        <i data-lucide="history"></i>
+        <span>الحركات</span>
+      </button>
+    </nav>
+
+    <!-- Scanner Modal -->
+    <div id="scanner-modal" class="modal">
+      <div class="glass modal-content">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <h3 style="margin: 0">جاري المسح...</h3>
+          <button
+            class="btn btn-outline"
+            style="width: auto; padding: 0.5rem"
+            onclick="closeScanner()"
+          >
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div id="reader"></div>
+        <p style="text-align: center; font-size: 0.8rem; margin-top: 10px">
+          وجه الكاميرا نحو الباركود بشكل واضح
+        </p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+  </body>
+</html>
