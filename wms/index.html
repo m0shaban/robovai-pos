@@ -30,7 +30,7 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-C21Dyuaz.js"></script>
+    <script type="module" crossorigin src="/wms/assets/index-BPAG0O1y.js"></script>
     <link rel="stylesheet" crossorigin href="/wms/assets/index-BRldyXOp.css">
   </head>
   <body>
@@ -454,10 +454,19 @@
               </button>
             </div>
           </div>
-          <div class="input-group">
-            <label>الكمية المضافة</label>
-            <input type="number" id="in-qty" value="1" required />
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+            <div class="input-group">
+              <label>الكمية المضافة</label>
+              <input type="number" id="in-qty" value="1" min="1" required />
+            </div>
+            <div class="input-group">
+              <!-- سعر الشراء — موحّد مع product.price في DB وتُحسب منه total_amount في الحركة -->
+              <label>سعر الشراء (اختياري)</label>
+              <input type="number" id="in-price" step="0.01" min="0" placeholder="يُستخدم سعر الصنف إن تُرك" />
+            </div>
           </div>
+
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
             <div class="input-group">
               <label>رقم التشغيلة (Batch Number)</label>
@@ -472,7 +481,9 @@
               <input type="date" id="in-expiry" />
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">تحديث المخزن</button>
+          <button type="submit" class="btn btn-primary">
+            <i data-lucide="plus-circle"></i> تحديث المخزن
+          </button>
         </form>
       </section>
 
@@ -843,35 +854,35 @@
       </section>
     </div>
 
-    <!-- Navigation Bar -->
-    <nav class="nav-bar" id="main-nav-bar" style="display: none">
-      <button class="nav-item active" data-view="dashboard" id="nav-dashboard">
+    <!-- Navigation Bar (قابل للتمرير أفقياً على الشاشات الصغيرة) -->
+    <nav class="nav-bar" id="main-nav-bar" style="display: none; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; scrollbar-width: none;">
+      <button class="nav-item active" data-view="dashboard" id="nav-dashboard" style="flex-shrink:0">
         <i data-lucide="layout-dashboard"></i>
         <span>الرئيسية</span>
       </button>
-      <button class="nav-item" data-view="products" id="nav-products">
+      <button class="nav-item" data-view="products" id="nav-products" style="flex-shrink:0">
         <i data-lucide="package"></i>
         <span>الأصناف</span>
       </button>
-      <button class="nav-item" data-view="inbound" id="nav-inbound">
+      <button class="nav-item" data-view="inbound" id="nav-inbound" style="flex-shrink:0">
         <i data-lucide="log-in"></i>
         <span>وارد</span>
       </button>
-      <button class="nav-item" data-view="outbound" id="nav-outbound">
+      <button class="nav-item" data-view="outbound" id="nav-outbound" style="flex-shrink:0">
         <i data-lucide="log-out"></i>
         <span>صادر</span>
       </button>
-      <button class="nav-item" data-view="stocktake" id="nav-stocktake">
+      <button class="nav-item" data-view="stocktake" id="nav-stocktake" style="flex-shrink:0">
         <i data-lucide="clipboard-check"></i>
         <span>جرد</span>
       </button>
-      <button class="nav-item" data-view="settings" id="nav-settings">
-        <i data-lucide="settings"></i>
-        <span>إعدادات</span>
-      </button>
-      <button class="nav-item" data-view="transactions" id="nav-transactions">
+      <button class="nav-item" data-view="transactions" id="nav-transactions" style="flex-shrink:0">
         <i data-lucide="history"></i>
         <span>الحركات</span>
+      </button>
+      <button class="nav-item" data-view="settings" id="nav-settings" style="flex-shrink:0">
+        <i data-lucide="settings"></i>
+        <span>إعدادات</span>
       </button>
     </nav>
 
