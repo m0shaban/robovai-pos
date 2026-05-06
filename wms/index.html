@@ -30,7 +30,7 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-BzG1DkoP.js"></script>
+    <script type="module" crossorigin src="/wms/assets/index-CiAxZg3G.js"></script>
     <link rel="stylesheet" crossorigin href="/wms/assets/index-BRldyXOp.css">
   </head>
   <body>
@@ -550,6 +550,78 @@
       <!-- SETTINGS SECTION -->
       <section id="settings">
         <h2>الإعدادات والنظام</h2>
+
+        <!-- QR SYNC BRIDGE PANEL -->
+        <div class="glass" id="qr-sync-panel" style="padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgba(99,102,241,0.3);">
+          <h4 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="qr-code"></i>
+            جسر المزامنة بالـ QR (أوفلاين)
+            <span class="badge badge-primary" style="font-size: 0.65rem; padding: 0.15rem 0.5rem;">اختياري</span>
+          </h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6;">
+            نقل بيانات المخزون من وإلى نظام الكاشير (POS) بدون إنترنت عبر مسح QR Code. كل نظام يعمل باستقلالية تامة — المزامنة اختيارية.
+          </p>
+
+          <!-- Tabs -->
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <button class="btn btn-primary" id="qr-tab-export" onclick="qrSwitchTab('export')"
+              style="flex:1; padding: 0.5rem; font-size: 0.82rem;">
+              <i data-lucide="upload"></i> تصدير للـ POS
+            </button>
+            <button class="btn btn-outline" id="qr-tab-import" onclick="qrSwitchTab('import')"
+              style="flex:1; padding: 0.5rem; font-size: 0.82rem;">
+              <i data-lucide="download"></i> استيراد من الـ POS
+            </button>
+          </div>
+
+          <!-- EXPORT TAB -->
+          <div id="qr-export-section">
+            <div class="input-group">
+              <label>نوع البيانات المُصدَّرة</label>
+              <select id="qr-export-type">
+                <option value="stock">لقطة المخزون الحالي (الأصناف + الكميات)</option>
+                <option value="inbound">آخر 20 حركة وارد</option>
+                <option value="outbound">آخر 20 حركة صادر</option>
+                <option value="all">كل حركات اليوم</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="generateSyncQR()" style="margin-bottom: 1rem;">
+              <i data-lucide="qr-code"></i> توليد QR للمزامنة
+            </button>
+
+            <!-- QR Display Area -->
+            <div id="qr-display-area" style="display:none; text-align:center;">
+              <canvas id="qr-canvas" style="border-radius: 12px; max-width: 240px; width: 100%;"></canvas>
+              <p id="qr-payload-info" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;"></p>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem; justify-content: center;">
+                <button class="btn btn-outline" onclick="downloadSyncQR()" style="width:auto; padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                  <i data-lucide="download"></i> حفظ QR
+                </button>
+                <button class="btn btn-outline" onclick="shareSyncQR()" style="width:auto; padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                  <i data-lucide="share-2"></i> مشاركة
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- IMPORT TAB -->
+          <div id="qr-import-section" style="display:none;">
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
+              امسح QR صادر من نظام الكاشير (POS) لاستيراد بيانات الأصناف أو تحديث المخزون.
+            </p>
+            <button class="btn btn-primary" onclick="openQRImportScanner()" style="margin-bottom: 1rem;">
+              <i data-lucide="scan-line"></i> فتح الكاميرا لمسح QR
+            </button>
+            <div id="qr-import-reader" style="display:none; border-radius: 12px; overflow: hidden; margin-bottom: 1rem;"></div>
+            <div id="qr-import-result" style="display:none;" class="glass" style="padding: 1rem; border-radius: 10px; margin-top: 0.5rem;">
+              <p style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">📦 البيانات المُستلمة:</p>
+              <pre id="qr-import-preview" style="font-size: 0.75rem; color: var(--text-muted); overflow-x: auto; direction: ltr;"></pre>
+              <button class="btn btn-primary" onclick="applyImportedQRData()" style="margin-top: 0.75rem;">
+                <i data-lucide="check-circle"></i> تطبيق البيانات على المخزون
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
           <h4 style="margin-bottom: 1rem">
