@@ -24,20 +24,28 @@
     <!-- Navigation -->
     <nav class="navbar" aria-label="Main Navigation">
         <div class="container nav-container">
-            <div class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                <img src="assets/images/logo.png" alt="RoboVAI Logo" style="height: 45px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));" onerror="this.src='https://placehold.co/45x45/111/00a8ff?text=RV'" />
-                <span style="font-family: 'Inter', sans-serif; font-size: 1.7rem; font-weight: 900; letter-spacing: -1px; color: #fff; line-height: 1;">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <img src="assets/images/logo.png" alt="RoboVAI Logo" style="height: 40px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));" onerror="this.src='https://placehold.co/40x40/111/00a8ff?text=RV'" />
+                <span class="logo-text" style="font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; color: #fff; line-height: 1;">
                     ROBOVAI <span style="color: var(--primary); font-weight: 300;">PRO POS</span>
                 </span>
+            </a>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="#bento" onclick="toggleMenu()">القدرات الجبارة</a></li>
+                    <li><a href="#stacked-gallery" onclick="toggleMenu()">استكشف النظام</a></li>
+                    <li><a href="#hardware" onclick="toggleMenu()">التوافق</a></li>
+                    <li><a href="#pricing" onclick="toggleMenu()">الأسعار</a></li>
+                    <li><a href="manual.html" style="color: var(--primary);">دليل الاستخدام</a></li>
+                </ul>
+                <a href="https://wa.me/201121891913" class="btn btn-blue nav-cta" target="_blank">تواصل واتساب</a>
             </div>
-            <ul class="nav-links">
-                <li><a href="#bento">القدرات الجبارة</a></li>
-                <li><a href="#stacked-gallery">استكشف النظام</a></li>
-                <li><a href="#hardware">التوافق</a></li>
-                <li><a href="#pricing">الأسعار</a></li>
-                <li><a href="manual.html" style="color: var(--primary);">دليل الاستخدام</a></li>
-            </ul>
-            <a href="https://wa.me/201121891913" class="btn btn-blue" target="_blank">تواصل واتساب</a>
+
+            <!-- Hamburger Icon -->
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
 
@@ -48,12 +56,12 @@
                 <h1 class="hero-title">سيبك من التعطيل.<br><span class="text-gradient">ركّز في أرباحك.</span></h1>
                 <p class="hero-subtitle">وداعاً للبرامج العقيمة اللي بتستنزف مجهودك. إحنا صممنالك "عقل إلكتروني" شغال معاك أوفلاين، سريع طلقة، بيدير محلك ومخزنك وحساباتك بالقرش. كل اللي في دماغك موجود.. واللي مش موجود نبرمجه لك تفصيل!</p>
                 
-                <div class="btn-group" style="display: flex; gap: 15px; margin-bottom: 25px;">
+                <div class="btn-group">
                     <a href="#pricing" class="btn btn-outline-glow">شوف الأسعار <i class="fas fa-arrow-left" style="margin-right: 10px;"></i></a>
                     <a href="manual.html" class="btn btn-blue">تصفح دليل الاستخدام <i class="fas fa-book" style="margin-right: 10px;"></i></a>
                 </div>
 
-                <div class="platforms" style="display: flex; gap: 20px; align-items: center; color: var(--text-muted); font-size: 0.95rem;">
+                <div class="platforms">
                     <span style="display: flex; align-items: center; gap: 8px; color: #fff;"><i class="fab fa-windows text-gradient" style="font-size: 1.5rem;"></i> متاح للويندوز أوفلاين 100%</span>
                     <span style="display: flex; align-items: center; gap: 8px; opacity: 0.6;"><i class="fas fa-shield-alt" style="font-size: 1.5rem;"></i> أمان تام لبياناتك</span>
                 </div>
@@ -97,7 +105,7 @@
                     <p>اقفل باب التلاعب. مفيش كاشير يقدر يمسح فاتورة أو يغير سعر من غير باسوردك كمدير.</p>
                 </div>
 
-                <div class="bento-card span-4 reveal-blur ios-glass-card" style="flex-direction: row; align-items: center; gap: 40px; padding: 50px;">
+                <div class="bento-card span-4 reveal-blur ios-glass-card bento-custom-card">
                     <i class="fas fa-code icon-gradient" style="font-size: 6rem; margin: 0;"></i>
                     <div>
                         <h3 style="font-size: 2.5rem; margin-bottom: 10px;">أنت تطلب.. وإحنا نبرمج</h3>
@@ -393,6 +401,20 @@
     <script src="js/main.js"></script>
 
     <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+            const hamburgerIcon = document.querySelector('#hamburger i');
+            if (navMenu.classList.contains('active')) {
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            } else {
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            }
+        }
+
         // POS Demo Logic
         let receiptTotal = 0;
         function addToReceipt(name, price) {
