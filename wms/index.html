@@ -30,7 +30,7 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-D-9O8vwh.js"></script>
+    <script type="module" crossorigin src="/wms/assets/index-B46uG6FX.js"></script>
     <link rel="stylesheet" crossorigin href="/wms/assets/index-B1vglWp_.css">
   </head>
   <body>
@@ -121,9 +121,17 @@
             type="button"
             class="btn btn-outline"
             onclick="startAuthQRScan()"
-            style="margin-top: 0.6rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.9rem;"
+            style="
+              margin-top: 0.6rem;
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 0.5rem;
+              font-size: 0.9rem;
+            "
           >
-            <i data-lucide="scan-line" style="width:18px;height:18px;"></i>
+            <i data-lucide="scan-line" style="width: 18px; height: 18px"></i>
             دخول بـ QR كود
           </button>
         </form>
@@ -1265,9 +1273,94 @@
           </div>
         </div>
 
+        <!-- ═══════ POS DEVICE PAIRING ═══════ -->
+        <div
+          class="glass"
+          id="pos-pairing-panel"
+          style="
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(124, 58, 237, 0.35);
+          "
+        >
+          <h4 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem">
+            <i data-lucide="link"></i>
+            ربط الجهاز بكاشير RoboVAI POS
+            <span
+              id="pos-pair-badge"
+              class="badge"
+              style="font-size: 0.65rem; padding: 0.15rem 0.5rem; background: #6b7280; color: #fff; border-radius: 6px; margin-right: 0.25rem"
+            >غير مرتبط</span>
+          </h4>
+
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6">
+            افتح برنامج الكاشير ← الإعدادات ← جسر WMS ← «توليد QR الربط»، ثم امسح الكود هنا. هذه الخطوة تُنجز مرة واحدة فقط.
+          </p>
+
+          <div id="pos-pair-status" style="font-size: 0.88rem; margin-bottom: 1rem; color: #6b7280">
+            لا يوجد ربط بعد — امسح QR الكاشير
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap">
+            <button
+              class="btn btn-primary"
+              onclick="startPosPairingQRScan()"
+              style="background: #7c3aed; border-color: #7c3aed; width: auto; padding: 0.5rem 1.25rem"
+            >
+              <i data-lucide="scan-line"></i> مسح QR الكاشير
+            </button>
+            <button
+              class="btn btn-outline"
+              id="pos-unpair-btn"
+              onclick="unpairPos()"
+              style="display: none; width: auto; padding: 0.5rem 1.25rem; color: #dc2626; border-color: #dc2626"
+            >
+              <i data-lucide="link-2-off"></i> إلغاء الربط
+            </button>
+          </div>
+        </div>
+
+        <!-- POS Pairing QR scanner modal -->
+        <div
+          id="pos-pair-scan-modal"
+          style="
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <div
+            class="glass"
+            style="
+              padding: 1.5rem;
+              border-radius: 16px;
+              width: min(360px, 90vw);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <h4 style="margin: 0">مسح QR ربط الكاشير</h4>
+            <p id="pos-pair-scan-status" style="font-size: 0.82rem; color: var(--text-muted); margin: 0">
+              📷 جاري تشغيل الكاميرا...
+            </p>
+            <div id="pos-pair-qr-reader" style="width: 260px; min-height: 260px; border-radius: 10px; overflow: hidden"></div>
+            <button
+              class="btn btn-outline"
+              onclick="stopPosPairingQRScan()"
+              style="width: auto; padding: 0.4rem 1.25rem"
+            >
+              <i data-lucide="x"></i> إغلاق
+            </button>
+          </div>
+        </div>
+
         <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
-          <h4 style="margin-bottom: 1rem">
-            <i data-lucide="smartphone"></i> تثبيت التطبيق
           </h4>
           <p
             style="
@@ -1743,23 +1836,70 @@
     <!-- ══════════════════════════════════════════════════════ -->
     <!--  Auth QR — بطاقة دخول المستخدم (يعرضها Admin)        -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div id="auth-qr-modal"
-      style="display:none; position:fixed; inset:0; z-index:10000;
-             background:rgba(0,0,0,0.85); align-items:center; justify-content:center;">
-      <div class="glass"
-        style="text-align:center; padding:2rem; max-width:320px; width:90%; border-radius:16px;">
-        <h3 style="color:var(--text-main); margin-bottom:0.5rem;">🔑 بطاقة الدخول</h3>
-        <div id="auth-qr-username"
-          style="font-size:1.1rem; color:var(--accent); font-weight:700; margin-bottom:0.2rem;"></div>
-        <div id="auth-qr-role"
-          style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;"></div>
-        <canvas id="auth-qr-canvas" style="border-radius:12px; display:block; margin:auto;"></canvas>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1rem; line-height:1.4;">
-          امسح هذا الـ QR من شاشة الدخول للتسجيل بدون كلمة مرور.<br>
+    <div
+      id="auth-qr-modal"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.85);
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        class="glass"
+        style="
+          text-align: center;
+          padding: 2rem;
+          max-width: 320px;
+          width: 90%;
+          border-radius: 16px;
+        "
+      >
+        <h3 style="color: var(--text-main); margin-bottom: 0.5rem">
+          🔑 بطاقة الدخول
+        </h3>
+        <div
+          id="auth-qr-username"
+          style="
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+          "
+        ></div>
+        <div
+          id="auth-qr-role"
+          style="
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+          "
+        ></div>
+        <canvas
+          id="auth-qr-canvas"
+          style="border-radius: 12px; display: block; margin: auto"
+        ></canvas>
+        <p
+          style="
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            line-height: 1.4;
+          "
+        >
+          امسح هذا الـ QR من شاشة الدخول للتسجيل بدون كلمة مرور.<br />
           <strong>يعمل على نفس الجهاز فقط.</strong>
         </p>
-        <button class="btn btn-outline" style="margin-top:1rem; width:100%;"
-          onclick="document.getElementById('auth-qr-modal').style.display='none'">
+        <button
+          class="btn btn-outline"
+          style="margin-top: 1rem; width: 100%"
+          onclick="
+            document.getElementById('auth-qr-modal').style.display = 'none'
+          "
+        >
           إغلاق
         </button>
       </div>
@@ -1768,17 +1908,49 @@
     <!-- ══════════════════════════════════════════════════════ -->
     <!--  Auth QR — ماسح بطاقة الدخول (على شاشة Login)        -->
     <!-- ══════════════════════════════════════════════════════ -->
-    <div id="auth-qr-scan-modal"
-      style="display:none; position:fixed; inset:0; z-index:10000;
-             background:rgba(0,0,0,0.92); align-items:center; justify-content:center;">
-      <div class="glass"
-        style="padding:1.5rem; border-radius:16px; text-align:center; width:90%; max-width:360px;">
-        <h3 style="color:var(--text-main); margin-bottom:0.75rem;">📷 امسح QR الخاص بك</h3>
-        <div id="auth-qr-reader" style="width:100%; border-radius:8px; overflow:hidden;"></div>
-        <p id="auth-qr-scan-status"
-          style="font-size:0.85rem; color:var(--text-muted); margin-top:0.75rem; min-height:1.2em;"></p>
-        <button class="btn btn-outline" style="margin-top:1rem; width:100%;"
-          onclick="stopAuthQRScan()">
+    <div
+      id="auth-qr-scan-modal"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.92);
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        class="glass"
+        style="
+          padding: 1.5rem;
+          border-radius: 16px;
+          text-align: center;
+          width: 90%;
+          max-width: 360px;
+        "
+      >
+        <h3 style="color: var(--text-main); margin-bottom: 0.75rem">
+          📷 امسح QR الخاص بك
+        </h3>
+        <div
+          id="auth-qr-reader"
+          style="width: 100%; border-radius: 8px; overflow: hidden"
+        ></div>
+        <p
+          id="auth-qr-scan-status"
+          style="
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            min-height: 1.2em;
+          "
+        ></p>
+        <button
+          class="btn btn-outline"
+          style="margin-top: 1rem; width: 100%"
+          onclick="stopAuthQRScan()"
+        >
           إلغاء
         </button>
       </div>
