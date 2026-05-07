@@ -31,7 +31,7 @@
 
         body {
             background-color: var(--bg-light);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, hsla(217,100%,76%,0.15) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, hsla(349,100%,76%,0.15) 0px, transparent 50%);
             background-attachment: fixed;
@@ -315,7 +315,7 @@
 
     <!-- Main Container -->
     <div class="docs-container">
-        
+
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <h3>فهرس النظام</h3>
@@ -338,12 +338,13 @@
                 <li><a href="#users"><i class="fas fa-user-shield fa-fw"></i> المستخدمين والصلاحيات</a></li>
                 <li><a href="#activity"><i class="fas fa-history fa-fw"></i> سجل النشاط</a></li>
                 <li><a href="#settings"><i class="fas fa-cogs fa-fw"></i> الإعدادات</a></li>
+                <li><a href="#wms"><i class="fas fa-mobile-alt fa-fw"></i> ربط WMS وسحابة 🆕</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            
+
             <div style="text-align: center; margin-bottom: 50px;">
                 <h1 style="font-size: 3rem; color: var(--primary-dark); margin-bottom: 15px;">دليل الاستخدام الشامل</h1>
                 <p style="font-size: 1.3rem; color: var(--text-muted);">كل اللي محتاج تعرفه عشان تدير مكانك باحترافية وسرعة الصاروخ 🚀</p>
@@ -593,6 +594,78 @@
                 </div>
                 <p class="module-desc">مين مسح الفاتورة دي؟ ومين غير سعر المنتج ده؟ سجل النشاط بيسجل كل حركة بتحصل على السيستم بالثانية واسم الموظف، عشان لو حصل أي تلاعب تعرف تصطاده فوراً.</p>
                 <img src="assets/images/17-activity.png" alt="سجل النشاط" class="module-image">
+            </section>
+
+            <!-- 18. Settings -->
+            <section id="settings" class="module-section">
+                <div class="module-header">
+                    <div class="module-icon"><i class="fas fa-cogs"></i></div>
+                    <div>
+                        <h2 class="module-title">الإعدادات (Settings)</h2>
+                        <span class="module-subtitle">خلي السيستم يتكلم لغتك</span>
+                    </div>
+                </div>
+                <p class="module-desc">من صفحة الإعدادات تقدر تضبط كل تفاصيل الفرع: اسم المحل، شعار الطابعة، بيانات الضريبة، اسم الكاشير على الفاتورة، وإعدادات الاتصال بالطابعة الحرارية. كل إعداد بيتحفظ فوراً من غير ما تعيد تشغيل البرنامج.</p>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4><i class="fas fa-print"></i> إعداد الطابعة</h4>
+                        <p>اختار اسم البورت بتاع الطابعة الحرارية (مثلاً USB001 أو COM3) واختبرها بزر "طباعة اختبار" عشان تتأكد إنها شغالة بشكل صح قبل ما تبدأ الشفت.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4><i class="fas fa-database"></i> النسخ الاحتياطي</h4>
+                        <p>من الإعدادات تقدر تعمل نسخة احتياطية من قاعدة البيانات بضغطة زر. احتفظ بنسخة كل أسبوع على USB خارجي.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 19. WMS Integration -->
+            <section id="wms" class="module-section">
+                <div class="module-header">
+                    <div class="module-icon" style="background: linear-gradient(135deg, #7B1FA2, #43A047);"><i class="fas fa-qrcode"></i></div>
+                    <div>
+                        <h2 class="module-title">ربط WMS الويب عبر QR 🆕</h2>
+                        <span class="module-subtitle">وصّل كاشيرك بهاتفك في ثوانٍ</span>
+                    </div>
+                </div>
+                <p class="module-desc">نظام RoboVAI v2.0 بيجيب معاه تطبيق ويب اسمه <strong>Smart Inventory Pro (WMS)</strong> — بيشتغل على أي موبايل أو تابلت من المتصفح بدون تثبيت. تقدر تربطه بكاشير الويندوز بثوانٍ عبر QR كود.</p>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4><i class="fas fa-link"></i> خطوات الربط (Pairing)</h4>
+                        <ol style="margin: 10px 0 0 0; padding-right: 20px; line-height: 2.2;">
+                            <li>افتح برنامج الكاشير (SmartPOS WPF)</li>
+                            <li>اذهب لـ <strong>الإعدادات → تبويب "ربط هذا الجهاز بـ WMS"</strong></li>
+                            <li>اضغط <strong>"توليد QR الربط"</strong></li>
+                            <li>افتح <a href="https://pos.robovai.tech/wms" target="_blank" style="color: #7B1FA2;">pos.robovai.tech/wms</a> على هاتفك</li>
+                            <li>من قائمة ≡ → <strong>الإعدادات → "ربط بكاشير RoboVAI POS"</strong></li>
+                            <li>امسح QR الظاهر على شاشة الكاشير</li>
+                            <li>✅ ستظهر رسالة "مرتبط بكاشير: [اسم الجهاز]"</li>
+                        </ol>
+                    </div>
+                    <div class="tip-card">
+                        <h4><i class="fas fa-cloud"></i> المزامنة السحابية (Firebase)</h4>
+                        <p>بعد الربط، تقدر تصدر بيانات المخزون من الكاشير وتستوردها في WMS والعكس. كل بيانات WMS محفوظة على Firebase Cloud — آمنة ومتاحة من أي مكان.</p>
+                        <ul style="margin-top: 10px; margin-right: 20px; line-height: 2;">
+                            <li>سجّل بحسابك على WMS (Google أو إيميل)</li>
+                            <li>أضف المنتجات والفئات من أي جهاز</li>
+                            <li>المخزون يتزامن بين الهاتف والكاشير</li>
+                            <li>تقارير مبسطة على الهاتف في أي وقت</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tips-grid" style="margin-top: 20px;">
+                    <div class="tip-card">
+                        <h4><i class="fas fa-mobile-alt"></i> رابط تطبيق WMS</h4>
+                        <p>التطبيق متاح على: <a href="https://pos.robovai.tech/wms" target="_blank" style="color: #7B1FA2; font-weight: bold;">pos.robovai.tech/wms</a></p>
+                        <p style="margin-top: 8px;">يعمل على Android وiOS وأي متصفح حديث. يمكن تثبيته على الهاتف كـ PWA من خيار "إضافة للشاشة الرئيسية".</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4><i class="fas fa-exchange-alt"></i> تبادل البيانات</h4>
+                        <p>من داخل WMS، اضغط "استيراد من POS" لجلب قائمة المنتجات من الكاشير. والعكس من داخل الكاشير اضغط "تصدير للـ WMS" لرفع أحدث بيانات المخزون.</p>
+                    </div>
+                </div>
+            </section>
             </section>
 
             <!-- 18. Settings -->
