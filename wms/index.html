@@ -30,8 +30,8 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-QwJj16Yo.js"></script>
-    <link rel="stylesheet" crossorigin href="/wms/assets/index-BRldyXOp.css">
+    <script type="module" crossorigin src="/wms/assets/index-DQ-wE9EC.js"></script>
+    <link rel="stylesheet" crossorigin href="/wms/assets/index-oT2iYtUP.css">
   </head>
   <body>
     <!-- Login Overlay -->
@@ -141,6 +141,96 @@
       </div>
     </div>
 
+    <!-- Cloud Account Setup Overlay (shown once to admin after first login when Firebase is configured) -->
+    <div
+      id="cloud-setup-overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+        z-index: 9998;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        class="glass"
+        style="
+          width: 90%;
+          max-width: 420px;
+          padding: 2rem;
+          border-radius: 16px;
+          text-align: center;
+        "
+      >
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem">☁️</div>
+        <h2
+          style="
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+          "
+        >
+          إعداد الحساب السحابي
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem">
+          أدخل بيانات حسابك لتفعيل المزامنة السحابية عبر الأجهزة. يمكنك تخطي هذه الخطوة واستخدام النظام محلياً.
+        </p>
+        <form id="cloud-setup-form" onsubmit="registerCloudAccount(event)">
+          <div class="input-group">
+            <label>اسم المتجر / المخزن</label>
+            <input
+              id="cloud-store-name"
+              type="text"
+              placeholder="مثال: مخزن الرياض الرئيسي"
+              required
+              style="text-align: right"
+            />
+          </div>
+          <div class="input-group">
+            <label>البريد الإلكتروني</label>
+            <input
+              id="cloud-email"
+              type="email"
+              placeholder="admin@example.com"
+              required
+              dir="ltr"
+              style="text-align: left"
+            />
+          </div>
+          <div class="input-group">
+            <label>كلمة المرور السحابية (6 أحرف على الأقل)</label>
+            <input
+              id="cloud-password"
+              type="password"
+              placeholder="••••••••"
+              required
+              minlength="6"
+              dir="ltr"
+              style="text-align: left"
+            />
+          </div>
+          <button
+            type="submit"
+            id="cloud-setup-submit-btn"
+            class="btn btn-primary"
+            style="margin-top: 1rem; width: 100%"
+          >
+            تفعيل المزامنة السحابية
+          </button>
+          <button
+            type="button"
+            class="btn"
+            onclick="document.getElementById('cloud-setup-overlay').style.display='none'"
+            style="margin-top: 0.5rem; width: 100%; background: transparent; color: var(--text-muted)"
+          >
+            تخطي — استخدام محلي فقط
+          </button>
+        </form>
+      </div>
+    </div>
+
     <div class="container" id="main-app-container" style="display: none">
       <header>
         <div style="display: flex; align-items: center; gap: 0.75rem">
@@ -194,12 +284,19 @@
             <span id="stat-total-products" class="stat-value">0</span>
             <span class="stat-label">إجمالي الأصناف</span>
           </div>
-          <div
-            class="glass stat-card"
-            style="border-color: rgba(245, 158, 11, 0.3)"
-          >
+          <div class="glass stat-card" style="border-color: rgba(245, 158, 11, 0.3)">
             <span id="stat-low-stock" class="stat-value text-danger">0</span>
             <span class="stat-label">نواقص (حد الطلب)</span>
+          </div>
+        </div>
+        <div class="stats-grid" style="margin-top: 1rem;">
+          <div class="glass stat-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);">
+            <span id="stat-inventory-value" class="stat-value" style="color: #10b981; font-size: 1.5rem;">0 ج.م</span>
+            <span class="stat-label" style="font-weight: bold;">رأس المال المتجمد (التكلفة)</span>
+          </div>
+          <div class="glass stat-card" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);">
+            <span id="stat-expected-revenue" class="stat-value" style="color: #3b82f6; font-size: 1.5rem;">0 ج.م</span>
+            <span class="stat-label" style="font-weight: bold;">القيمة البيعية المتوقعة</span>
           </div>
         </div>
 
@@ -438,8 +535,21 @@
 
       <!-- INBOUND SECTION -->
       <section id="inbound">
-        <h2>إضافة كمية (وارد)</h2>
+        <h2>فاتورة مشتريات (وارد)</h2>
         <form id="inbound-form" class="glass" style="padding: 1.5rem">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="input-group">
+              <label>المورد</label>
+              <select id="in-supplier">
+                <!-- Dynamically populated from Suppliers list -->
+              </select>
+            </div>
+            <div class="input-group">
+              <label>رقم الفاتورة (Invoice No)</label>
+              <input type="text" id="in-invoice" placeholder="مثال: INV-202605" />
+            </div>
+          </div>
+          
           <div class="input-group">
             <label>مسح أو كتابة الباركود</label>
             <div style="display: flex; gap: 0.5rem">
@@ -555,6 +665,191 @@
           class="glass"
         >
           <!-- Dynamically injected via JS -->
+        </div>
+
+        <div id="cycle-counting-suggestions" class="glass" style="margin-top: 1.5rem; padding: 1.5rem; display: none;">
+          <h3 style="margin-bottom: 1rem;"><i data-lucide="sparkles" style="color: #f59e0b;"></i> اقتراحات الجرد الدوري (AI)</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            بناءً على خوارزمية المخاطر وتاريخ آخر جرد، نوصي بجرد هذه الأصناف اليوم:
+          </p>
+          <div id="cycle-counting-list"></div>
+        </div>
+      </section>
+
+      <!-- SUPPLIERS SECTION -->
+      <section id="suppliers">
+        <h2>إدارة الموردين</h2>
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <form id="supplier-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="input-group">
+              <label>اسم المورد / الشركة</label>
+              <input type="text" id="sup-name" required />
+            </div>
+            <div class="input-group">
+              <label>رقم الهاتف</label>
+              <input type="text" id="sup-phone" required />
+            </div>
+            <button type="submit" class="btn btn-primary" style="grid-column: span 2;">إضافة مورد</button>
+          </form>
+        </div>
+        <div class="glass" style="padding: 1rem; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 0.5rem;">الاسم</th>
+                <th style="padding: 0.5rem;">الهاتف</th>
+                <th style="padding: 0.5rem;">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="suppliers-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- BRANCHES SECTION -->
+      <section id="branches">
+        <h2>الفروع ونقاط البيع</h2>
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <form id="branch-form" style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+            <div class="input-group">
+              <label>اسم نقطة البيع (مثال: كنتين الإدارة)</label>
+              <input type="text" id="branch-name" required />
+            </div>
+            <button type="submit" class="btn btn-primary">إضافة فرع</button>
+          </form>
+        </div>
+        <div class="glass" style="padding: 1rem; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 0.5rem;">الفرع</th>
+                <th style="padding: 0.5rem;">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="branches-list"></tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top: 2rem;">تتبع البضائع قيد النقل (In-Transit)</h3>
+        <div class="glass" style="padding: 1rem; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 0.5rem;">التاريخ</th>
+                <th style="padding: 0.5rem;">رقم الحركة</th>
+                <th style="padding: 0.5rem;">الفرع المستلم</th>
+                <th style="padding: 0.5rem;">الحالة</th>
+                <th style="padding: 0.5rem;">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="transfers-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- DAMAGES SECTION -->
+      <section id="damages">
+        <h2>إدارة التوالف (Damages)</h2>
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <form id="damage-form">
+            <div class="input-group">
+              <label>مسح الباركود للصنف التالف</label>
+              <div style="display: flex; gap: 0.5rem">
+                <input type="text" id="dmg-barcode" required />
+                <button type="button" class="btn btn-outline" style="width: auto" onclick="openScanner('damages')">
+                  <i data-lucide="scan"></i>
+                </button>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+              <div class="input-group">
+                <label>الكمية التالفة</label>
+                <input type="number" id="dmg-qty" min="1" value="1" required />
+              </div>
+              <div class="input-group">
+                <label>السبب</label>
+                <select id="dmg-reason">
+                  <option value="تالف / مكسور">تالف / مكسور</option>
+                  <option value="منتهي الصلاحية">منتهي الصلاحية</option>
+                  <option value="مفقود">مفقود</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-danger" style="margin-top: 1rem;"><i data-lucide="trash-2"></i> استبعاد وتأكيد</button>
+          </form>
+        </div>
+        <h3>سجل التوالف</h3>
+        <div class="glass" style="padding: 1rem; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 0.5rem;">التاريخ</th>
+                <th style="padding: 0.5rem;">الصنف</th>
+                <th style="padding: 0.5rem;">الكمية</th>
+                <th style="padding: 0.5rem;">السبب</th>
+              </tr>
+            </thead>
+            <tbody id="damages-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- KITTING SECTION -->
+      <section id="kitting">
+        <h2>العروض والباقات (Kitting & Bundling)</h2>
+        <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">قم بإنشاء عرض أو باقة (مثال: كرتونة رمضان) مجمعة من عدة أصناف. سيتم خصم المكونات وإضافة العرض كصنف جديد.</p>
+          <form id="kit-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div class="input-group">
+                <label>اسم العرض</label>
+                <input type="text" id="kit-name" required />
+              </div>
+              <div class="input-group">
+                <label>باركود العرض</label>
+                <input type="text" id="kit-barcode" required />
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label>مكونات العرض (اختر الصنف واكتب الكمية)</label>
+              <div style="display: flex; gap: 0.5rem">
+                <select id="kit-component-select" style="flex: 2;"></select>
+                <input type="number" id="kit-component-qty" value="1" min="1" style="flex: 1;" />
+                <button type="button" class="btn btn-outline" style="width: auto" onclick="addKitComponent()">إضافة للمكونات</button>
+              </div>
+            </div>
+            
+            <ul id="kit-components-list" style="margin-bottom: 1rem; padding: 1rem; background: rgba(0,0,0,0.1); border-radius: 8px;">
+              <li style="color: var(--text-muted); font-size: 0.85rem; text-align: center; list-style: none;">لا يوجد مكونات مضافة بعد</li>
+            </ul>
+
+            <div class="input-group">
+              <label>سعر بيع العرض (ج.م)</label>
+              <input type="number" id="kit-price" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 1rem;"><i data-lucide="package-plus"></i> تجميع وحفظ العرض</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- AUDIT LOG SECTION -->
+      <section id="audit-logs">
+        <h2>سجل التدقيق (Audit Trail)</h2>
+        <div class="glass" style="padding: 1rem; overflow-x: auto; max-height: 500px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="padding: 0.5rem;">التاريخ</th>
+                <th style="padding: 0.5rem;">المستخدم</th>
+                <th style="padding: 0.5rem;">الإجراء</th>
+                <th style="padding: 0.5rem;">الكائن</th>
+                <th style="padding: 0.5rem;">التفاصيل</th>
+              </tr>
+            </thead>
+            <tbody id="audit-logs-list"></tbody>
+          </table>
         </div>
       </section>
 
@@ -864,25 +1159,45 @@
         <i data-lucide="package"></i>
         <span>الأصناف</span>
       </button>
+      <button class="nav-item" data-view="suppliers" id="nav-suppliers" style="flex-shrink:0">
+        <i data-lucide="truck"></i>
+        <span>الموردين</span>
+      </button>
+      <button class="nav-item" data-view="branches" id="nav-branches" style="flex-shrink:0">
+        <i data-lucide="store"></i>
+        <span>الفروع</span>
+      </button>
       <button class="nav-item" data-view="inbound" id="nav-inbound" style="flex-shrink:0">
         <i data-lucide="log-in"></i>
-        <span>وارد</span>
+        <span>الوارد</span>
       </button>
       <button class="nav-item" data-view="outbound" id="nav-outbound" style="flex-shrink:0">
         <i data-lucide="log-out"></i>
-        <span>صادر</span>
+        <span>الصادر</span>
+      </button>
+      <button class="nav-item" data-view="damages" id="nav-damages" style="flex-shrink:0">
+        <i data-lucide="trash-2"></i>
+        <span>التوالف</span>
+      </button>
+      <button class="nav-item" data-view="kitting" id="nav-kitting" style="flex-shrink:0">
+        <i data-lucide="package-plus"></i>
+        <span>الباقات</span>
       </button>
       <button class="nav-item" data-view="stocktake" id="nav-stocktake" style="flex-shrink:0">
         <i data-lucide="clipboard-check"></i>
-        <span>جرد</span>
+        <span>الجرد</span>
       </button>
       <button class="nav-item" data-view="transactions" id="nav-transactions" style="flex-shrink:0">
         <i data-lucide="history"></i>
         <span>الحركات</span>
       </button>
+      <button class="nav-item" data-view="audit-logs" id="nav-audit-logs" style="flex-shrink:0">
+        <i data-lucide="shield"></i>
+        <span>السجل السري</span>
+      </button>
       <button class="nav-item" data-view="settings" id="nav-settings" style="flex-shrink:0">
         <i data-lucide="settings"></i>
-        <span>إعدادات</span>
+        <span>الإعدادات</span>
       </button>
     </nav>
 
@@ -945,9 +1260,16 @@
           </button>
         </div>
         <div id="reader"></div>
-        <p style="text-align: center; font-size: 0.8rem; margin-top: 10px">
+        <p style="text-align: center; font-size: 0.8rem; margin-top: 10px; margin-bottom: 15px;">
           وجه الكاميرا نحو الباركود بشكل واضح
         </p>
+        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+          <p style="font-size: 0.85rem; margin-bottom: 10px;">أو قم برفع صورة للباركود / QR (في حال عدم وجود كاميرا):</p>
+          <input type="file" id="scanner-file-input" accept="image/*" style="display: none;" onchange="handleImageScan(event)">
+          <label for="scanner-file-input" class="btn btn-outline" style="cursor: pointer; display: inline-flex; width: auto; padding: 0.5rem 1rem;">
+            <i data-lucide="image"></i> رفع صورة
+          </label>
+        </div>
       </div>
     </div>
 
