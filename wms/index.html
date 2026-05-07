@@ -30,7 +30,7 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-BScWdbaS.js"></script>
+    <script type="module" crossorigin src="/wms/assets/index-D-9O8vwh.js"></script>
     <link rel="stylesheet" crossorigin href="/wms/assets/index-B1vglWp_.css">
   </head>
   <body>
@@ -116,6 +116,15 @@
             style="margin-top: 1rem; width: 100%"
           >
             <span id="login-btn-text">دخول</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline"
+            onclick="startAuthQRScan()"
+            style="margin-top: 0.6rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.9rem;"
+          >
+            <i data-lucide="scan-line" style="width:18px;height:18px;"></i>
+            دخول بـ QR كود
           </button>
         </form>
         <noscript>
@@ -1730,5 +1739,49 @@
     </div>
 
     <!-- Scripts -->
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!--  Auth QR — بطاقة دخول المستخدم (يعرضها Admin)        -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div id="auth-qr-modal"
+      style="display:none; position:fixed; inset:0; z-index:10000;
+             background:rgba(0,0,0,0.85); align-items:center; justify-content:center;">
+      <div class="glass"
+        style="text-align:center; padding:2rem; max-width:320px; width:90%; border-radius:16px;">
+        <h3 style="color:var(--text-main); margin-bottom:0.5rem;">🔑 بطاقة الدخول</h3>
+        <div id="auth-qr-username"
+          style="font-size:1.1rem; color:var(--accent); font-weight:700; margin-bottom:0.2rem;"></div>
+        <div id="auth-qr-role"
+          style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;"></div>
+        <canvas id="auth-qr-canvas" style="border-radius:12px; display:block; margin:auto;"></canvas>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1rem; line-height:1.4;">
+          امسح هذا الـ QR من شاشة الدخول للتسجيل بدون كلمة مرور.<br>
+          <strong>يعمل على نفس الجهاز فقط.</strong>
+        </p>
+        <button class="btn btn-outline" style="margin-top:1rem; width:100%;"
+          onclick="document.getElementById('auth-qr-modal').style.display='none'">
+          إغلاق
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <!--  Auth QR — ماسح بطاقة الدخول (على شاشة Login)        -->
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div id="auth-qr-scan-modal"
+      style="display:none; position:fixed; inset:0; z-index:10000;
+             background:rgba(0,0,0,0.92); align-items:center; justify-content:center;">
+      <div class="glass"
+        style="padding:1.5rem; border-radius:16px; text-align:center; width:90%; max-width:360px;">
+        <h3 style="color:var(--text-main); margin-bottom:0.75rem;">📷 امسح QR الخاص بك</h3>
+        <div id="auth-qr-reader" style="width:100%; border-radius:8px; overflow:hidden;"></div>
+        <p id="auth-qr-scan-status"
+          style="font-size:0.85rem; color:var(--text-muted); margin-top:0.75rem; min-height:1.2em;"></p>
+        <button class="btn btn-outline" style="margin-top:1rem; width:100%;"
+          onclick="stopAuthQRScan()">
+          إلغاء
+        </button>
+      </div>
+    </div>
   </body>
 </html>
