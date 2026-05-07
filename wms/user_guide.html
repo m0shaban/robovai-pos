@@ -1,655 +1,1915 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل الاستخدام الشامل | RoboVAI PRO POS</title>
-    <!-- Google Fonts: Cairo for professional Arabic typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دليل استخدام مخزني الذكي Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary: #1a73e8;
-            --primary-dark: #1557b0;
-            --accent: #ff6b6b;
-            --text-dark: #1f2937;
-            --text-muted: #6b7280;
-            --bg-light: #f8fafc;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
+      :root {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-card: rgba(30, 41, 59, 0.85);
+        --bg-glass: rgba(15, 23, 42, 0.6);
+        --cyan: #22d3ee;
+        --cyan-light: #67e8f9;
+        --cyan-dark: #0891b2;
+        --purple: #a855f7;
+        --purple-light: #c084fc;
+        --purple-dark: #7c3aed;
+        --green: #10b981;
+        --orange: #f59e0b;
+        --red: #ef4444;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --border: rgba(148, 163, 184, 0.12);
+        --border-cyan: rgba(34, 211, 238, 0.3);
+        --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+        --radius: 16px;
+        --radius-sm: 10px;
+      }
 
-        body {
-            background-color: var(--bg-light);
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(217,100%,76%,0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, hsla(349,100%,76%,0.15) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-dark);
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
+      html {
+        scroll-behavior: smooth;
+      }
 
-        /* Navbar */
-        .navbar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 40px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-sm);
-        }
+      body {
+        font-family: 'Tajawal', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.75;
+        font-size: 16px;
+        min-height: 100vh;
+      }
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-            color: var(--text-dark);
-        }
+      /* Background pattern */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 20% 10%,
+            rgba(34, 211, 238, 0.06) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 80%,
+            rgba(168, 85, 247, 0.06) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
 
-        .navbar-brand img {
-            height: 40px;
-        }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+        position: relative;
+        z-index: 1;
+      }
 
-        .navbar-brand span {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+      /* ===== COVER ===== */
+      .cover {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 24px;
+        position: relative;
+        overflow: hidden;
+      }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            margin-right: 25px;
-            transition: color 0.3s ease;
-        }
+      .cover::before {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(34, 211, 238, 0.08) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+      .cover-logo {
+        width: 120px;
+        height: 120px;
+        border-radius: 28px;
+        margin-bottom: 28px;
+        box-shadow:
+          0 0 60px rgba(34, 211, 238, 0.25),
+          0 0 20px rgba(34, 211, 238, 0.15);
+        border: 2px solid var(--border-cyan);
+      }
 
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+      .cover-badge {
+        display: inline-block;
+        background: linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.15),
+          rgba(168, 85, 247, 0.15)
+        );
+        border: 1px solid var(--border-cyan);
+        border-radius: 100px;
+        padding: 6px 20px;
+        font-size: 13px;
+        color: var(--cyan);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
 
-        .btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-        }
+      .cover h1 {
+        font-size: clamp(36px, 7vw, 72px);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--cyan-light) 0%,
+          var(--cyan) 40%,
+          var(--purple-light) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
 
-        /* Layout */
-        .docs-container {
-            display: flex;
-            max-width: 1600px;
-            margin: 90px auto 0;
-            padding: 0 20px;
-            gap: 40px;
-        }
+      .cover-subtitle {
+        font-size: clamp(18px, 3vw, 26px);
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
 
-        /* Sidebar */
-        .sidebar {
-            width: 300px;
-            flex-shrink: 0;
-            height: calc(100vh - 120px);
-            position: sticky;
-            top: 100px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
-            overflow-y: auto;
-            box-shadow: var(--shadow-sm);
-        }
+      .cover-desc {
+        font-size: 16px;
+        color: var(--text-muted);
+        max-width: 540px;
+        margin: 0 auto 48px;
+      }
 
-        .sidebar h3 {
-            margin-bottom: 20px;
-            color: var(--primary-dark);
-            font-size: 1.2rem;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(26, 115, 232, 0.1);
-        }
+      .cover-meta {
+        display: flex;
+        gap: 32px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
 
-        .sidebar ul {
-            list-style: none;
-        }
+      .meta-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
 
-        .sidebar li {
-            margin-bottom: 8px;
-        }
+      .meta-label {
+        font-size: 11px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+      }
 
-        .sidebar a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: block;
-            padding: 10px 15px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
+      .meta-value {
+        font-size: 15px;
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
 
-        .sidebar a:hover, .sidebar a.active {
-            background: rgba(26, 115, 232, 0.08);
-            color: var(--primary);
-            transform: translateX(-5px);
-        }
+      .scroll-hint {
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-muted);
+        font-size: 13px;
+        animation: bounce 2s infinite;
+      }
 
-        /* Main Content */
-        .main-content {
-            flex-grow: 1;
-            padding-bottom: 100px;
-        }
+      .scroll-hint::after {
+        content: '↓';
+        font-size: 20px;
+        color: var(--cyan);
+      }
 
-        .module-section {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 50px;
-            box-shadow: var(--shadow-lg);
-            scroll-margin-top: 120px;
-            animation: fadeIn 0.8s ease-out forwards;
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
         }
+        50% {
+          transform: translateX(-50%) translateY(8px);
+        }
+      }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+      /* ===== NAVIGATION / TOC ===== */
+      .toc-section {
+        padding: 80px 0 60px;
+      }
 
-        .module-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
+      .toc-section .container {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 48px;
+        backdrop-filter: blur(12px);
+      }
 
-        .module-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 10px 20px rgba(26, 115, 232, 0.2);
-        }
+      .toc-title {
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 32px;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
 
-        .module-title {
-            font-size: 2.2rem;
-            color: var(--primary-dark);
-            line-height: 1.2;
-        }
+      .toc-title .icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(
+          135deg,
+          var(--cyan-dark),
+          var(--purple-dark)
+        );
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
 
-        .module-subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
+      .toc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 12px;
+      }
 
-        .module-image {
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            margin: 30px 0;
-            border: 4px solid white;
-            transition: transform 0.3s ease;
-        }
+      .toc-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.25s ease;
+      }
 
-        .module-image:hover {
-            transform: scale(1.02);
-        }
+      .toc-item:hover {
+        background: rgba(34, 211, 238, 0.08);
+        border-color: var(--border-cyan);
+        color: var(--cyan);
+        transform: translateX(-4px);
+      }
 
-        .module-desc {
-            font-size: 1.2rem;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
+      .toc-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.2),
+          rgba(168, 85, 247, 0.2)
+        );
+        border: 1px solid var(--border-cyan);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--cyan);
+        flex-shrink: 0;
+      }
 
-        /* Tips & Shortcuts */
-        .tips-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
+      /* ===== SECTION ===== */
+      .guide-section {
+        padding: 60px 0;
+        border-bottom: 1px solid var(--border);
+      }
 
-        .tip-card {
-            background: rgba(26, 115, 232, 0.05);
-            border-right: 4px solid var(--primary);
-            padding: 20px;
-            border-radius: 12px 0 0 12px;
-        }
+      .guide-section:last-of-type {
+        border-bottom: none;
+      }
 
-        .tip-card h4 {
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
 
-        kbd {
-            background-color: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-shadow: 0 2px 0 #cbd5e1;
-            color: #334155;
-            display: inline-block;
-            font-family: inherit;
-            font-size: 0.9em;
-            font-weight: 700;
-            padding: 2px 8px;
-            margin: 0 4px;
-            white-space: nowrap;
-        }
+      .section-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex-shrink: 0;
+      }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .docs-container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                top: 0;
-                margin-bottom: 30px;
-            }
-            .navbar {
-                padding: 15px 20px;
-            }
+      .icon-cyan {
+        background: linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.2),
+          rgba(34, 211, 238, 0.05)
+        );
+        border: 1px solid rgba(34, 211, 238, 0.3);
+      }
+      .icon-purple {
+        background: linear-gradient(
+          135deg,
+          rgba(168, 85, 247, 0.2),
+          rgba(168, 85, 247, 0.05)
+        );
+        border: 1px solid rgba(168, 85, 247, 0.3);
+      }
+      .icon-green {
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.2),
+          rgba(16, 185, 129, 0.05)
+        );
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+      .icon-orange {
+        background: linear-gradient(
+          135deg,
+          rgba(245, 158, 11, 0.2),
+          rgba(245, 158, 11, 0.05)
+        );
+        border: 1px solid rgba(245, 158, 11, 0.3);
+      }
+      .icon-red {
+        background: linear-gradient(
+          135deg,
+          rgba(239, 68, 68, 0.2),
+          rgba(239, 68, 68, 0.05)
+        );
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+
+      .section-title-wrap h2 {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+
+      .section-num {
+        font-size: 12px;
+        color: var(--cyan);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .section-intro {
+        font-size: 16px;
+        color: var(--text-secondary);
+        margin-bottom: 32px;
+        max-width: 720px;
+        line-height: 1.85;
+      }
+
+      /* Screenshot card */
+      .screenshot-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 28px;
+        backdrop-filter: blur(8px);
+        box-shadow: var(--shadow-card);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .screenshot-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow);
+      }
+
+      .screenshot-label {
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .screenshot-label .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--cyan);
+        box-shadow: 0 0 6px var(--cyan);
+      }
+
+      .screenshot-card img {
+        width: 100%;
+        display: block;
+        border-radius: 0 0 var(--radius) var(--radius);
+      }
+
+      /* Multi screenshot grid */
+      .screenshots-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 28px;
+      }
+
+      @media (max-width: 640px) {
+        .screenshots-grid {
+          grid-template-columns: 1fr;
         }
+      }
+
+      /* Steps */
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+
+      .step {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px 20px;
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        transition: background 0.2s;
+      }
+
+      .step:hover {
+        background: rgba(34, 211, 238, 0.05);
+      }
+
+      .step-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--cyan-dark),
+          var(--purple-dark)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .step-content strong {
+        display: block;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+      }
+
+      .step-content p {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin: 0;
+      }
+
+      /* Info boxes */
+      .info-box {
+        display: flex;
+        gap: 14px;
+        padding: 16px 20px;
+        border-radius: var(--radius-sm);
+        margin-bottom: 20px;
+        font-size: 14px;
+      }
+
+      .info-box-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .info-box p {
+        margin: 0;
+      }
+      .info-box strong {
+        font-weight: 700;
+      }
+
+      .info-tip {
+        background: rgba(34, 211, 238, 0.07);
+        border: 1px solid rgba(34, 211, 238, 0.25);
+        color: var(--cyan-light);
+      }
+
+      .info-warning {
+        background: rgba(245, 158, 11, 0.08);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: #fcd34d;
+      }
+
+      .info-success {
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #6ee7b7;
+      }
+
+      /* Credentials box */
+      .credentials-box {
+        background: rgba(168, 85, 247, 0.08);
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        border-radius: var(--radius-sm);
+        padding: 20px 24px;
+        margin-bottom: 24px;
+      }
+
+      .credentials-box h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--purple-light);
+        margin-bottom: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .credentials-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .credentials-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .cred-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        min-width: 90px;
+      }
+
+      .cred-value {
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: var(--purple-light);
+        background: rgba(168, 85, 247, 0.12);
+        padding: 3px 12px;
+        border-radius: 6px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      /* Feature list */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .feature-item .check {
+        color: var(--green);
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+
+      /* FAQ */
+      .faq-item {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+
+      .faq-q {
+        padding: 16px 20px;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.025);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .faq-q .q-mark {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--cyan-dark),
+          var(--purple-dark)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .faq-a {
+        padding: 14px 20px;
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* ===== FOOTER ===== */
+      .footer {
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+        padding: 48px 0;
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .footer-logo {
+        font-size: 22px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--cyan), var(--purple-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+      }
+
+      .footer-text {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      /* ===== DIVIDER ===== */
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border-cyan),
+          transparent
+        );
+        margin: 48px 0;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .toc-section .container {
+          padding: 28px;
+        }
+        .guide-section {
+          padding: 40px 0;
+        }
+        .screenshots-grid {
+          grid-template-columns: 1fr;
+        }
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
     </style>
-</head>
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="index.html" class="navbar-brand">
-            <img src="assets/images/logo.png" alt="RoboVAI Logo">
-            <span>RoboVAI PRO POS</span>
-        </a>
-        <div class="nav-links">
-            <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
-            <a href="#dashboard"><i class="fas fa-book"></i> الدليل الشامل</a>
-            <a href="https://wa.me/201121891913" class="btn-whatsapp" target="_blank">
-                <i class="fab fa-whatsapp"></i> الدعم الفني المباشر
-            </a>
+  </head>
+  <body>
+    <!-- ============================================================ COVER -->
+    <section class="cover">
+      <div class="cover-badge">دليل المستخدم الرسمي</div>
+      <img
+        class="cover-logo"
+        src="./public/icons/icon-192x192.png"
+        alt="شعار مخزني الذكي Pro"
+        onerror="this.style.display = 'none'"
+      />
+      <h1>مخزني الذكي Pro</h1>
+      <p class="cover-subtitle">
+        نظام إدارة المخزون الذكي — RoboVAI WMS Platform
+      </p>
+      <p class="cover-desc">
+        دليل شامل واحترافي لاستخدام جميع ميزات التطبيق، من تسجيل الدخول إلى
+        إدارة الأصناف والحركات والتقارير والإعدادات.
+      </p>
+      <div class="cover-meta">
+        <div class="meta-item">
+          <span class="meta-label">الإصدار</span
+          ><span class="meta-value">1.0.0</span>
         </div>
-    </nav>
+        <div class="meta-item">
+          <span class="meta-label">المنصة</span
+          ><span class="meta-value">PWA — ويب تطبيق</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">اللغة</span
+          ><span class="meta-value">عربي (RTL)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">النوع</span
+          ><span class="meta-value">نظام إدارة مخزون</span>
+        </div>
+      </div>
+      <div class="scroll-hint">تمرير للأسفل</div>
+    </section>
 
-    <!-- Main Container -->
-    <div class="docs-container">
-        
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <h3>فهرس النظام</h3>
-            <ul>
-                <li><a href="#dashboard" class="active"><i class="fas fa-chart-line fa-fw"></i> لوحة القيادة</a></li>
-                <li><a href="#login"><i class="fas fa-shield-alt fa-fw"></i> الدخول الآمن</a></li>
-                <li><a href="#pos"><i class="fas fa-cash-register fa-fw"></i> كاشير المبيعات (POS)</a></li>
-                <li><a href="#sessions"><i class="fas fa-gamepad fa-fw"></i> إدارة الجلسات</a></li>
-                <li><a href="#zreport"><i class="fas fa-file-invoice-dollar fa-fw"></i> تقفيل الوردية</a></li>
-                <li><a href="#invoices"><i class="fas fa-file-alt fa-fw"></i> أرشيف الفواتير</a></li>
-                <li><a href="#returns"><i class="fas fa-undo fa-fw"></i> المرتجعات</a></li>
-                <li><a href="#categories"><i class="fas fa-layer-group fa-fw"></i> الأقسام</a></li>
-                <li><a href="#inventory"><i class="fas fa-boxes fa-fw"></i> المخزون والمنتجات</a></li>
-                <li><a href="#customers"><i class="fas fa-users fa-fw"></i> العملاء والديون</a></li>
-                <li><a href="#expenses"><i class="fas fa-money-bill-wave fa-fw"></i> المصروفات</a></li>
-                <li><a href="#suppliers"><i class="fas fa-truck-loading fa-fw"></i> الموردين</a></li>
-                <li><a href="#purchases"><i class="fas fa-shopping-cart fa-fw"></i> المشتريات</a></li>
-                <li><a href="#loyalty"><i class="fas fa-medal fa-fw"></i> نقاط الولاء</a></li>
-                <li><a href="#reports"><i class="fas fa-chart-pie fa-fw"></i> التقارير التفصيلية</a></li>
-                <li><a href="#users"><i class="fas fa-user-shield fa-fw"></i> المستخدمين والصلاحيات</a></li>
-                <li><a href="#activity"><i class="fas fa-history fa-fw"></i> سجل النشاط</a></li>
-                <li><a href="#settings"><i class="fas fa-cogs fa-fw"></i> الإعدادات</a></li>
-            </ul>
-        </aside>
+    <!-- ============================================================ TOC -->
+    <section class="toc-section">
+      <div class="container">
+        <h2 class="toc-title">
+          <span class="icon">📋</span>
+          جدول المحتويات
+        </h2>
+        <div class="toc-grid">
+          <a class="toc-item" href="#section-login"
+            ><span class="toc-num">1</span>تسجيل الدخول</a
+          >
+          <a class="toc-item" href="#section-dashboard"
+            ><span class="toc-num">2</span>لوحة التحكم</a
+          >
+          <a class="toc-item" href="#section-products"
+            ><span class="toc-num">3</span>إدارة الأصناف</a
+          >
+          <a class="toc-item" href="#section-add-product"
+            ><span class="toc-num">4</span>إضافة صنف جديد</a
+          >
+          <a class="toc-item" href="#section-edit-product"
+            ><span class="toc-num">5</span>تعديل وحذف صنف</a
+          >
+          <a class="toc-item" href="#section-inbound"
+            ><span class="toc-num">6</span>استيعاب الوارد</a
+          >
+          <a class="toc-item" href="#section-outbound"
+            ><span class="toc-num">7</span>إذن الصرف (الصادر)</a
+          >
+          <a class="toc-item" href="#section-stocktake"
+            ><span class="toc-num">8</span>الجرد الفعلي</a
+          >
+          <a class="toc-item" href="#section-transactions"
+            ><span class="toc-num">9</span>سجل الحركات</a
+          >
+          <a class="toc-item" href="#section-settings"
+            ><span class="toc-num">10</span>الإعدادات والنظام</a
+          >
+          <a class="toc-item" href="#section-faq"
+            ><span class="toc-num">11</span>نصائح وأسئلة شائعة</a
+          >
+          <a class="toc-item" href="#section-enterprise"
+            ><span class="toc-num">12</span>ميزات الـ Enterprise (الجديدة)</a
+          >
+        </div>
+      </div>
+    </section>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            
-            <div style="text-align: center; margin-bottom: 50px;">
-                <h1 style="font-size: 3rem; color: var(--primary-dark); margin-bottom: 15px;">دليل الاستخدام الشامل</h1>
-                <p style="font-size: 1.3rem; color: var(--text-muted);">كل اللي محتاج تعرفه عشان تدير مكانك باحترافية وسرعة الصاروخ 🚀</p>
+    <!-- ============================================================ 1. LOGIN -->
+    <section class="guide-section" id="section-login">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-cyan">🔐</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الأول</div>
+            <h2>تسجيل الدخول</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          عند فتح التطبيق لأول مرة أو بعد تسجيل الخروج، ستظهر شاشة تسجيل الدخول.
+          أدخل اسم المستخدم وكلمة المرور للوصول إلى لوحة التحكم الرئيسية.
+        </p>
+
+        <div class="credentials-box">
+          <h4>بيانات الدخول الافتراضية</h4>
+          <div class="credentials-row">
+            <span class="cred-label">اسم المستخدم</span>
+            <span class="cred-value">admin</span>
+          </div>
+          <div class="credentials-row">
+            <span class="cred-label">كلمة المرور</span>
+            <span class="cred-value">admin123</span>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>شاشة تسجيل الدخول
+          </div>
+          <img
+            src="./guide-00-login.png"
+            alt="شاشة تسجيل الدخول"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>أدخل اسم المستخدم</strong>
+              <p>اكتب <code>admin</code> في حقل "اسم المستخدم"</p>
             </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>أدخل كلمة المرور</strong>
+              <p>اكتب <code>admin123</code> في حقل "كلمة المرور"</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>انقر على زر "دخول"</strong>
+              <p>سيتم التحقق من بياناتك والانتقال إلى لوحة التحكم فوراً</p>
+            </div>
+          </div>
+        </div>
 
-            <!-- 01. Dashboard -->
-            <section id="dashboard" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-chart-line"></i></div>
-                    <div>
-                        <h2 class="module-title">لوحة القيادة (Dashboard)</h2>
-                        <span class="module-subtitle">عينك على فلوسك وحركة مكانك لحظة بلحظة</span>
-                    </div>
-                </div>
-                <p class="module-desc">بمجرد ما تفتح السيستم، لوحة القيادة بتديك الخلاصة: إجمالي المبيعات، عدد الفواتير، الأرباح الصافية، والمنتجات اللي قربت تخلص عشان تلحق تطلبها. كله قدام عينك في شاشة واحدة شيك ومريحة.</p>
-                <img src="assets/images/01-dashboard.png" alt="لوحة القيادة" class="module-image">
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <h4><i class="fas fa-lightbulb text-warning"></i> تلميحة احترافية</h4>
-                        <p>الشاشة بتتحدث تلقائياً مع كل فاتورة بتضرب. تقدر تعتمد عليها عشان تقيم أداء الشفت الحالي وتعرف أكتر منتجات بتتباع (Best Sellers).</p>
-                    </div>
-                </div>
-            </section>
+        <div class="info-box info-warning">
+          <span class="info-box-icon">⚠️</span>
+          <p>
+            <strong>تنبيه:</strong> يُنصح بتغيير كلمة المرور الافتراضية بعد أول
+            تسجيل دخول من قسم الإعدادات، للحفاظ على أمان النظام.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            <!-- 02. Login -->
-            <section id="login" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div>
-                        <h2 class="module-title">الدخول الآمن (Login)</h2>
-                        <span class="module-subtitle">محدش هيلعب في الحسابات من وراك</span>
-                    </div>
-                </div>
-                <p class="module-desc">شاشة الدخول مصممة عشان تحمي بياناتك. كل كاشير أو مدير ليه الباسورد الخاص بيه، والسيستم بيسجل مين اللي دخل وعمل إيه بالظبط، عشان مفيش قرش يضيع.</p>
-                <img src="assets/images/02-login.png" alt="شاشة الدخول" class="module-image">
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <h4><i class="fas fa-lock"></i> كود المدير (PIN Code)</h4>
-                        <p>لو الكاشير حب يعمل مرتجع أو يمسح فاتورة، السيستم هيطلب منه الـ PIN الخاص بالمدير. أمان 100%.</p>
-                    </div>
-                </div>
-            </section>
+    <!-- ============================================================ 2. DASHBOARD -->
+    <section class="guide-section" id="section-dashboard">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-purple">📊</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الثاني</div>
+            <h2>لوحة التحكم</h2>
+          </div>
+        </div>
 
-            <!-- 03. POS -->
-            <section id="pos" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-cash-register"></i></div>
-                    <div>
-                        <h2 class="module-title">كاشير المبيعات (Touch POS)</h2>
-                        <span class="module-subtitle">طلقة في الزحمة.. الكاشير اللي بيفهمك</span>
-                    </div>
-                </div>
-                <p class="module-desc">قلب النظام النابض! شاشة بيع ذكية جداً بتدعم اللمس (Touch) أو الماوس. بتعرض الأقسام والصور بشكل يفتح النفس، وبتقرأ الباركود أوتوماتيك من غير ما تدوس على أي زرار. مصممة عشان تخلص الطابور في ثواني.</p>
-                <img src="assets/images/03-pos.jpeg" alt="كاشير المبيعات" class="module-image">
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <h4><i class="fas fa-keyboard"></i> اختصارات الكيبورد السحرية</h4>
-                        <p>عشان تشتغل بسرعة الصاروخ، استخدم الاختصارات دي من غير ما تلمس الماوس:</p>
-                        <ul style="margin-top: 10px; margin-right: 20px; line-height: 2;">
-                            <li><kbd>F1</kbd> إضافة منتج يدوي بالباركود</li>
-                            <li><kbd>F2</kbd> تأكيد الطلب والدفع</li>
-                            <li><kbd>Ctrl</kbd> + <kbd>Enter</kbd> تأكيد الطلب السريع</li>
-                            <li><kbd>F3</kbd> فتح درج النقدية</li>
-                            <li><kbd>F4</kbd> تفريغ الفاتورة (إلغاء)</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+        <p class="section-intro">
+          لوحة التحكم هي الصفحة الرئيسية التي تعرض ملخصاً شاملاً لحالة المخزون
+          لحظةً بلحظة. تحتوي على بطاقات إحصائية وأعلى الأصناف حركةً ومنتجات
+          تحتاج إلى إعادة طلب.
+        </p>
 
-            <!-- 04. Sessions -->
-            <section id="sessions" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-gamepad"></i></div>
-                    <div>
-                        <h2 class="module-title">إدارة الجلسات (Sessions/Rentals)</h2>
-                        <span class="module-subtitle">للبلايستيشن، الكافيهات، وغرف الاجتماعات</span>
-                    </div>
-                </div>
-                <p class="module-desc">افتح طاولة أو جهاز، والسيستم هيبدأ يحسب الوقت أوتوماتيك بالقرش. العميل طلب مشاريب؟ ضيفها على نفس الجلسة بكل سهولة. ولما يخلص، هتدوس "إنهاء" والسيستم هيحسب إجمالي الوقت والطلبات في فاتورة واحدة شيك.</p>
-                <img src="assets/images/04-sessions.png" alt="إدارة الجلسات" class="module-image">
-            </section>
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>لوحة التحكم الرئيسية
+          </div>
+          <img
+            src="./guide-02-dashboard.png"
+            alt="لوحة التحكم"
+            loading="lazy"
+          />
+        </div>
 
-            <!-- 05. Z-Report -->
-            <section id="zreport" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <div>
-                        <h2 class="module-title">تقفيل الوردية (Z-Report)</h2>
-                        <span class="module-subtitle">حسابك بالقرش.. وداعا لعجز الدرج</span>
-                    </div>
-                </div>
-                <p class="module-desc">آخر الشفت، الكاشير بيقفل ورديته. السيستم هيقولك المفروض الدرج يكون فيه كام بالضبط (كاش، فيزا، آجل). وهيطلعلك تقرير مطبوع (Z-Report) يطابق النقدية الفعلية بالمفترضة عشان لو فيه عجز أو زيادة تعرفه فوراً.</p>
-                <img src="assets/images/05-zreport.png" alt="تقفيل الوردية" class="module-image">
-            </section>
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="check">✓</span>إجمالي عدد الأصناف المخزنة
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>القيمة الإجمالية للمخزون
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>عدد الأصناف منخفضة المخزون
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>أعلى الأصناف من حيث الكمية
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>منتجات تحتاج إعادة طلب
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>شريط التنقل السفلي
+          </div>
+        </div>
 
-            <!-- 06. Invoices -->
-            <section id="invoices" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-file-alt"></i></div>
-                    <div>
-                        <h2 class="module-title">أرشيف الفواتير (Invoices)</h2>
-                        <span class="module-subtitle">استرجع واطبع أي فاتورة في أي وقت</span>
-                    </div>
-                </div>
-                <p class="module-desc">كل فاتورة بتتسجل هنا بالتاريخ والوقت والكاشير اللي ضربها. عميل طلب نسخة تانية من الفاتورة؟ ابحث برقم الفاتورة أو رقم التليفون واطبعها بضغطة زر سواء على طابعة ريسيت صغيرة أو A4 كبيرة.</p>
-                <img src="assets/images/06-invoices.png" alt="أرشيف الفواتير" class="module-image">
-            </section>
+        <div class="info-box info-tip">
+          <span class="info-box-icon">💡</span>
+          <p>
+            <strong>نصيحة:</strong> استخدم شريط التنقل السفلي للتنقل بسرعة بين
+            الأقسام: الرئيسية، الأصناف، وارد، صادر، جرد، حركات، إعدادات.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            <!-- 07. Returns -->
-            <section id="returns" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-undo"></i></div>
-                    <div>
-                        <h2 class="module-title">المرتجعات (Returns)</h2>
-                        <span class="module-subtitle">المرتجعات بدون لخبطة في المخزن</span>
-                    </div>
-                </div>
-                <p class="module-desc">عميل عايز يرجع منتج؟ اختار الفاتورة، حدد المنتج، والسيستم هيعمل الآتي أوتوماتيك: هيرجع البضاعة للمخزن، ويخصم الفلوس من درج النقدية، ويسجل حركة المرتجع في التقرير عشان مفيش حاجة تقع منك.</p>
-                <img src="assets/images/07-returns.png" alt="المرتجعات" class="module-image">
-            </section>
+    <!-- ============================================================ 3. PRODUCTS LIST -->
+    <section class="guide-section" id="section-products">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-green">📦</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الثالث</div>
+            <h2>قائمة الأصناف</h2>
+          </div>
+        </div>
 
-            <!-- 08. Categories -->
-            <section id="categories" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-layer-group"></i></div>
-                    <div>
-                        <h2 class="module-title">الأقسام (Categories)</h2>
-                        <span class="module-subtitle">رتب بضاعتك ومنيو مطعمك باحترافية</span>
-                    </div>
-                </div>
-                <p class="module-desc">قسم منتجاتك (مثلاً: مشروبات ساخنة، وجبات، حلويات). الأقسام دي هي اللي هتظهر للكاشير في شاشة البيع بألوان وصور مميزة عشان يوصل للمنتج بسرعة من غير ما يدور كتير.</p>
-                <img src="assets/images/08-categories.png" alt="الأقسام" class="module-image">
-            </section>
+        <p class="section-intro">
+          يُتيح قسم الأصناف عرض جميع المنتجات المخزنة مع تفاصيلها الكاملة. يمكنك
+          البحث، التصفية، والتصدير إلى Excel بضغطة واحدة.
+        </p>
 
-            <!-- 09. Inventory -->
-            <section id="inventory" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-boxes"></i></div>
-                    <div>
-                        <h2 class="module-title">المخزون والمنتجات (Inventory)</h2>
-                        <span class="module-subtitle">بضاعتك كلها تحت السيطرة</span>
-                    </div>
-                </div>
-                <p class="module-desc">سجل كل منتجاتك، حط سعر البيع وسعر التكلفة والباركود. السيستم هينبهك لو فيه منتج رصيده قل في المخزن. كمان تقدر تحط صورة لكل منتج عشان يسهل على الكاشير التعرف عليه.</p>
-                <img src="assets/images/09-inventory.png" alt="المخزون والمنتجات" class="module-image">
-            </section>
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>قائمة الأصناف — عرض البطاقات
+          </div>
+          <img
+            src="./guide-03-products.png"
+            alt="قائمة الأصناف"
+            loading="lazy"
+          />
+        </div>
 
-            <!-- 10. Customers -->
-            <section id="customers" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-users"></i></div>
-                    <div>
-                        <h2 class="module-title">العملاء والديون (Customers)</h2>
-                        <span class="module-subtitle">نوتة إلكترونية للزباين الشكك والآجل</span>
-                    </div>
-                </div>
-                <p class="module-desc">عندك زباين بتسحب شغل وتدفع بعدين؟ سجل العميل هنا وتابع كشف حسابه. أي فاتورة (آجل) بتنزل في حسابه أوتوماتيك، ولما يسدد جزء من المديونية بيتخصم من عليه ويطبعله إيصال سداد.</p>
-                <img src="assets/images/10-customers.png" alt="العملاء والديون" class="module-image">
-            </section>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>البحث عن صنف</strong>
+              <p>
+                اكتب اسم الصنف أو رقم الباركود في خانة البحث للتصفية الفورية
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>التبديل بين العرض البطاقي والجدولي</strong>
+              <p>استخدم أزرار التبديل في الأعلى لاختيار طريقة العرض المناسبة</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>تصدير إلى Excel</strong>
+              <p>
+                انقر على "تصدير Excel" لتنزيل قائمة الأصناف كاملةً في ملف جداول
+                بيانات
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>استيراد من CSV</strong>
+              <p>يمكنك رفع ملف CSV لاستيراد أصناف متعددة دفعةً واحدة</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <!-- 11. Expenses -->
-            <section id="expenses" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-money-bill-wave"></i></div>
-                    <div>
-                        <h2 class="module-title">المصروفات (Expenses)</h2>
-                        <span class="module-subtitle">فلوسك راحت فين؟</span>
-                    </div>
-                </div>
-                <p class="module-desc">الكهرباء، الإيجار، بوفيه العمال.. سجل أي مصروف بيخرج من الدرج. المصروفات دي بتتخصم من صافي أرباحك في التقارير وبتسمع في تقفيلة الوردية عشان الدرج يطلع مظبوط بالظبط.</p>
-                <img src="assets/images/11-expenses.png" alt="المصروفات" class="module-image">
-            </section>
+    <!-- ============================================================ 4. ADD PRODUCT -->
+    <section class="guide-section" id="section-add-product">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-cyan">➕</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الرابع</div>
+            <h2>إضافة صنف جديد</h2>
+          </div>
+        </div>
 
-            <!-- 12. Suppliers -->
-            <section id="suppliers" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-truck-loading"></i></div>
-                    <div>
-                        <h2 class="module-title">الموردين (Suppliers)</h2>
-                        <span class="module-subtitle">إدارة حسابات الموردين والشركات</span>
-                    </div>
-                </div>
-                <p class="module-desc">سجل بيانات الشركات اللي بتوردلك البضاعة، وتابع مديونياتهم. لو نزلت بضاعة ومأجل فلوسها، هتتسجل في حساب المورد وتقدر تطلع كشف حساب مفصل لكل مورد دفع تله إيه وباقي عليه كام.</p>
-                <img src="assets/images/12-suppliers.png" alt="الموردين" class="module-image">
-            </section>
+        <p class="section-intro">
+          لإضافة صنف جديد إلى المخزون، انقر على زر "إضافة صنف" في قسم الأصناف.
+          ستظهر نموذج الإضافة الشامل الذي يتيح إدخال كافة تفاصيل المنتج.
+        </p>
 
-            <!-- 13. Purchases -->
-            <section id="purchases" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-shopping-cart"></i></div>
-                    <div>
-                        <h2 class="module-title">المشتريات (Purchases)</h2>
-                        <span class="module-subtitle">إذن استلام البضاعة (أوامر الشراء)</span>
-                    </div>
-                </div>
-                <p class="module-desc">بضاعة جديدة دخلت المحل؟ أعمل بيها أمر شراء. السيستم هيزود الكميات في المخزن أوتوماتيك، ويحسب إجمالي فاتورة الشراء، ويضيفها على حساب المورد أو يخصمها من الدرج لو الدفع كاش.</p>
-                <img src="assets/images/13-purchases.png" alt="المشتريات" class="module-image">
-            </section>
+        <div class="screenshots-grid">
+          <div class="screenshot-card" style="margin-bottom: 0">
+            <div class="screenshot-label">
+              <span class="dot"></span>نموذج الإضافة — الجزء العلوي
+            </div>
+            <img
+              src="./guide-04-add-product-form.png"
+              alt="نموذج إضافة صنف"
+              loading="lazy"
+            />
+          </div>
+          <div class="screenshot-card" style="margin-bottom: 0">
+            <div class="screenshot-label">
+              <span class="dot"></span>نموذج الإضافة — الجزء السفلي
+            </div>
+            <img
+              src="./guide-04b-add-product-bottom.png"
+              alt="نموذج إضافة صنف (الجزء السفلي)"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
-            <!-- 14. Loyalty -->
-            <section id="loyalty" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-medal"></i></div>
-                    <div>
-                        <h2 class="module-title">نقاط الولاء (Loyalty Points)</h2>
-                        <span class="module-subtitle">خلي زباينك دايماً ترجعلك</span>
-                    </div>
-                </div>
-                <p class="module-desc">نظام ذكي لربط العميل بمكانك. كل ما يشتري، بياخد نقاط. السيستم بيقسم العملاء لمستويات (فضي - ذهبي - بلاتيني). العميل يقدر يستبدل النقاط دي بخصومات في المرات الجاية، وده بيزود مبيعاتك.</p>
-                <img src="assets/images/14-loyalty.png" alt="نقاط الولاء" class="module-image">
-            </section>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>أدخل اسم الصنف</strong>
+              <p>اكتب اسم المنتج في حقل "اسم الصنف" (مطلوب)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>أدخل الباركود</strong>
+              <p>أدخل رقم الباركود يدوياً أو امسحه بكاميرا الجهاز</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>حدد الفئة والمورد</strong>
+              <p>اختر تصنيف الصنف والمورد المناسبَين من القائمة</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>أدخل الأسعار والكميات</strong>
+              <p>حدد سعر الشراء والبيع، الكمية الحالية، وحد إعادة الطلب</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>انقر على "حفظ الصنف"</strong>
+              <p>سيظهر إشعار نجاح وسيُضاف الصنف إلى القائمة فوراً</p>
+            </div>
+          </div>
+        </div>
 
-            <!-- 15. Reports -->
-            <section id="reports" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-chart-pie"></i></div>
-                    <div>
-                        <h2 class="module-title">التقارير (Detailed Reports)</h2>
-                        <span class="module-subtitle">القرار الصح محتاج داتا صح</span>
-                    </div>
-                </div>
-                <p class="module-desc">كشف حساب كامل لمكانك. تقارير المبيعات، الأرباح، تقييم أداء كل كاشير مين بيبيع أكتر، وحركة الأصناف. تقدر تصدر أي تقرير بصيغة Excel أو PDF أو تطبعه عشان تراجع حساباتك في البيت.</p>
-                <img src="assets/images/15-reports.png" alt="التقارير" class="module-image">
-            </section>
+        <div class="info-box info-success">
+          <span class="info-box-icon">✅</span>
+          <p>
+            <strong>ملاحظة:</strong> بعد الحفظ الناجح ستظهر رسالة "تم إضافة
+            الصنف بنجاح!" ويمكنك إضافة صنف آخر مباشرةً.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            <!-- 16. Users -->
-            <section id="users" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-user-shield"></i></div>
-                    <div>
-                        <h2 class="module-title">المستخدمين (Users & Roles)</h2>
-                        <span class="module-subtitle">كل موظف وصلاحياته</span>
-                    </div>
-                </div>
-                <p class="module-desc">ضيف الكاشير، المدير، والمحاسب. حدد لكل واحد يقدر يفتح إيه وميفتحش إيه. الكاشير ميقدرش يشوف الأرباح ولا يمسح فواتير، لكن المدير يقدر يعمل كل حاجة. أمان تام لبياناتك.</p>
-                <img src="assets/images/16-users.png" alt="المستخدمين" class="module-image">
-            </section>
+    <!-- ============================================================ 5. EDIT / DELETE PRODUCT -->
+    <section class="guide-section" id="section-edit-product">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-orange">✏️</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الخامس</div>
+            <h2>تعديل وحذف صنف</h2>
+          </div>
+        </div>
 
-            <!-- 17. Activity -->
-            <section id="activity" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-history"></i></div>
-                    <div>
-                        <h2 class="module-title">سجل النشاط (Audit Log)</h2>
-                        <span class="module-subtitle">الصندوق الأسود بتاع المحل</span>
-                    </div>
-                </div>
-                <p class="module-desc">مين مسح الفاتورة دي؟ ومين غير سعر المنتج ده؟ سجل النشاط بيسجل كل حركة بتحصل على السيستم بالثانية واسم الموظف، عشان لو حصل أي تلاعب تعرف تصطاده فوراً.</p>
-                <img src="assets/images/17-activity.png" alt="سجل النشاط" class="module-image">
-            </section>
+        <p class="section-intro">
+          يمكنك تعديل بيانات أي صنف في أي وقت بالضغط على أيقونة القلم في بطاقة
+          الصنف. ستفتح نافذة التعديل بالبيانات الحالية جاهزةً للتغيير.
+        </p>
 
-            <!-- 18. Settings -->
-            <section id="settings" class="module-section">
-                <div class="module-header">
-                    <div class="module-icon"><i class="fas fa-cogs"></i></div>
-                    <div>
-                        <h2 class="module-title">الإعدادات (Settings)</h2>
-                        <span class="module-subtitle">ظبط السيستم على مزاجك</span>
-                    </div>
-                </div>
-                <p class="module-desc">شاشة التحكم الكاملة. من هنا تقدر ترفع لوجو المحل اللي هيطبع على الريسيت، تحدد الطابعات (طابعة الكاشير وطابعة المطبخ)، تظبط سكانر الباركود، وتتحكم في ضريبة القيمة المضافة ودرج النقدية.</p>
-                <img src="assets/images/18-settings.png" alt="الإعدادات" class="module-image">
-            </section>
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>نموذج تعديل الصنف
+          </div>
+          <img
+            src="./guide-05-edit-product.png"
+            alt="تعديل صنف"
+            loading="lazy"
+          />
+        </div>
 
-            <footer style="text-align: center; margin-top: 80px; padding-top: 30px; border-top: 1px solid var(--glass-border);">
-                <p style="font-weight: 700; color: var(--text-muted);">صُنع بكل <i class="fas fa-heart" style="color: var(--accent);"></i> وفخر في مصر &copy; 2026 RoboVAI Solutions</p>
-            </footer>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>افتح قائمة الأصناف</strong>
+              <p>اذهب إلى قسم "الأصناف" من شريط التنقل</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>انقر على أيقونة التعديل</strong>
+              <p>في بطاقة الصنف، اضغط أيقونة القلم ✏️ لفتح نموذج التعديل</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>عدّل البيانات المطلوبة</strong>
+              <p>غيّر أي حقل تريد تحديثه (السعر، الكمية، الاسم، إلخ)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>احفظ التغييرات</strong>
+              <p>انقر "حفظ التعديلات" لتطبيق التحديث فوراً</p>
+            </div>
+          </div>
+        </div>
 
-        </main>
-    </div>
+        <div class="info-box info-warning">
+          <span class="info-box-icon">⚠️</span>
+          <p>
+            <strong>تنبيه:</strong> لحذف صنف، اضغط أيقونة سلة المهملات 🗑️ في
+            البطاقة. سيُطلب منك تأكيد الحذف قبل تنفيذه لتجنب الحذف العرضي.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        // Active link switching based on scroll
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.sidebar a');
+    <!-- ============================================================ 6. INBOUND -->
+    <section class="guide-section" id="section-inbound">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-green">📥</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم السادس</div>
+            <h2>استيعاب الوارد</h2>
+          </div>
+        </div>
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
+        <p class="section-intro">
+          يُستخدم هذا القسم لتسجيل البضائع الواردة وإضافة كميات جديدة إلى
+          المخزون. يدعم المسح الضوئي للباركود، وتتبع الدُفعات وتواريخ الانتهاء.
+        </p>
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>نموذج استيعاب الوارد
+          </div>
+          <img src="./guide-06-inbound.png" alt="نموذج الوارد" loading="lazy" />
+        </div>
 
-    <!-- Print to PDF Button -->
-    <button onclick="window.print()" class="btn btn-blue print-btn" style="position: fixed; bottom: 30px; left: 30px; z-index: 9999; box-shadow: 0 8px 32px rgba(14,165,233,0.4); border-radius: 50px; padding: 14px 28px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; cursor: pointer;">
-        <i class="fas fa-file-pdf"></i> طباعة الدليل PDF
-    </button>
-    <style>
-        @media print {
-            .print-btn, .navbar, .footer { display: none !important; }
-            body { background: white !important; color: black !important; }
-            .manual-container { padding: 0 !important; margin: 0 !important; box-shadow: none !important; }
-        }
-    </style>
-</body>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>أدخل باركود الصنف</strong>
+              <p>
+                اكتب رقم الباركود يدوياً أو استخدم زر المسح 📷 لمسحه بالكاميرا
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>أدخل الكمية الواردة</strong>
+              <p>حدد عدد الوحدات الداخلة إلى المخزون في هذه الدفعة</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>أدخل رقم الدفعة (اختياري)</strong>
+              <p>
+                مثال: B-2023X — يُفيد في تتبع الدفعات للمنتجات الغذائية
+                والدوائية
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>حدد تاريخ الانتهاء (اختياري)</strong>
+              <p>للمنتجات ذات صلاحية محددة</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>انقر "تسجيل الوارد"</strong>
+              <p>سيُحدَّث مخزون الصنف تلقائياً وتُسجَّل الحركة في السجل</p>
+            </div>
+          </div>
+        </div>
 
+        <div class="info-box info-tip">
+          <span class="info-box-icon">💡</span>
+          <p>
+            <strong>نصيحة:</strong> يمكن مسح الباركود بكاميرا الجهاز للإدخال
+            السريع دون الكتابة اليدوية — مناسب جداً للمستودعات ذات الحجم الكبير.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 7. OUTBOUND -->
+    <section class="guide-section" id="section-outbound">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-red">📤</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم السابع</div>
+            <h2>إذن الصرف (الصادر)</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          قسم الصادر يُتيح إصدار أذونات صرف للأصناف من المخزن. يمكنك صرف أصناف
+          متعددة في إذن واحد مع تحديد الجهة المستلمة.
+        </p>
+
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>نموذج إذن الصرف
+          </div>
+          <img
+            src="./guide-07-outbound.png"
+            alt="نموذج الصادر"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>حدد الجهة المستلمة</strong>
+              <p>اختر القسم أو الشخص المستلم للبضاعة من القائمة المنسدلة</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>أضف الأصناف المطلوب صرفها</strong>
+              <p>
+                أدخل باركود الصنف أو امسحه بالكاميرا، ثم حدد الكمية المراد صرفها
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>أضف أصناف أخرى (اختياري)</strong>
+              <p>يمكنك إضافة عدة أصناف في إذن صرف واحد</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>انقر "إتمام إذن الصرف"</strong>
+              <p>سيُخصَم المخزون وتُسجَّل الحركة وتُنشأ وثيقة الإذن</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box info-tip">
+          <span class="info-box-icon">💡</span>
+          <p>
+            <strong>نصيحة:</strong> يدعم النظام المسح الضوئي بالكاميرا لإضافة
+            الأصناف سريعاً دون الحاجة لكتابة الباركود يدوياً.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 8. STOCKTAKE -->
+    <section class="guide-section" id="section-stocktake">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-purple">🔍</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الثامن</div>
+            <h2>الجرد الفعلي</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          قسم الجرد يُمكّنك من إجراء جرد شامل أو جزئي للمخزون ومطابقته مع
+          الأرصدة الدفترية. يدعم المسح الضوئي وإدخال الكميات الفعلية.
+        </p>
+
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>واجهة الجرد الفعلي
+          </div>
+          <img
+            src="./guide-08-stocktake.png"
+            alt="الجرد الفعلي"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>ابدأ جلسة الجرد</strong>
+              <p>انقر على "بدء جلسة جرد جديدة" لتفعيل وضع الجرد</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>امسح الأصناف أو أدخلها يدوياً</strong>
+              <p>
+                استخدم خانة البحث بالباركود أو كاميرا المسح الضوئي لاختيار كل
+                صنف
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>أدخل الكمية الفعلية</strong>
+              <p>أدخل الكمية الفعلية الموجودة فيزيائياً في المخزن لكل صنف</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>أنهِ عملية الجرد</strong>
+              <p>
+                بعد جرد جميع الأصناف، انقر "تأكيد الجرد" لحفظ نتائج المطابقة
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box info-warning">
+          <span class="info-box-icon">⚠️</span>
+          <p>
+            <strong>تنبيه:</strong> سيتم تحديث أرصدة المخزون تلقائياً بناءً على
+            نتائج الجرد. راجع الفروقات قبل التأكيد النهائي.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 9. TRANSACTIONS -->
+    <section class="guide-section" id="section-transactions">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-cyan">📜</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم التاسع</div>
+            <h2>سجل الحركات</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          يعرض سجل الحركات جميع العمليات التي تمت على المخزون مرتبةً زمنياً.
+          يمكن تصفيتها بالتاريخ، النوع، أو البحث عن صنف محدد.
+        </p>
+
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>سجل الحركات مع أدوات التصفية
+          </div>
+          <img
+            src="./guide-10-transactions.png"
+            alt="سجل الحركات"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="check">✓</span>تصفية بالتاريخ (من - إلى)
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>تصفية بنوع الحركة (وارد/صادر/جرد)
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>البحث باسم الصنف أو الباركود
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>عرض تفاصيل كل حركة
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>اسم المستخدم الذي نفّذ العملية
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>الكمية والرصيد قبل وبعد
+          </div>
+        </div>
+
+        <div class="info-box info-tip">
+          <span class="info-box-icon">💡</span>
+          <p>
+            <strong>نصيحة:</strong> استخدم التصفية بالتاريخ لاستعراض حركات فترة
+            محددة وطباعتها كتقرير. مناسب للمراجعة الشهرية والتدقيق.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 10. SETTINGS -->
+    <section class="guide-section" id="section-settings">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-orange">⚙️</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم العاشر</div>
+            <h2>الإعدادات والنظام</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          قسم الإعدادات يُتيح تخصيص النظام، إدارة المستخدمين، ضبط التكاملات
+          الخارجية، والتحكم في النسخ الاحتياطي للبيانات.
+        </p>
+
+        <div class="screenshot-card">
+          <div class="screenshot-label">
+            <span class="dot"></span>الإعدادات والنظام
+          </div>
+          <img src="./guide-09-settings.png" alt="الإعدادات" loading="lazy" />
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="check">✓</span>تثبيت التطبيق كـ PWA على الجهاز
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>إدارة المستخدمين والصلاحيات
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>ضبط Webhook للمزامنة السحابية
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>تصدير النسخة الاحتياطية
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>استيراد نسخة احتياطية
+          </div>
+          <div class="feature-item">
+            <span class="check">✓</span>مزامنة البيانات مع السحابة
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3
+          style="
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+          "
+        >
+          📲 تثبيت التطبيق (PWA)
+        </h3>
+        <p
+          style="
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+          "
+        >
+          يمكن تثبيت "مخزني الذكي Pro" كتطبيق أصلي على الجهاز (موبايل أو حاسوب)
+          دون الحاجة إلى متجر التطبيقات.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>اذهب إلى الإعدادات</strong>
+              <p>انقر على أيقونة الإعدادات في شريط التنقل</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>انقر "تثبيت التطبيق"</strong>
+              <p>ستظهر نافذة تأكيد التثبيت من المتصفح</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>تأكيد التثبيت</strong>
+              <p>
+                انقر "تثبيت" وسيُضاف التطبيق إلى شاشة الرئيسية أو سطح المكتب
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3
+          style="
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+          "
+        >
+          🔗 ضبط Webhook للمزامنة
+        </h3>
+        <p
+          style="
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+          "
+        >
+          يمكن ربط التطبيق بأنظمة خارجية (ERP، Zapier، Make، إلخ) عبر Webhook
+          لمزامنة البيانات تلقائياً.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>أدخل رابط Webhook</strong>
+              <p>الصق رابط الـ Webhook الخاص بنظامك الخارجي في الحقل المخصص</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>احفظ الإعدادات</strong>
+              <p>انقر "حفظ الإعدادات" لتطبيق التغييرات</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>اختبر المزامنة</strong>
+              <p>انقر "مزامنة الآن" للتحقق من صحة الاتصال وإرسال البيانات</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 12. ENTERPRISE FEATURES -->
+    <section class="guide-section" id="section-enterprise">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-purple">🚀</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الثاني عشر</div>
+            <h2>ميزات الـ Enterprise (الإصدار الجديد)</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          تم تحديث النظام ليدعم العمليات المؤسسية المتقدمة. يشمل هذا التحديث ميزات الأمان، التتبع الدقيق، والتوافق مع بيئات العمل المتنوعة (مثل العمل بدون كاميرا).
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <i class="check" data-lucide="shield-check"></i>
+            صلاحيات دقيقة (RBAC) وإخفاء البيانات المالية للعمال.
+          </div>
+          <div class="feature-item">
+            <i class="check" data-lucide="truck"></i>
+            تتبع البضائع قيد النقل (In-Transit) بين الفروع.
+          </div>
+          <div class="feature-item">
+            <i class="check" data-lucide="package-plus"></i>
+            نظام التجميع والتعبئة (Kitting & Bundling).
+          </div>
+          <div class="feature-item">
+            <i class="check" data-lucide="sparkles"></i>
+            الجرد الدوري الذكي باقتراحات الذكاء الاصطناعي.
+          </div>
+          <div class="feature-item">
+            <i class="check" data-lucide="printer"></i>
+            إنشاء وطباعة الباركود فورياً من النظام.
+          </div>
+          <div class="feature-item">
+            <i class="check" data-lucide="image"></i>
+            قراءة الباركود/QR من الصور המرفوعة (لأجهزة بدون كاميرا).
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>نظام الصلاحيات وإخفاء البيانات (RBAC)</strong>
+              <p>
+                تم تخصيص الواجهة لتتناسب مع دور المستخدم. عند دخول موظف بصلاحية "عامل" (Worker)، يقوم النظام تلقائياً بإخفاء جميع البيانات المالية (تكلفة المنتج، إجمالي الفواتير، أسعار الشراء) لضمان الخصوصية، كما يتم إخفاء شاشات الإعدادات والتقارير.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>قراءة الباركود من الصور (لأجهزة الديسكتوب بدون كاميرا)</strong>
+              <p>
+                إذا كنت تعمل على جهاز كمبيوتر لا يحتوي على كاميرا، يمكنك الآن التقاط صورة للباركود أو الـ QR عبر هاتفك ونقلها للجهاز (عبر USB أو غيره). في نافذة الماسح الضوئي، اضغط على <b>"رفع صورة"</b>، واختر الصورة ليقوم النظام بقراءتها وتنفيذ العملية مباشرة.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>تتبع البضائع قيد النقل (In-Transit)</strong>
+              <p>
+                عند صرف بضائع لفرع، يتم تسجيلها بحالة "قيد النقل". يمكن لمدير المخزن الدخول لشاشة "الفروع" ومتابعة البضائع المرسلة والتأكد من استلامها بالفرع لتحديث الرصيد بدقة.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>الجرد الدوري الذكي وتنبيهات النواقص</strong>
+              <p>
+                في شاشة <b>"الجرد الفعلي"</b>، يقوم النظام باقتراح 5 أصناف لم يتم جردها مؤخراً لتقوم بجردها دورياً (Smart Cycle Counting). كما يقوم النظام بإرسال <b>إشعارات المتصفح (Push Notifications)</b> عند وصول أي صنف للحد الأدنى للطلب.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <strong>التجميع والتعبئة (Kitting) وطباعة الباركود</strong>
+              <p>
+                يتيح لك النظام من شاشة <b>"التجميع"</b> تكوين "عروض" أو "سلات رمضانية" من أصناف متعددة مع خصم المكونات تلقائياً. كما تتيح لك شاشة "الأصناف" طباعة ملصق باركود احترافي (عبر JsBarcode) لأي منتج بضغطة زر لطباعته ولصقه على الأرفف.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <strong>مزامنة QR مع الكاشير (SmartPOS)</strong>
+              <p>
+                عبر شاشة <b>"مزامنة QR"</b>، يقوم المخزن بتوليد كود QR يحتوي على بيانات أمر الصرف أو الفاتورة المراد إرسالها لجهاز الكاشير (SmartPOS). يكفي مسح هذا الـ QR بكاميرا الكاشير أو برفعه كصورة لاستيراد الحركة فوراً بدون إدخال يدوي.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshots Grid -->
+        <h3 style="margin-bottom: 1rem; margin-top: 2rem; font-size: 1.1rem;">📸 صور من النظام</h3>
+
+        <div class="screenshots-grid">
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> لوحة التحكم الرئيسية</div>
+            <img src="./guide-new-01-dashboard.png" alt="لوحة التحكم" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> شاشة الأصناف وطباعة الباركود</div>
+            <img src="./guide-new-02-products.png" alt="الأصناف" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> استيعاب الوارد</div>
+            <img src="./guide-new-03-inbound.png" alt="الوارد" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> إذن الصرف (الصادر)</div>
+            <img src="./guide-new-04-outbound.png" alt="الصادر" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> الجرد الذكي مع اقتراحات AI</div>
+            <img src="./guide-new-05-stocktake-ai.png" alt="الجرد الذكي" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> رفع صورة باركود (بدل الكاميرا)</div>
+            <img src="./guide-new-06-scanner-upload.png" alt="رفع صورة" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> سجل الحركات</div>
+            <img src="./guide-new-10-transactions.png" alt="الحركات" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> الإعدادات وإدارة المستخدمين</div>
+            <img src="./guide-new-11-settings.png" alt="الإعدادات" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+
+        <!-- QR Sync Screenshots -->
+        <h3 style="margin-bottom: 1rem; margin-top: 2rem; font-size: 1.1rem;">📡 مزامنة QR مع SmartPOS</h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+          يتيح نظام QR Sync نقل البيانات بسرعة من المخزن لكاشير الفروع دون الحاجة لشبكة أو إنترنت. يمكنك مسح الـ QR أو رفعه كصورة.
+        </p>
+        <div class="screenshots-grid">
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> شاشة مزامنة QR</div>
+            <img src="./guide-new-12-qr-sync.png" alt="مزامنة QR" onerror="this.parentElement.style.display='none'">
+          </div>
+          <div class="screenshot-card">
+            <div class="screenshot-label"><span class="dot"></span> QR Codes للمنتجات (رفع من الهاتف)</div>
+            <img src="./guide-new-qr-single.png" alt="QR منفرد" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+        <div class="screenshot-card" style="margin-bottom: 2rem;">
+          <div class="screenshot-label"><span class="dot"></span> مجموعة QR للمنتجات الجاهزة للمسح</div>
+          <img src="./guide-new-qr-set.png" alt="مجموعة QR" onerror="this.parentElement.style.display='none'">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================ 13. FAQ -->
+    <section class="guide-section" id="section-faq">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-icon icon-purple">❓</div>
+          <div class="section-title-wrap">
+            <div class="section-num">القسم الحادي عشر</div>
+            <h2>نصائح وأسئلة شائعة</h2>
+          </div>
+        </div>
+
+        <p class="section-intro">
+          إجابات على الأسئلة الأكثر شيوعاً ونصائح لتحقيق أقصى استفادة من مخزني
+          الذكي Pro.
+        </p>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>هل يعمل التطبيق بدون إنترنت؟
+          </div>
+          <div class="faq-a">
+            نعم! التطبيق مبني كـ PWA ويعمل بالكامل بدون اتصال بالإنترنت. تُحفظ
+            جميع البيانات محلياً على الجهاز باستخدام قاعدة بيانات IndexedDB. عند
+            توفر الإنترنت يمكن المزامنة مع السحابة عبر Webhook.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>كيف أضيف مستخدمين جدد؟
+          </div>
+          <div class="faq-a">
+            من قسم الإعدادات، اذهب إلى "إدارة المستخدمين" وانقر "إضافة مستخدم".
+            حدد اسم المستخدم وكلمة المرور ومستوى الصلاحيات (مدير / محرر / قارئ).
+            يمكن للمستخدمين من مستوى "مدير" فقط إدارة حسابات المستخدمين الآخرين.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>كيف أعمل نسخة احتياطية من البيانات؟
+          </div>
+          <div class="faq-a">
+            من قسم الإعدادات، انقر "تصدير نسخة احتياطية". سيتم تنزيل ملف JSON
+            يحتوي على جميع بياناتك. لاستعادة البيانات، انقر "استيراد نسخة
+            احتياطية" وارفع الملف. يُنصح بعمل نسخة احتياطية أسبوعياً.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>ما هو حد إعادة الطلب؟
+          </div>
+          <div class="faq-a">
+            حد إعادة الطلب هو الكمية الدنيا التي عندها ينبغي إعادة طلب الصنف.
+            عندما تصل كمية الصنف إلى هذا الحد أو أقل، يظهر في قائمة "تحتاج إعادة
+            طلب" في لوحة التحكم ويُميَّز بلون مختلف في قائمة الأصناف.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>هل يدعم التطبيق عدة مستودعات؟
+          </div>
+          <div class="faq-a">
+            يدعم التطبيق حالياً مستودعاً واحداً مع إمكانية تحديد موقع الصنف داخل
+            المستودع (رمز الموقع). دعم المستودعات المتعددة مخطط في الإصدارات
+            القادمة.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>كيف أستخدم المسح الضوئي بالكاميرا؟
+          </div>
+          <div class="faq-a">
+            انقر أيقونة الكاميرا 📷 في أي حقل باركود. سيطلب التطبيق الإذن
+            بالوصول إلى الكاميرا. وجّه الكاميرا نحو الباركود وسيتم القراءة
+            تلقائياً خلال ثوانٍ. يدعم جميع تنسيقات الباركود الشائعة (EAN-13, QR,
+            Code128, إلخ).
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>كيف أصدّر قائمة الأصناف إلى Excel؟
+          </div>
+          <div class="faq-a">
+            في قسم الأصناف، انقر زر "تصدير Excel". سيتم تنزيل ملف XLSX يحتوي على
+            جميع الأصناف مع بياناتها الكاملة. يمكن أيضاً تصدير "قائمة إعادة
+            الطلب" بشكل منفصل للمنتجات منخفضة المخزون.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <span class="q-mark">?</span>ما الفرق بين "وارد" و"صادر"؟
+          </div>
+          <div class="faq-a">
+            <strong>الوارد (📥):</strong> يُستخدم لتسجيل البضائع الداخلة إلى
+            المخزن (مشتريات، إرجاع من عميل)، ويزيد من الرصيد.
+            <strong>الصادر (📤):</strong> يُستخدم لتسجيل البضائع الخارجة من
+            المخزن (صرف لقسم، بيع، تحويل)، ويخصم من الرصيد.
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3
+          style="
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+          "
+        >
+          🚀 نصائح سريعة للاستخدام الأمثل
+        </h3>
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="check">⚡</span>استخدم المسح الضوئي دائماً لتوفير الوقت
+            وتجنب أخطاء الإدخال
+          </div>
+          <div class="feature-item">
+            <span class="check">📅</span>قم بالجرد الدوري (أسبوعياً أو شهرياً)
+            للحفاظ على دقة البيانات
+          </div>
+          <div class="feature-item">
+            <span class="check">💾</span>صدّر نسخة احتياطية أسبوعياً على الأقل
+            لحماية بياناتك
+          </div>
+          <div class="feature-item">
+            <span class="check">📱</span>ثبّت التطبيق كـ PWA للوصول السريع من
+            شاشة الرئيسية
+          </div>
+          <div class="feature-item">
+            <span class="check">🔔</span>راقب قائمة "إعادة الطلب" في لوحة التحكم
+            يومياً
+          </div>
+          <div class="feature-item">
+            <span class="check">👥</span>امنح كل مستخدم الصلاحية المناسبة لعمله
+            فقط
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-logo">مخزني الذكي Pro</div>
+        <p class="footer-text">
+          نظام إدارة المخزون الذكي — RoboVAI WMS Platform
+        </p>
+        <p class="footer-text" style="margin-top: 8px">
+          دليل المستخدم الرسمي — جميع الحقوق محفوظة © 2025 RoboVAI Solutions
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
