@@ -13,7 +13,7 @@
     <title>مخزني الذكي Pro</title>
     <!-- Favicon & PWA -->
     <link rel="manifest" href="./app.webmanifest" />
-    <link rel="icon" href="/wms/assets/favicon-C3NwjYhP.ico" sizes="any" />
+    <link rel="icon" href="./assets/favicon-C3NwjYhP.ico" sizes="any" />
     <link
       rel="icon"
       href="./icons/icon-32.png"
@@ -30,8 +30,8 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="/wms/assets/index-B2PjetO-.js"></script>
-    <link rel="stylesheet" crossorigin href="/wms/assets/index-B1vglWp_.css">
+    <script type="module" crossorigin src="./assets/index-B2PjetO-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B1vglWp_.css">
   </head>
   <body>
     <!-- Login Overlay -->
@@ -94,6 +94,7 @@
             <input
               type="text"
               id="login-username"
+              value="admin"
               required
               dir="ltr"
               style="text-align: left"
@@ -104,6 +105,7 @@
             <input
               type="password"
               id="login-password"
+              value="123456"
               required
               dir="ltr"
               style="text-align: left"
@@ -134,6 +136,9 @@
             <i data-lucide="scan-line" style="width: 18px; height: 18px"></i>
             دخول بـ QR كود
           </button>
+          <div style="margin-top: 0.8rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 8px 12px; text-align: center; font-size: 0.82rem; color: #93c5fd;">
+            🔑 بيانات الدخول الافتراضية: المستخدم <strong>admin</strong> | الباسورد <strong>123456</strong>
+          </div>
         </form>
         <noscript>
           <div
@@ -1400,7 +1405,7 @@
         </div>
 
         <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
-          </h4>
+          <h4 style="margin-bottom: 0.5rem"><i data-lucide="download-cloud"></i> تحميل النسخة الكاملة والتحديثات</h4>
           <p
             style="
               font-size: 0.85rem;
@@ -1408,11 +1413,16 @@
               margin-bottom: 1rem;
             "
           >
-            ثبّت التطبيق على جهازك للحصول على أداء أسرع وعمل متواصل بدون إنترنت.
+            حمل أحدث نسخ برنامج الويندوز وتطبيق WMS مباشرة من مجلد Google Drive الرسمي.
           </p>
-          <button class="btn btn-primary" onclick="triggerInstallPrompt()">
-            <i data-lucide="download"></i> تثبيت التطبيق (Add to Home Screen)
-          </button>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://drive.google.com/drive/folders/1qnQpUumI5gnv6muZLrPELVraOPGMDXlX?usp=sharing" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+              <i data-lucide="external-link"></i> فتح مجلد Google Drive الرسمي
+            </a>
+            <button class="btn btn-outline" onclick="triggerInstallPrompt()">
+              <i data-lucide="download"></i> تثبيت التطبيق المحمول (PWA)
+            </button>
+          </div>
         </div>
 
         <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
