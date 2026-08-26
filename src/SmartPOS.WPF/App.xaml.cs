@@ -177,7 +177,17 @@ public partial class App : System.Windows.Application
                 settingsService.BarcodeBaudRate,
                 settingsService.BarcodeTimeoutMs);
 
-            // 4. Show Login Window
+            // 4. Send Telegram startup & network status notifications (fire-and-forget)
+            try
+            {
+                var telegramService = _host.Services.GetRequiredService<SmartPOS.Infrastructure.Services.TelegramBotService>();
+                var lanService = _host.Services.GetRequiredService<SmartPOS.Infrastructure.Services.LanHttpServerService>();
+                _ = telegramService.SendStartupNotificationAsync();
+                _ = telegramService.SendNetworkStatusAsync(lanService.ServerUrl, lanService.IsLocalOnly);
+            }
+            catch { /* non-critical — ignore */ }
+
+            // 5. Show Login Window
             var loginWindow = _host.Services.GetRequiredService<LoginWindow>();
             if (loginWindow.ShowDialog() == true)
             {
@@ -198,9 +208,63 @@ public partial class App : System.Windows.Application
             // Write crash log to LocalAppData (Program Files is read-only)
             var logDir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RoboVAI", "SmartPOS");
             System.IO.Directory.CreateDirectory(logDir);
-            System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, "fatal_startup_error.log"), ex.ToString());
-            MessageBox.Show($"Startup Error: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Critical Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            Shutdown();
+            System.IO.File.WriteAllText(System.IO.Path.Combine(logDir, $"startup_error_{DateTime.Now:yyyyMMdd_HHmmss}.log"), ex.ToString());
+
+            var msg = ex.Message.ToLower();
+            if (msg.Contains("sqlite") || msg.Contains("database") || msg.Contains("migration") || msg.Contains("no such table"))
+            {
+                MessageBox.Show("⚠️ تم اكتشاف قاعدة بيانات قديمة أو تالفة. سيتم الإصلاح التلقائي الآن...", "إصلاح", MessageBoxButton.OK, MessageBoxImage.Warning);
+                try
+                {
+                    var connectionString = DatabasePathHelper.GetConnectionString();
+                    using (var connection = new Microsoft.Data.Sqlite.SqliteConnection(connectionString))
+                    {
+                        connection.Open();
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandText = "DROP TABLE IF EXISTS __EFMigrationsHistory";
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                    var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+                    optionsBuilder.UseSqlite(connectionString, b => b.MigrationsAssembly("SmartPOS.Infrastructure"));
+                    using var initContext = new AppDbContext(optionsBuilder.Options);
+                    
+                    await DbInitializer.InitializeAsync(initContext);
+
+                    var loginWindow = _host!.Services.GetRequiredService<LoginWindow>();
+                    if (loginWindow.ShowDialog() == true)
+                    {
+                        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+                        MainWindow = mainWindow;
+                        ShutdownMode = ShutdownMode.OnMainWindowClose;
+                        mainWindow.Show();
+                    }
+                    else
+                    {
+                        Shutdown();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("❌ تعذر إصلاح قاعدة البيانات. اضغط موافق لإنشاء قاعدة بيانات جديدة (لن تُفقد بياناتك القديمة - ستجد نسخة احتياطية على سطح المكتب).", "خطأ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var dbPath = DatabasePathHelper.GetDatabasePath();
+                    if (System.IO.File.Exists(dbPath))
+                    {
+                        var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        System.IO.File.Copy(dbPath, System.IO.Path.Combine(desktop, $"SmartPOS_Backup_{DateTime.Now:yyyyMMdd_HHmmss}.db"), true);
+                        System.IO.File.Move(dbPath, dbPath + $".bak_{DateTime.Now:yyyyMMdd_HHmmss}");
+                    }
+                    System.Diagnostics.Process.Start(Environment.ProcessPath!);
+                    Shutdown();
+                }
+            }
+            else
+            {
+                MessageBox.Show($"❌ خطأ في التشغيل: {ex.Message}\n\nتم حفظ تقرير الخطأ في: {logDir}", "Critical Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+            }
         }
     }
 

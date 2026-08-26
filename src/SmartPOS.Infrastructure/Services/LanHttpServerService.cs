@@ -73,6 +73,8 @@ public class LanHttpServerService : IHostedService, IDisposable
         _logger = logger;
     }
 
+    public bool IsLocalOnly { get; private set; } = false;
+
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         // Load persistent token from settings or generate a fixed one if empty
@@ -92,6 +94,12 @@ public class LanHttpServerService : IHostedService, IDisposable
         _logger?.LogInformation("LAN HTTP Server starting on {ServerUrl}", ServerUrl);
 
         _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+        try
+        {
+            TryAddFirewallRule(port);
+        }
+        catch { /* ignore */ }
 
         try
         {
@@ -127,25 +135,88 @@ public class LanHttpServerService : IHostedService, IDisposable
             }
             catch (Exception)
             {
-                // Fallback: listen on localhost only
+                // Attempt 3: Try registering URL ACL and binding to wildcard again
+                bool urlAclSuccess = false;
                 try
                 {
-                    _listener = new HttpListener();
-                    _listener.Prefixes.Add($"http://127.0.0.1:{port}/");
-                    _listener.Prefixes.Add($"http://localhost:{port}/");
-                    _listener.Start();
-                    ServerUrl = $"http://localhost:{port}";
-                    _serverTask = RunServerLoopAsync(_cts.Token);
-                    _logger?.LogInformation("LAN HTTP Server started on localhost only.");
+                    if (TryRegisterUrlAcl(port))
+                    {
+                        _listener = new HttpListener();
+                        _listener.Prefixes.Add($"http://+:{port}/");
+                        _listener.Prefixes.Add($"http://localhost:{port}/");
+                        _listener.Start();
+                        ServerUrl = $"http://{localIp}:{port}";
+                        _serverTask = RunServerLoopAsync(_cts.Token);
+                        _logger?.LogInformation("LAN HTTP Server started on wildcard after URL ACL registration.");
+                        urlAclSuccess = true;
+                    }
                 }
-                catch (Exception fallbackEx)
+                catch (Exception)
                 {
-                    _logger?.LogError(fallbackEx, "Could not start LAN HTTP Server even on localhost. LAN sync disabled.");
+                    // Ignore and fall through to localhost
+                }
+
+                if (!urlAclSuccess)
+                {
+                    // Fallback: listen on localhost only
+                    try
+                    {
+                        _listener = new HttpListener();
+                        _listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+                        _listener.Prefixes.Add($"http://localhost:{port}/");
+                        _listener.Start();
+                        ServerUrl = $"http://localhost:{port}";
+                        IsLocalOnly = true;
+                        _serverTask = RunServerLoopAsync(_cts.Token);
+                        _logger?.LogInformation("LAN HTTP Server started on localhost only.");
+                    }
+                    catch (Exception fallbackEx)
+                    {
+                        _logger?.LogError(fallbackEx, "Could not start LAN HTTP Server even on localhost. LAN sync disabled.");
+                    }
                 }
             }
         }
 
         await Task.CompletedTask;
+    }
+
+    private bool TryRegisterUrlAcl(int port)
+    {
+        try
+        {
+            var psi = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "netsh",
+                Arguments = $"http add urlacl url=http://+:{port}/ user=Everyone",
+                Verb = "runas",
+                UseShellExecute = true,
+                CreateNoWindow = true,
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+            };
+            var p = System.Diagnostics.Process.Start(psi);
+            p?.WaitForExit(5000);
+            return p?.ExitCode == 0;
+        }
+        catch { return false; }
+    }
+
+    private void TryAddFirewallRule(int port)
+    {
+        try
+        {
+            var psi = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "netsh",
+                Arguments = $"advfirewall firewall add rule name=\"RoboVAI POS LAN Server ({port})\" dir=in action=allow protocol=TCP localport={port}",
+                Verb = "runas",
+                UseShellExecute = true,
+                CreateNoWindow = true,
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+            };
+            System.Diagnostics.Process.Start(psi);
+        }
+        catch { /* ignore */ }
     }
 
     private async Task RunServerLoopAsync(CancellationToken ct)

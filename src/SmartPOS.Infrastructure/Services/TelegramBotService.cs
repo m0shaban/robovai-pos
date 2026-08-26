@@ -174,11 +174,10 @@ public class TelegramBotService : IHostedService, IDisposable
             try
             {
                 var botToken = GetConfiguredBotToken();
-                var chatId = GetConfiguredChatId();
 
-                if (!string.IsNullOrWhiteSpace(botToken) && !string.IsNullOrWhiteSpace(chatId))
+                if (!string.IsNullOrWhiteSpace(botToken))
                 {
-                    await PollTelegramUpdatesAsync(botToken, chatId, ct);
+                    await PollTelegramUpdatesAsync(botToken, GetConfiguredChatId(), ct);
                 }
             }
             catch (OperationCanceledException) { break; }
@@ -217,6 +216,28 @@ public class TelegramBotService : IHostedService, IDisposable
                 {
                     var chatId = msg.GetProperty("chat").GetProperty("id").GetInt64().ToString();
                     var text = msg.TryGetProperty("text", out var t) ? t.GetString() ?? "" : "";
+
+                    if (string.IsNullOrWhiteSpace(targetChatId))
+                    {
+                        await _settingsService.SaveSettingAsync("TelegramChatId", chatId);
+                        targetChatId = chatId;
+
+                        var welcome = new StringBuilder();
+                        welcome.AppendLine("🎉 تم ربط التليجرام بنجاح!");
+                        welcome.AppendLine("الآن ستصلك تنبيهات فورية على:");
+                        welcome.AppendLine("🛍️ كل عملية بيع");
+                        welcome.AppendLine("📋 إغلاق الوردية (Z-Report)");
+                        welcome.AppendLine("⚠️ تنبيهات نقص المخزون");
+                        welcome.AppendLine("🔴 تنبيهات المرتجعات");
+                        welcome.AppendLine("");
+                        welcome.AppendLine("أوامر متاحة:");
+                        welcome.AppendLine("/today - مبيعات اليوم");
+                        welcome.AppendLine("/stock - المخزون المنخفض");
+                        welcome.AppendLine("/shift - حالة الوردية");
+                        welcome.AppendLine("/status - حالة السيرفر");
+
+                        await SendMessageAsync(botToken, chatId, welcome.ToString());
+                    }
 
                     if (chatId == targetChatId || text.StartsWith("/start"))
                     {
@@ -480,6 +501,42 @@ public class TelegramBotService : IHostedService, IDisposable
     {
         if (string.IsNullOrEmpty(str)) return "";
         return str.Replace("<", "&lt;").Replace(">", "&gt;").Replace("&", "&amp;");
+    }
+
+    public async Task SendStartupNotificationAsync()
+    {
+        var chatId = GetConfiguredChatId();
+        var botToken = GetConfiguredBotToken();
+        if (string.IsNullOrWhiteSpace(chatId) || string.IsNullOrWhiteSpace(botToken)) return;
+
+        var storeName = _settingsService.StoreName ?? "الفرع الرئيسي";
+
+        var text = new StringBuilder();
+        text.AppendLine($"🟢 <b>RoboVAI POS يعمل الآن</b>");
+        text.AppendLine($"🏪 <b>المتجر:</b> {EscapeMarkdown(storeName)}");
+        text.AppendLine($"🕒 <b>وقت التشغيل:</b> {DateTime.Now:yyyy-MM-dd HH:mm}");
+        text.AppendLine($"📶 <b>السيرفر:</b> Port 7890 نشط");
+
+        await SendMessageAsync(botToken, chatId, text.ToString());
+    }
+
+    public async Task SendNetworkStatusAsync(string localIp, bool isLocalOnly)
+    {
+        var chatId = GetConfiguredChatId();
+        var botToken = GetConfiguredBotToken();
+        if (string.IsNullOrWhiteSpace(chatId) || string.IsNullOrWhiteSpace(botToken)) return;
+
+        var text = new StringBuilder();
+        if (!isLocalOnly)
+        {
+            text.AppendLine($"✅ <b>الشبكة:</b> متاح على http://{localIp}:7890");
+        }
+        else
+        {
+            text.AppendLine($"⚠️ <b>الشبكة:</b> محدود على localhost فقط (شغّل البرنامج كمسؤول للوصول من الشبكة)");
+        }
+
+        await SendMessageAsync(botToken, chatId, text.ToString());
     }
 
     public async Task StopAsync(CancellationToken cancellationToken)
