@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SmartPOS Activation Web</title>
+    <style>
+      body {
+        font-family:
+          Segoe UI,
+          Tahoma,
+          sans-serif;
+        background: #f7f9fc;
+        margin: 0;
+        color: #1f2937;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 24px auto;
+        padding: 20px;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        margin-bottom: 14px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 24px;
+      }
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        margin-bottom: 12px;
+      }
+      button {
+        background: #0ea5e9;
+        color: #fff;
+        border: 0;
+        padding: 11px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      button:hover {
+        background: #0284c7;
+      }
+      .muted {
+        color: #6b7280;
+        font-size: 13px;
+      }
+      .result {
+        white-space: pre-wrap;
+        background: #0b1020;
+        color: #dbeafe;
+        padding: 12px;
+        border-radius: 8px;
+        min-height: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>توليد كود تفعيل SmartPOS</h1>
+        <p class="muted">
+          نسخة ويب من أداة التفعيل. يفضل حمايتها عبر HTTPS + حسابات قوية +
+          Firewall.
+        </p>
+      </div>
+
+      <div class="card">
+        <label>اسم المستخدم (Admin)</label>
+        <input id="user" placeholder="adminpos" />
+
+        <label>كلمة المرور</label>
+        <input id="pass" type="password" placeholder="••••••" />
+
+        <label>اسم العميل / المتجر</label>
+        <input id="customer" placeholder="My Store" />
+
+        <label>Device ID</label>
+        <input id="device" placeholder="ABCD1234EFGH5678" />
+
+        <label>نوع الاشتراك</label>
+        <select id="duration">
+          <option value="trial14">تجربة مجانية 14 يوم</option>
+          <option value="m1">شهري (1 شهر)</option>
+          <option value="m6">6 شهور</option>
+          <option value="m12">سنوي (12 شهر)</option>
+          <option value="days">أيام مخصصة</option>
+        </select>
+
+        <label>عدد الأيام المخصصة (عند اختيار أيام مخصصة)</label>
+        <input id="days" type="number" min="1" value="14" />
+
+        <button id="generateBtn">توليد الكود</button>
+      </div>
+
+      <div class="card">
+        <label>النتيجة</label>
+        <div id="result" class="result"></div>
+      </div>
+    </div>
+
+    <script>
+      const resultEl = document.getElementById('result');
+
+      document
+        .getElementById('generateBtn')
+        .addEventListener('click', async () => {
+          const user = document.getElementById('user').value.trim();
+          const pass = document.getElementById('pass').value;
+          const customer = document.getElementById('customer').value.trim();
+          const device = document.getElementById('device').value.trim();
+          const duration = document.getElementById('duration').value;
+          const days = parseInt(
+            document.getElementById('days').value || '0',
+            10,
+          );
+
+          if (!customer || !device) {
+            resultEl.textContent = 'من فضلك أدخل اسم العميل و Device ID.';
+            return;
+          }
+
+          const body = { deviceId: device, customer, months: null, days: null };
+
+          if (duration === 'trial14') body.days = 14;
+          if (duration === 'm1') body.months = 1;
+          if (duration === 'm6') body.months = 6;
+          if (duration === 'm12') body.months = 12;
+          if (duration === 'days') body.days = days > 0 ? days : 14;
+
+          resultEl.textContent = 'جاري التوليد...';
+
+          try {
+            const res = await fetch('/api/generate', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Admin-User': user,
+                'X-Admin-Pass': pass,
+              },
+              body: JSON.stringify(body),
+            });
+
+            if (!res.ok) {
+              const txt = await res.text();
+              resultEl.textContent = `خطأ (${res.status}): ${txt}`;
+              return;
+            }
+
+            const data = await res.json();
+            resultEl.textContent = `Activation Code:\n${data.token}\n\nExpires UTC: ${data.expiresAtUtc}\nExpires Local: ${data.expiresAtLocal}`;
+          } catch (err) {
+            resultEl.textContent = `فشل الاتصال: ${err}`;
+          }
+        });
+    </script>
+  </body>
+</html>

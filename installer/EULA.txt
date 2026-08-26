@@ -1,0 +1,10 @@
+﻿End User License Agreement (EULA)
+===========================================================
+Software: RoboVAI PRO POS - AI Edition v6.0
+Publisher: RoboVAI Solutions
+
+1. This software is licensed, not sold.
+2. Reverse engineering or decompilation is strictly prohibited.
+3. The user is responsible for maintaining regular backups.
+
+Contact: robovaisolutions@gmail.com | +20 112 189 1913

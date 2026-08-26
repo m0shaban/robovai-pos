@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ApplicationIcon>..\..\assets\branding\robovai-pos.ico</ApplicationIcon>
+    <Product>RoboVAI POS</Product>
+    <Company>RoboVAI</Company>
+    <Authors>RoboVAI</Authors>
+    <Version>1.0.2</Version>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;tmp_obj\**;tmp_bin\**;publish\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SmartPOS.Core\SmartPOS.Core.csproj" />
+  </ItemGroup>
+
+</Project>

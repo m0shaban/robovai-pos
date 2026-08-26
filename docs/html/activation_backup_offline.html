@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RoboVAI Activation Backup (Offline)</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a30;
+        --text: #eaf0ff;
+        --muted: #9db0d6;
+        --accent: #38bdf8;
+        --ok: #22c55e;
+        --warn: #f59e0b;
+        --bad: #ef4444;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at 10% 15%,
+            rgba(56, 189, 248, 0.25),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 85% 80%,
+            rgba(34, 197, 94, 0.18),
+            transparent 30%
+          ),
+          var(--bg);
+        min-height: 100vh;
+        padding: 24px;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        gap: 16px;
+      }
+      .card {
+        background: rgba(18, 26, 48, 0.92);
+        border: 1px solid rgba(157, 176, 214, 0.22);
+        border-radius: 14px;
+        padding: 16px;
+      }
+      h1 {
+        margin: 0 0 10px;
+        font-size: 28px;
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+      p,
+      li {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      input,
+      select,
+      textarea,
+      button {
+        width: 100%;
+        border-radius: 9px;
+        border: 1px solid rgba(157, 176, 214, 0.28);
+        background: #0e162a;
+        color: var(--text);
+        padding: 10px;
+        font-size: 14px;
+      }
+      textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+      button {
+        background: linear-gradient(135deg, #0284c7, #22d3ee);
+        color: #001024;
+        font-weight: 700;
+        border: 0;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: linear-gradient(135deg, #475569, #64748b);
+        color: #fff;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .mt-8 {
+        margin-top: 8px;
+      }
+      .mt-10 {
+        margin-top: 10px;
+      }
+      .row > * {
+        flex: 1 1 260px;
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-inline-end: 8px;
+      }
+      .ok {
+        background: rgba(34, 197, 94, 0.2);
+        color: #86efac;
+      }
+      .warn {
+        background: rgba(245, 158, 11, 0.2);
+        color: #fcd34d;
+      }
+      .bad {
+        background: rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+      }
+      .output {
+        font-family: Consolas, Monaco, monospace;
+        word-break: break-all;
+        background: #070c18;
+        border: 1px solid rgba(157, 176, 214, 0.2);
+        border-radius: 9px;
+        padding: 10px;
+        min-height: 72px;
+      }
+      .hint {
+        font-size: 12px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>RoboVAI Activation Backup (Offline)</h1>
+        <p>
+          This standalone HTML file generates and verifies RoboVAI-compatible
+          activation keys without internet. Use only on trusted admin devices.
+        </p>
+        <p>
+          <span class="pill warn">Important</span> Activation format:
+          <strong>payload_b64.signature_b64</strong> with HMAC-SHA256 using
+          secret format
+          <strong>LICENSE_SECRET_KEY:store.license-key.v6.platinum</strong>.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>1) Generate Activation Key</h2>
+        <input
+          id="secret"
+          type="hidden"
+          value="mohamedshabanibrahimsalamaetmanrobovai-platinum-10y"
+        />
+        <input id="salt" type="hidden" value="store.license-key.v6.platinum" />
+        <div class="grid">
+          <div>
+            <label for="machineId">Machine ID (m)</label>
+            <input id="machineId" type="text" placeholder="PC-ABC12345" />
+          </div>
+          <div>
+            <label for="planName">Plan Name (p)</label>
+            <input id="planName" type="text" value="Pro" />
+          </div>
+          <div>
+            <label for="expiryMode">Expiry Mode</label>
+            <select id="expiryMode">
+              <option value="lifetime">LIFETIME</option>
+              <option value="date">Date</option>
+            </select>
+          </div>
+          <div>
+            <label for="expiryDate">Expiry Date (e)</label>
+            <input id="expiryDate" type="date" disabled />
+          </div>
+        </div>
+        <!-- Optional fields -->
+        <input id="orderId" type="hidden" value="" />
+        <input id="orderItemId" type="hidden" value="" />
+        <input id="productId" type="hidden" value="" />
+        <div class="grid mt-10">
+          <div>
+            <label for="seat">Seat / Slot # <span class="hint">(اتركه فارغاً للترخيص الفردي)</span></label>
+            <input id="seat" type="number" min="1" placeholder="e.g. 1" />
+          </div>
+          <div>
+            <label for="maxSeats">Max Seats (ms) <span class="hint">(اختياري)</span></label>
+            <input id="maxSeats" type="number" min="1" placeholder="e.g. 5" />
+          </div>
+        </div>
+        <div class="row mt-10">
+          <button id="generateBtn">Generate Key</button>
+          <button id="copyKeyBtn" class="secondary" type="button">
+            Copy Generated Key
+          </button>
+        </div>
+        <p class="hint">
+          Machine ID is normalized to uppercase and spaces removed before
+          signing.
+        </p>
+        <div id="generatedKey" class="output" aria-live="polite"></div>
+        <div id="generatedPayload" class="output mt-8" aria-live="polite"></div>
+      </div>
+
+      <div class="card">
+        <h2>2) Verify Activation Key</h2>
+        <input
+          id="verifySecret"
+          type="hidden"
+          value="mohamedshabanibrahimsalamaetmanrobovai-platinum-10y"
+        />
+        <input
+          id="verifySalt"
+          type="hidden"
+          value="store.license-key.v6.platinum"
+        />
+        <div class="grid">
+          <div>
+            <label for="verifyMachine">Machine ID</label>
+            <input id="verifyMachine" type="text" placeholder="PC-ABC12345" />
+          </div>
+        </div>
+        <label for="verifyKey" class="mt-8">Activation Key</label>
+        <textarea
+          id="verifyKey"
+          placeholder="Paste payload.signature"
+        ></textarea>
+        <div class="row mt-10">
+          <button id="verifyBtn">Verify Key</button>
+        </div>
+        <div id="verifyResult" class="output mt-10" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <script>
+      const encoder = new TextEncoder();
+
+      function normalizeMachineId(value) {
+        return (value || '').trim().toUpperCase().replace(/\s+/g, '');
+      }
+
+      function toBase64Url(bytes) {
+        let binary = '';
+        const chunkSize = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          const chunk = bytes.subarray(i, i + chunkSize);
+          binary += String.fromCharCode(...chunk);
+        }
+        return btoa(binary)
+          .replace(/\+/g, '-')
+          .replace(/\//g, '_')
+          .replace(/=+$/g, '');
+      }
+
+      function fromBase64Url(text) {
+        const padded =
+          text.replace(/-/g, '+').replace(/_/g, '/') +
+          '==='.slice((text.length + 3) % 4);
+        const binary = atob(padded);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i += 1) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+      }
+
+      async function signPayload(payloadB64, secret, salt) {
+        const keyData = encoder.encode(`${secret}:${salt}`);
+        const cryptoKey = await crypto.subtle.importKey(
+          'raw',
+          keyData,
+          { name: 'HMAC', hash: 'SHA-256' },
+          false,
+          ['sign'],
+        );
+        const signature = await crypto.subtle.sign(
+          'HMAC',
+          cryptoKey,
+          encoder.encode(payloadB64),
+        );
+        return toBase64Url(new Uint8Array(signature));
+      }
+
+      function parseExpiry(expiryText) {
+        if (!expiryText || expiryText.toUpperCase() === 'LIFETIME') {
+          return { lifetime: true, expiresAt: null };
+        }
+        const expiresAt = new Date(`${expiryText}T23:59:59Z`);
+        if (Number.isNaN(expiresAt.getTime())) {
+          throw new Error('Invalid expiry date format.');
+        }
+        return { lifetime: false, expiresAt };
+      }
+
+      function buildPayload() {
+        const machine = normalizeMachineId(
+          document.getElementById('machineId').value,
+        );
+        const plan = document.getElementById('planName').value.trim();
+        const expiryMode = document.getElementById('expiryMode').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const orderId = document.getElementById('orderId').value;
+        const orderItemId = document.getElementById('orderItemId').value;
+        const seat = document.getElementById('seat').value;
+        const productId = document.getElementById('productId').value.trim();
+
+        if (!machine) {
+          throw new Error('Machine ID is required.');
+        }
+        if (!plan) {
+          throw new Error('Plan name is required.');
+        }
+
+        const payload = {
+          m: machine,
+          p: plan,
+          e: expiryMode === 'lifetime' ? 'LIFETIME' : expiryDate,
+          g: new Date().toISOString().slice(0, 10),
+        };
+
+        if (
+          payload.e !== 'LIFETIME' &&
+          !/^\d{4}-\d{2}-\d{2}$/.test(payload.e)
+        ) {
+          throw new Error('Expiry date is required in YYYY-MM-DD.');
+        }
+        if (orderId) payload.o = Number(orderId);
+        if (orderItemId) payload.i = Number(orderItemId);
+        const seatVal = document.getElementById('seat').value;
+        const maxSeatsVal = document.getElementById('maxSeats').value;
+        if (seatVal) payload.s = Number(seatVal);
+        if (maxSeatsVal) payload.ms = Number(maxSeatsVal);
+        if (productId) payload.pr = productId;
+
+        return payload;
+      }
+
+      async function generateKey() {
+        const secret = document.getElementById('secret').value.trim();
+        const salt =
+          document.getElementById('salt').value.trim() ||
+          'store.license-key.v6.platinum';
+        const generatedKey = document.getElementById('generatedKey');
+        const generatedPayload = document.getElementById('generatedPayload');
+
+        if (!secret) {
+          generatedKey.textContent = 'Secret key is required.';
+          return;
+        }
+
+        try {
+          const payload = buildPayload();
+          const payloadJson = JSON.stringify(payload);
+          const payloadB64 = toBase64Url(encoder.encode(payloadJson));
+          const signatureB64 = await signPayload(payloadB64, secret, salt);
+          const key = `${payloadB64}.${signatureB64}`;
+
+          generatedKey.textContent = key;
+          generatedPayload.textContent = payloadJson;
+        } catch (error) {
+          generatedKey.textContent = error.message || 'Failed to generate key.';
+        }
+      }
+
+      async function verifyKey() {
+        const secret = document.getElementById('verifySecret').value.trim();
+        const salt =
+          document.getElementById('verifySalt').value.trim() ||
+          'store.license-key.v6.platinum';
+        const machine = normalizeMachineId(
+          document.getElementById('verifyMachine').value,
+        );
+        const keyText = document.getElementById('verifyKey').value.trim();
+        const verifyResult = document.getElementById('verifyResult');
+
+        if (!secret) {
+          verifyResult.textContent = 'Secret key is required.';
+          return;
+        }
+        if (!machine) {
+          verifyResult.textContent = 'Machine ID is required.';
+          return;
+        }
+
+        const parts = keyText.split('.');
+        if (parts.length !== 2) {
+          verifyResult.textContent =
+            'Invalid format. Expected payload.signature';
+          return;
+        }
+
+        try {
+          const payloadB64 = parts[0];
+          const signatureB64 = parts[1];
+          const expected = await signPayload(payloadB64, secret, salt);
+          if (expected !== signatureB64) {
+            verifyResult.textContent = 'Invalid signature.';
+            return;
+          }
+
+          const payloadBytes = fromBase64Url(payloadB64);
+          const payloadText = new TextDecoder().decode(payloadBytes);
+          const payload = JSON.parse(payloadText);
+
+          if (normalizeMachineId(payload.m) !== machine) {
+            verifyResult.textContent = `Machine mismatch. Token machine=${payload.m}, local machine=${machine}`;
+            return;
+          }
+
+          if (payload.e && String(payload.e).toUpperCase() !== 'LIFETIME') {
+            const { expiresAt } = parseExpiry(String(payload.e));
+            const now = new Date();
+            if (expiresAt < now) {
+              const graceEnd = new Date(
+                expiresAt.getTime() + 3 * 24 * 60 * 60 * 1000,
+              );
+              if (now <= graceEnd) {
+                verifyResult.textContent = `Valid (grace period). Expires: ${payload.e}`;
+                return;
+              }
+              verifyResult.textContent = `Expired. Expires: ${payload.e}`;
+              return;
+            }
+          }
+
+          verifyResult.textContent = `Valid key. Plan=${payload.p || 'N/A'}, Expiry=${payload.e || 'LIFETIME'}`;
+        } catch (error) {
+          verifyResult.textContent = error.message || 'Failed to verify key.';
+        }
+      }
+
+      document
+        .getElementById('generateBtn')
+        .addEventListener('click', generateKey);
+      document.getElementById('verifyBtn').addEventListener('click', verifyKey);
+      document
+        .getElementById('copyKeyBtn')
+        .addEventListener('click', async () => {
+          const value =
+            document.getElementById('generatedKey').textContent || '';
+          if (!value.trim()) {
+            return;
+          }
+          try {
+            await navigator.clipboard.writeText(value.trim());
+          } catch {
+            // ignore clipboard errors in restricted contexts
+          }
+        });
+
+      document
+        .getElementById('expiryMode')
+        .addEventListener('change', (event) => {
+          const input = document.getElementById('expiryDate');
+          input.disabled = event.target.value === 'lifetime';
+          if (input.disabled) {
+            input.value = '';
+          }
+        });
+    </script>
+  </body>
+</html>

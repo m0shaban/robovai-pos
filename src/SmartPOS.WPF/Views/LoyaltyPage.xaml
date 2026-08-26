@@ -1,0 +1,365 @@
+﻿<Page x:Class="SmartPOS.WPF.Views.LoyaltyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      FlowDirection="RightToLeft"
+      Loaded="Page_Loaded">
+
+    <Grid Background="{DynamicResource AlAtmani.BackgroundBrush}"
+          TextElement.Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
+          Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <materialDesign:Card Grid.Row="0"
+                             Style="{StaticResource AlAtmani.GlassCard}"
+                             Margin="0,0,0,24"
+                             Padding="24">
+            <DockPanel>
+                <Border DockPanel.Dock="Right" Background="{DynamicResource AlAtmani.Surface2Brush}"
+                        CornerRadius="12"
+                        Padding="12"
+                        Margin="0,0,16,0"
+                        VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="StarCircle"
+                                             Width="32"
+                                             Height="32"
+                                             Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                </Border>
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
+                    <TextBlock Text="نظام نقاط الولاء"
+                               Style="{StaticResource AlAtmani.HeaderText}"/>
+                    <TextBlock Text="إدارة نقاط العملاء ومكافآت الولاء"
+                               FontSize="14"
+                               Opacity="0.85"
+                               Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
+                               Margin="0,4,0,0"/>
+                </StackPanel>
+                
+                <!-- Toolbar -->
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Command="{Binding LoadCommand}"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="تحديث البيانات"
+                            Foreground="{DynamicResource AlAtmani.AccentBrush}">
+                        <materialDesign:PackIcon Kind="Refresh" Width="24" Height="24"/>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:Card>
+
+        <!-- Loyalty Tiers -->
+        <Grid Grid.Row="1"
+              Margin="0,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Bronze -->
+            <materialDesign:Card Grid.Column="0"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Margin="0,0,8,0"
+                                 Padding="20">
+                <StackPanel>
+                    <Border Background="{DynamicResource AlAtmani.Surface2Brush}"
+                            CornerRadius="12"
+                            Padding="10"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,12">
+                        <materialDesign:PackIcon Kind="Medal"
+                                                 Width="32"
+                                                 Height="32"
+                                                 Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Border>
+                    <TextBlock Text="برونزي"
+                               FontSize="14"
+                               Opacity="0.7"/>
+                    <TextBlock Text="0 - 999 نقطة"
+                               FontSize="12"
+                               Opacity="0.6"
+                               Margin="0,4,0,0"/>
+                    <TextBlock Text="{Binding BronzeCount, StringFormat={}{0} عميل}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Silver -->
+            <materialDesign:Card Grid.Column="1"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Margin="8,0,8,0"
+                                 Padding="20">
+                <StackPanel>
+                    <Border Background="{DynamicResource AlAtmani.Surface2Brush}"
+                            CornerRadius="12"
+                            Padding="10"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,12">
+                        <materialDesign:PackIcon Kind="Medal"
+                                                 Width="32"
+                                                 Height="32"
+                                                 Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Border>
+                    <TextBlock Text="فضي"
+                               FontSize="14"
+                               Opacity="0.7"/>
+                    <TextBlock Text="1,000 - 2,999 نقطة"
+                               FontSize="12"
+                               Opacity="0.6"
+                               Margin="0,4,0,0"/>
+                    <TextBlock Text="{Binding SilverCount, StringFormat={}{0} عميل}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Gold -->
+            <materialDesign:Card Grid.Column="2"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Margin="8,0,8,0"
+                                 Padding="20">
+                <StackPanel>
+                    <Border Background="{DynamicResource AlAtmani.Surface2Brush}"
+                            CornerRadius="12"
+                            Padding="10"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,12">
+                        <materialDesign:PackIcon Kind="Medal"
+                                                 Width="32"
+                                                 Height="32"
+                                                 Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Border>
+                    <TextBlock Text="ذهبي"
+                               FontSize="14"
+                               Opacity="0.7"/>
+                    <TextBlock Text="3,000 - 4,999 نقطة"
+                               FontSize="12"
+                               Opacity="0.6"
+                               Margin="0,4,0,0"/>
+                    <TextBlock Text="{Binding GoldCount, StringFormat={}{0} عميل}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Platinum -->
+            <materialDesign:Card Grid.Column="3"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Margin="8,0,0,0"
+                                 Padding="20">
+                <StackPanel>
+                    <Border Background="{DynamicResource AlAtmani.Surface2Brush}"
+                            CornerRadius="12"
+                            Padding="10"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,12">
+                        <materialDesign:PackIcon Kind="Crown"
+                                                 Width="32"
+                                                 Height="32"
+                                                 Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Border>
+                    <TextBlock Text="بلاتيني"
+                               FontSize="14"
+                               Opacity="0.7"/>
+                    <TextBlock Text="5,000+ نقطة"
+                               FontSize="12"
+                               Opacity="0.6"
+                               Margin="0,4,0,0"/>
+                    <TextBlock Text="{Binding PlatinumCount, StringFormat={}{0} عميل}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+
+        <!-- Customer Loyalty List -->
+        <materialDesign:Card Grid.Row="2"
+                             Style="{StaticResource AlAtmani.GlassCard}"
+                             Margin="0"
+                             Padding="24">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" Margin="0,0,0,16">
+                    <TextBlock Text="عملاء برنامج الولاء"
+                               Style="{StaticResource AlAtmani.SubHeaderText}"
+                               VerticalAlignment="Center"/>
+                               
+                    <TextBox materialDesign:HintAssist.Hint="بحث باسم العميل أو رقم الهاتف..."
+                             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Padding="8,6"
+                             Width="250"
+                             HorizontalAlignment="Left"
+                             materialDesign:TextFieldAssist.HasClearButton="True"
+                             VerticalAlignment="Center"/>
+                </DockPanel>
+
+                <!-- Action Row -->
+                <Grid Grid.Row="1"
+                      Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0"
+                              ItemsSource="{Binding Customers}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding SelectedCustomer}"
+                              Height="45"
+                              Margin="0,0,10,0"
+                              materialDesign:HintAssist.Hint="اختر العميل"/>
+
+                    <TextBox Grid.Column="1"
+                             Height="45"
+                             Text="{Binding PointsInput, UpdateSourceTrigger=PropertyChanged}"
+                             materialDesign:HintAssist.Hint="عدد النقاط"
+                             Margin="0,0,10,0"/>
+
+                    <Button Grid.Column="2"
+                            Style="{StaticResource AlAtmani.SoftButton}"
+                            Height="45"
+                            Content="إضافة نقاط"
+                            Command="{Binding AddPointsCommand}"
+                            Margin="0,0,10,0"/>
+
+                    <Button Grid.Column="3"
+                            Style="{StaticResource AlAtmani.SoftButton}"
+                            Height="45"
+                            Content="استبدال نقاط"
+                            Command="{Binding RedeemPointsCommand}"/>
+                </Grid>
+
+                <TextBox Grid.Row="2"
+                         Height="45"
+                         Text="{Binding NotesInput, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="ملاحظات"/>
+
+                <!-- Customer List -->
+                <DataGrid Grid.Row="3"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          HeadersVisibility="Column"
+                          FontSize="14"
+                          ItemsSource="{Binding Loyalties}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="اسم العميل"
+                                            Binding="{Binding Customer.Name}"
+                                            Width="2*"/>
+                        <DataGridTextColumn Header="رقم الهاتف"
+                                            Binding="{Binding Customer.Phone}"
+                                            Width="*"/>
+                        <DataGridTextColumn Header="النقاط الحالية"
+                                            Binding="{Binding Points}"
+                                            Width="*"/>
+                        <DataGridTextColumn Header="إجمالي النقاط المكتسبة"
+                                            Binding="{Binding TotalPointsEarned}"
+                                            Width="*"/>
+                        <DataGridTemplateColumn Header="المستوى" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Padding="12,4" CornerRadius="12" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="#F3F4F6"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Tier}" Value="Bronze">
+                                                        <Setter Property="Background" Value="#FEF08A"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Tier}" Value="Silver">
+                                                        <Setter Property="Background" Value="#E5E7EB"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Tier}" Value="Gold">
+                                                        <Setter Property="Background" Value="#FEF9C3"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Tier}" Value="Platinum">
+                                                        <Setter Property="Background" Value="#E0E7FF"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Width="14" Height="14" VerticalAlignment="Center" Margin="0,0,4,0">
+                                                <materialDesign:PackIcon.Style>
+                                                    <Style TargetType="materialDesign:PackIcon">
+                                                        <Setter Property="Kind" Value="Medal"/>
+                                                        <Setter Property="Foreground" Value="#4B5563"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Bronze">
+                                                                <Setter Property="Foreground" Value="#A16207"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Silver">
+                                                                <Setter Property="Foreground" Value="#4B5563"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Gold">
+                                                                <Setter Property="Foreground" Value="#CA8A04"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Platinum">
+                                                                <Setter Property="Kind" Value="Crown"/>
+                                                                <Setter Property="Foreground" Value="#4338CA"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </materialDesign:PackIcon.Style>
+                                            </materialDesign:PackIcon>
+                                            <TextBlock FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="#4B5563"/>
+                                                        <Setter Property="Text" Value="غير محدد"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Bronze">
+                                                                <Setter Property="Foreground" Value="#A16207"/>
+                                                                <Setter Property="Text" Value="برونزي"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Silver">
+                                                                <Setter Property="Foreground" Value="#4B5563"/>
+                                                                <Setter Property="Text" Value="فضي"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Gold">
+                                                                <Setter Property="Foreground" Value="#CA8A04"/>
+                                                                <Setter Property="Text" Value="ذهبي"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Tier}" Value="Platinum">
+                                                                <Setter Property="Foreground" Value="#4338CA"/>
+                                                                <Setter Property="Text" Value="بلاتيني"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="آخر تحديث"
+                                            Binding="{Binding LastTierUpdate, StringFormat={}{0:yyyy-MM-dd}}"
+                                            Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</Page>

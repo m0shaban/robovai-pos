@@ -1,0 +1,16 @@
+{
+  "name": "robovai-cloud-server",
+  "version": "2.0.0",
+  "description": "RobovAI Cloud REST & WebSocket Sync Server for Multi-Branch POS Ecosystem",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "ws": "^8.17.0"
+  }
+}

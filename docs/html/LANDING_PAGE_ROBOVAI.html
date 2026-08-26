@@ -1,0 +1,469 @@
+<!-- 
+    صفحة الهبوط لنظام RoboVAI POS
+    تعليمات: انسخ هذا الكود وضعه داخل صفحة جديدة (Page) أو مشاركة (Post) في Blogger.
+    تم تصميم الأنماط (CSS) لتكون "معزولة" (Scoped) لعدم التأثير على الهيدر والفوتر الخاص بالموقع.
+-->
+
+<style>
+  /* Scoped Styles for Landing Page Container */
+  .robovai-lp-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    direction: rtl;
+    text-align: right;
+    line-height: 1.6;
+    background-color: #fcfcfc;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    border-radius: 8px;
+  }
+
+  .robovai-lp-container h1,
+  .robovai-lp-container h2,
+  .robovai-lp-container h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+
+  /* Hero Section */
+  .robovai-hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+    color: white;
+    border-radius: 12px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .robovai-hero-logo {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .robovai-hero h1 {
+    color: white;
+    font-size: 3em;
+    margin-bottom: 10px;
+  }
+
+  .robovai-hero p {
+    font-size: 1.4em;
+    opacity: 0.9;
+    margin-bottom: 30px;
+  }
+
+  .robovai-btn {
+    display: inline-block;
+    background-color: #fff;
+    color: #1565c0;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .robovai-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    color: #0d47a1;
+  }
+
+  /* Features Grid */
+  .robovai-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+
+  .robovai-feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #1e88e5;
+    transition: transform 0.3s;
+  }
+
+  .robovai-feature-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .robovai-feature-icon {
+    font-size: 2.5em;
+    color: #1e88e5;
+    margin-bottom: 15px;
+  }
+
+  /* Pricing Section */
+  .robovai-pricing-section {
+    background-color: #f8f9fa;
+    padding: 50px 20px;
+    border-radius: 12px;
+    margin-bottom: 60px;
+  }
+
+  .robovai-section-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #2c3e50;
+  }
+
+  .robovai-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .robovai-plan-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+  }
+
+  .robovai-plan-card.popular {
+    border-color: #fbc02d;
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .robovai-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fbc02d;
+    color: #333;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  .robovai-price {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #1565c0;
+    margin: 20px 0;
+  }
+
+  .robovai-period {
+    font-size: 0.4em;
+    color: #777;
+    font-weight: normal;
+  }
+
+  .robovai-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: right;
+  }
+
+  .robovai-features-list li {
+    margin-bottom: 10px;
+    padding-right: 25px;
+    position: relative;
+    color: #555;
+  }
+
+  .robovai-features-list li::before {
+    content: '✓';
+    color: #4caf50;
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+  }
+
+  .robovai-features-list li.missing {
+    color: #aaa;
+    text-decoration: line-through;
+  }
+
+  .robovai-features-list li.missing::before {
+    content: '✕';
+    color: #e53935;
+  }
+
+  /* FAQ / Commercial */
+  .robovai-faq {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .robovai-faq h2 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* CTA Section (WhatsApp) */
+  .robovai-cta {
+    text-align: center;
+    margin-top: 60px;
+    padding: 40px;
+    background-color: #e3f2fd;
+    border-radius: 12px;
+  }
+
+  .whatsapp-btn {
+    background-color: #25d366;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.3em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+    margin-top: 20px;
+  }
+
+  .whatsapp-btn:hover {
+    background-color: #1da851;
+  }
+</style>
+
+<div class="robovai-lp-container">
+  <!-- Hero Section -->
+  <div class="robovai-hero">
+    <!-- Logo Placeholder - you can upload your images and replace this src -->
+    <img
+      src="https://via.placeholder.com/120.png?text=RoboVAI"
+      alt="RoboVAI Logo"
+      class="robovai-hero-logo"
+    />
+    <h1>نظام RoboVAI POS</h1>
+    <p>الذكاء والسهولة في إدارة متجرك (نسخة 2026)</p>
+    <a href="#pricing" class="robovai-btn">ابدأ التجربة المجانية</a>
+  </div>
+
+  <!-- Intro Text -->
+  <div
+    style="
+      text-align: center;
+      margin-bottom: 50px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    "
+  >
+    <h2>هل تبحث عن نظام كاشير متكامل واحترافي؟</h2>
+    <p style="font-size: 1.1em; color: #555">
+      نقدم لك <strong>RoboVAI POS</strong>، الحل الأمثل للمحلات التجارية، السوبر
+      ماركت، والمطاعم. نظام يعمل بدون إنترنت (Offline)، يدعم الفاتورة
+      الإلكترونية، إدارة المخزون، والتقارير الذكية. مصمم بخبرة ليتناسب مع السوق
+      المصري والعربي.
+    </p>
+  </div>
+
+  <!-- Features -->
+  <div class="robovai-features">
+    <div class="robovai-feature-card">
+      <div class="robovai-feature-icon">🚀</div>
+      <h3>سرعة فائقة</h3>
+      <p>
+        واجهة بيع سريعة (POS) تدعم شاشات اللمس والباركود، مصممة لاختصار الوقت.
+      </p>
+    </div>
+    <div class="robovai-feature-card">
+      <div class="robovai-feature-icon">📊</div>
+      <h3>تقارير ذكية</h3>
+      <p>
+        تابع مبيعاتك، أرباحك، ونواقص المخزون لحظة بلحظة من خلال لوحة تحكم عصرية.
+      </p>
+    </div>
+    <div class="robovai-feature-card">
+      <div class="robovai-feature-icon">🔐</div>
+      <h3>أمان وخصوصية</h3>
+      <p>
+        بياناتك محفوظة على جهازك بنسبة 100%. لا يحتاج لاتصال دائم بالإنترنت.
+      </p>
+    </div>
+    <div class="robovai-feature-card">
+      <div class="robovai-feature-icon">🧾</div>
+      <h3>طباعة وفواتير</h3>
+      <p>
+        دعم كامل للطابعات الحرارية (Thermal 80mm/58mm) ودرج الكاشير قارئ
+        الباركود.
+      </p>
+    </div>
+  </div>
+
+  <!-- Commercial Readiness -->
+  <div class="robovai-faq">
+    <h2>أكثر من مجرد برنامج كاشير.. شريك نجاحك!</h2>
+    <p>
+      لا تدع المشاكل التقنية توقف مبيعاتك. تم تصميم
+      <strong>RoboVAI POS</strong> هندسياً ليتحمل أقصى درجات ضغط العمل التجاري،
+      ليمنحك راحة البال والتركيز الكامل على نمو أرباحك.
+    </p>
+    <ul style="list-style: none; padding: 0">
+      <li style="margin-bottom: 15px">
+        ✅ <strong>يعمل بلا توقف:</strong> استقرار تام في الأداء حتى مع آلاف
+        الفواتير اليومية وانقطاع الإنترنت.
+      </li>
+      <li style="margin-bottom: 15px">
+        ✅ <strong>أمان لبياناتك المالية:</strong> قاعدة بياناتك ملك لك وحدك،
+        محمية ومشفرة على جهازك لضمان الخصوصية ومنع التلاعب.
+      </li>
+      <li style="margin-bottom: 15px">
+        ✅ <strong>دعم فني وتحديثات:</strong> لست وحدك، فريقنا التقني معك لضمان
+        أن نظامك يعمل دائماً بأحدث التقنيات.
+      </li>
+    </ul>
+  </div>
+
+  <!-- Pricing Section -->
+  <div class="robovai-pricing-section" id="pricing">
+    <div class="robovai-section-title">باقات الاشتراك والأسعار</div>
+
+    <div class="robovai-pricing-grid">
+      <!-- Plan: Free Trial -->
+      <div class="robovai-plan-card">
+        <h3>تجربة مجانية</h3>
+        <div class="robovai-price" style="font-size: 2em; color: #777">
+          0 <span class="robovai-period">جنيه</span>
+        </div>
+        <p>لمدة 14 يوم</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0" />
+        <ul class="robovai-features-list">
+          <li>كامل المميزات للتجربة</li>
+          <li>دعم فني محدود</li>
+          <li>نسخة كاملة غير مقيدة</li>
+          <li>يعمل أوفلاين</li>
+        </ul>
+        <a
+          href="#contact"
+          style="
+            display: block;
+            margin-top: 20px;
+            color: #1565c0;
+            font-weight: bold;
+            text-decoration: none;
+          "
+          >طلب التجربة &larr;</a
+        >
+      </div>
+
+      <!-- Plan: Monthly (Starter) -->
+      <div class="robovai-plan-card">
+        <h3>اشتراك شهري</h3>
+        <div class="robovai-price">
+          350 <span class="robovai-period">ج.م / شهرياً</span>
+        </div>
+        <p>للأنشطة الصغيرة والموسمية</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0" />
+        <ul class="robovai-features-list">
+          <li>تفعيل لجهاز واحد</li>
+          <li>تحديثات مجانية</li>
+          <li>دعم فني واتساب</li>
+          <li>تجديد مرن</li>
+        </ul>
+      </div>
+
+      <!-- Plan: Annual (Best Value) -->
+      <div class="robovai-plan-card popular">
+        <span class="robovai-badge">الأكثر طلباً</span>
+        <h3>اشتراك سنوي</h3>
+        <div class="robovai-price">
+          3,500 <span class="robovai-period">ج.م / سنوياً</span>
+        </div>
+        <p>وفر شهرين من قيمة الاشتراك!</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0" />
+        <ul class="robovai-features-list">
+          <li>تفعيل كامل لمدة سنة</li>
+          <li>تحديثات مجانية طوال السنة</li>
+          <li>أولوية الدعم الفني</li>
+          <li>تدريب مجاني على النظام</li>
+        </ul>
+      </div>
+
+      <!-- Plan: Lifetime -->
+      <div class="robovai-plan-card" style="border: 1px solid #ccc">
+        <h3>مدى الحياة</h3>
+        <div class="robovai-price" style="color: #444">
+          8,000 <span class="robovai-period">ج.م مرة واحدة</span>
+        </div>
+        <p>شراء الترخيص (Lifetime)</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0" />
+        <ul class="robovai-features-list">
+          <li>ترخيص دائم للاصدار الحالي</li>
+          <li>يعمل مدى الحياة بدون اشتراك</li>
+          <li class="missing">لا يشمل التحديثات الكبرى القادمة</li>
+          <li>دعم فني لمدة عام واحد</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Installation & Requirements -->
+  <div
+    style="
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      margin-bottom: 50px;
+    "
+  >
+    <h3>متطلبات التشغيل</h3>
+    <p>يعمل النظام بكفاءة على معظم أجهزة الكمبيوتر ونقاظ البيع (All-in-One).</p>
+    <ul style="list-style-type: disc; padding-right: 20px; color: #555">
+      <li>نظام التشغيل: Windows 10 أو Windows 11 (64-bit).</li>
+      <li>المعالج: Core i3 الجيل الرابع أو أحدث.</li>
+      <li>الذاكرة (RAM): 4 جيجابايت كحد أدنى.</li>
+      <li>المساحة: 500 ميجابايت مساحة فارغة.</li>
+    </ul>
+  </div>
+
+  <!-- CTA Contact -->
+  <div class="robovai-cta" id="contact">
+    <h2>جاهز للبدء؟</h2>
+    <p style="font-size: 1.2em; margin-bottom: 30px">
+      تواصل معنا الآن للحصول على نسختك التجريبية أو الاشتراك وتفعيل النظام
+      فوراً.
+    </p>
+
+    <a
+      href="https://wa.me/201121891913?text=مرحباً، أرغب في الاستفسار عن نظام RoboVAI POS"
+      class="whatsapp-btn"
+      target="_blank"
+    >
+      <span>تواصل عبر واتساب</span>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="white"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.309-5.216c0-5.457 4.432-9.884 9.896-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.89-9.898 9.89M12 2C6.486 2 2 6.486 2 12c0 1.846.577 3.557 1.581 4.97L2.002 22l5.235-1.344A10.038 10.038 0 0112 22c5.514 0 10-4.486 10-10S17.514 2 12 2z"
+        />
+      </svg>
+    </a>
+  </div>
+</div>

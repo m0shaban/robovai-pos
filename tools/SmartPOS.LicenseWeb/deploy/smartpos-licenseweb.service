@@ -1,0 +1,17 @@
+[Unit]
+Description=SmartPOS License Web Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/smartpos-licenseweb
+ExecStart=/opt/smartpos-licenseweb/SmartPOS.LicenseWeb
+Restart=always
+RestartSec=5
+User=www-data
+Group=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+EnvironmentFile=/etc/smartpos-licenseweb.env
+
+[Install]
+WantedBy=multi-user.target

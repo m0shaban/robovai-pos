@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ba6nDIniasw=",
+  "success": true,
+  "projectFilePath": "F:\\Raw\\kasher\\kasher\\tools\\Branding.IconGen\\Branding.IconGen.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\shaban\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\shaban\\.nuget\\packages\\system.drawing.common\\8.0.26\\system.drawing.common.8.0.26.nupkg.sha512"
+  ],
+  "logs": []
+}

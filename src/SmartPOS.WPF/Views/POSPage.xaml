@@ -1,0 +1,846 @@
+<Page x:Class="SmartPOS.WPF.Views.POSPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      d:DesignHeight="800"
+      d:DesignWidth="1400"
+      Title="CASHIER"
+      FontFamily="Segoe UI"
+      FlowDirection="RightToLeft"
+      Loaded="Page_Loaded"
+      PreviewKeyDown="Page_PreviewKeyDown">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Removed obsolete MaterialDesignTheme.Defaults.xaml to fix crash -->
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="Cashier.SurfaceBrush"
+                             Color="#16203A"
+                             Opacity="0.78"/>
+
+            <!-- Modern Scrollbar -->
+            <Style TargetType="ScrollBar"
+                   BasedOn="{StaticResource MaterialDesignScrollBar}"/>
+
+            <!-- Category Chip Style -->
+            <Style x:Key="CategoryChipStyle"
+                   TargetType="RadioButton"
+                   BasedOn="{StaticResource MaterialDesignChoiceChipOutlineRadioButton}">
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Margin" Value="0,0,8,0"/>
+                <Setter Property="Height" Value="55"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Padding" Value="16,8"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource AlAtmani.BorderBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource AlAtmani.AccentBrush}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource AlAtmani.AccentBrush}"/>
+                        <Setter Property="Foreground" Value="White"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Converters -->
+            <local:PaymentMethodToArabicConverter x:Key="PaymentMethodToArabicConverter" xmlns:local="clr-namespace:SmartPOS.WPF.Converters"/>
+            <local:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter" xmlns:local="clr-namespace:SmartPOS.WPF.Converters"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid x:Name="RootGrid" Background="{DynamicResource AlAtmani.BackgroundBrush}"
+          TextElement.Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}">
+        <!-- Page Shortcuts -->
+        <Grid.InputBindings>
+            <KeyBinding Key="F1" Command="{Binding AddProductByBarcodeCommand}" />
+            <KeyBinding Key="F2" Command="{Binding SubmitOrderCommand}" />
+            <KeyBinding Key="F3" Command="{Binding OpenCashDrawerCommand}" />
+            <KeyBinding Key="F4" Command="{Binding ClearCartCommand}" />
+            <KeyBinding Key="F6" Command="{Binding ParkCurrentOrderCommand}" />
+            <KeyBinding Key="F7" Command="{Binding ToggleParkedOrdersPopupCommand}" />
+            <KeyBinding Key="F9" Command="{Binding ToggleTouchNumpadCommand}" />
+            <KeyBinding Key="Enter" Command="{Binding SubmitOrderCommand}" Modifiers="Ctrl" />
+        </Grid.InputBindings>
+        <Grid.ColumnDefinitions>
+            <!-- LEFT: CATALOG (62%) -->
+            <ColumnDefinition Width="6.2*"/>
+            <!-- RIGHT: CART (38%) -->
+            <ColumnDefinition Width="3.8*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- === LEFT SECTION: PRODUCTS === -->
+        <Grid Grid.Column="0"
+              Margin="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Search & Quick Action Header -->
+                <RowDefinition Height="Auto"/>
+                <!-- Categories -->
+                <RowDefinition Height="*"/>
+                <!-- Products Catalog (Grid / Compact List) -->
+            </Grid.RowDefinitions>
+
+            <!-- 1. Header, Search & Action Bar -->
+            <Grid Grid.Row="0"
+                  Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}"
+                                     Padding="6,4"
+                                     UniformCornerRadius="20"
+                                     Margin="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="Magnify"
+                                                 Width="24"
+                                                 Height="24"
+                                                 VerticalAlignment="Center"
+                                                 Margin="12,0"
+                                                 Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                        <TextBox x:Name="BarcodeTextBox"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="امسح الباركود أو ابحث بالاسم أو الكود... (F1)"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0"
+                                 FontSize="15"
+                                 VerticalAlignment="Center"
+                                 Padding="0,8"
+                                 Background="Transparent"
+                                 Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
+                                 Text="{Binding BarcodeInput, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding AddProductByBarcodeCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                    </Grid>
+                </materialDesign:Card>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,0,0,0">
+                    <!-- Search Button -->
+                    <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
+                            Background="{DynamicResource AlAtmani.AccentBrush}"
+                            BorderBrush="{DynamicResource AlAtmani.AccentBrush}"
+                            Command="{Binding AddProductByBarcodeCommand}"
+                            Margin="0,0,8,0"
+                            ToolTip="بحث بالباركود / F1">
+                        <materialDesign:PackIcon Kind="BarcodeScan" Width="22" Height="22" Foreground="White"/>
+                    </Button>
+
+                    <!-- Toggle Grid / Compact List View -->
+                    <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
+                            Command="{Binding ToggleCompactListViewCommand}"
+                            Margin="0,0,8,0"
+                            ToolTip="تبديل العرض (شبكة بالصور / جدول مدمج بالباركود)">
+                        <materialDesign:PackIcon Kind="ViewList" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Button>
+
+                    <!-- Park Current Order Button -->
+                    <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
+                            Command="{Binding ParkCurrentOrderCommand}"
+                            Margin="0,0,8,0"
+                            ToolTip="تعليق الفاتورة الحالية (Park / F6)">
+                        <materialDesign:PackIcon Kind="PauseCircleOutline" Width="22" Height="22" Foreground="#F59E0B"/>
+                    </Button>
+
+                    <!-- Parked Orders List Button with Badge -->
+                    <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
+                            Width="Auto" Padding="14,0"
+                            Command="{Binding ToggleParkedOrdersPopupCommand}"
+                            Margin="0,0,8,0"
+                            ToolTip="الفواتير المعلقة (F7)">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ClockOutline" Width="20" Height="20" Foreground="#F59E0B" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="{Binding ParkedOrdersCount, StringFormat='{}معلق ({0})'}" FontWeight="Bold" FontSize="13" Foreground="#F59E0B" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Touch Numpad Button -->
+                    <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
+                            Command="{Binding ToggleTouchNumpadCommand}"
+                            Margin="0,0,8,0"
+                            ToolTip="لوحة الأرقام اللمسية (F9)">
+                        <materialDesign:PackIcon Kind="Calculator" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Button>
+
+                    <!-- Cash Drawer Button -->
+                    <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
+                            Command="{Binding OpenCashDrawerCommand}"
+                            ToolTip="فتح الدرج يدوياً / F3">
+                        <materialDesign:PackIcon Kind="CashRegister" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- 2. Categories -->
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled"
+                          Margin="0,0,0,12">
+                <ItemsControl ItemsSource="{Binding Categories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Style="{StaticResource CategoryChipStyle}"
+                                         Content="{Binding Name}"
+                                         IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                         Command="{Binding DataContext.SelectCategoryCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                         CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- 3. Products Catalog (Grid OR Compact List) -->
+            <Grid Grid.Row="2">
+                <!-- A: Standard Touch Grid View (When IsCompactListView == False) -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <ScrollViewer.Style>
+                        <Style TargetType="ScrollViewer">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCompactListView}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Style>
+                    <ItemsControl ItemsSource="{Binding QuickProducts}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Product Card -->
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}"
+                                        Command="{Binding DataContext.AddProductToCartCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        Width="190"
+                                        Height="240"
+                                        Margin="6"
+                                        Padding="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <materialDesign:Card UniformCornerRadius="20"
+                                                                 BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
+                                                                 BorderThickness="1"
+                                                                 Background="{DynamicResource AlAtmani.SurfaceBrush}"
+                                                                 materialDesign:ElevationAssist.Elevation="Dp2"
+                                                                 Cursor="Hand">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="120"/>
+                                                        <!-- Image Area -->
+                                                        <RowDefinition Height="*"/>
+                                                        <!-- Info Area -->
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Image Placeholder -->
+                                                    <Border Grid.Row="0"
+                                                            Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                                            CornerRadius="20,20,0,0"
+                                                            ClipToBounds="True">
+                                                        <Grid>
+                                                            <materialDesign:PackIcon Kind="ShoppingBasket"
+                                                                                     Width="42"
+                                                                                     Height="42"
+                                                                                     HorizontalAlignment="Center"
+                                                                                     VerticalAlignment="Center"
+                                                                                     Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                                                            <Image Source="{Binding ImagePath}" Stretch="UniformToFill" 
+                                                                   Visibility="{Binding ImagePath, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <!-- Ripple Overlay -->
+                                                    <materialDesign:Ripple Grid.RowSpan="2" Feedback="#3B82F6"/>
+
+                                                    <!-- Info -->
+                                                    <Grid Grid.Row="1" Margin="10">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   TextWrapping="Wrap"
+                                                                   FontSize="14"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
+                                                                   VerticalAlignment="Top"/>
+
+                                                        <StackPanel Grid.Row="1"
+                                                                    Orientation="Horizontal"
+                                                                    HorizontalAlignment="Right">
+                                                            <TextBlock Text="{Binding SellingPrice, StringFormat='{}{0:N0}'}"
+                                                                       FontSize="17"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                                            <TextBlock Text=" ج.م"
+                                                                       FontSize="11"
+                                                                       VerticalAlignment="Bottom"
+                                                                       Margin="4,0,0,2"
+                                                                       Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Grid>
+                                            </materialDesign:Card>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <!-- B: High-Density Compact Barcode List View (When IsCompactListView == True) -->
+                <ListView ItemsSource="{Binding QuickProducts}"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.Style>
+                        <Style TargetType="ListView">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCompactListView}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{DynamicResource AlAtmani.SurfaceBrush}"
+                                    BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="12,8"
+                                    Margin="0,0,0,6">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="70"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Barcode}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Category.Name}" FontSize="12" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding SellingPrice, StringFormat='{}{0:N0} ج.م'}" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource AlAtmani.AccentBrush}" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="4" Style="{StaticResource MaterialDesignRaisedButton}"
+                                            Height="32" Padding="8,0"
+                                            Background="{DynamicResource AlAtmani.AccentBrush}"
+                                            Command="{Binding DataContext.AddProductToCartCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="Plus" Width="16" Height="16"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <!-- === RIGHT SECTION: CART === -->
+        <materialDesign:Card Grid.Column="1"
+                             Style="{StaticResource AlAtmani.GlassCard}"
+                             Margin="12,16,16,16"
+                             Padding="0"
+                             UniformCornerRadius="24">
+            <Grid Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Fast Customer & Cart Header -->
+                    <RowDefinition Height="*"/>
+                    <!-- Cart Items List -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Discounts & Checkout Area -->
+                </Grid.RowDefinitions>
+
+                <!-- 1. Cart Header & Fast Customer / Loyalty Selector -->
+                <StackPanel Grid.Row="0">
+                    <Grid Margin="16,12,16,8">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="CartOutline" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="الطلب الحالي"
+                                       FontSize="17"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                        </StackPanel>
+                        
+                        <Button Focusable="False" Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                Command="{Binding ClearCartCommand}"
+                                HorizontalAlignment="Right"
+                                ToolTip="مسح السلة بالكامل (F4)">
+                            <materialDesign:PackIcon Kind="DeleteSweepOutline"
+                                                     Width="22"
+                                                     Height="22"
+                                                     Foreground="#FB7185"/>
+                        </Button>
+                    </Grid>
+
+                    <!-- Fast Customer Selector with Loyalty Points Preview -->
+                    <Border Background="{DynamicResource AlAtmani.Surface2Brush}" 
+                            CornerRadius="14" Margin="12,0,12,8" Padding="8,4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <materialDesign:PackIcon Kind="AccountSearchOutline" Width="20" Height="20" 
+                                                     VerticalAlignment="Center" Margin="4,0,6,0"
+                                                     Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                            
+                            <ComboBox Grid.Column="1"
+                                      materialDesign:HintAssist.Hint="ابحث عن العميل (بالاسم أو الهاتف)..."
+                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                      ItemsSource="{Binding Customers}"
+                                      DisplayMemberPath="Name"
+                                      SelectedItem="{Binding SelectedCustomer, UpdateSourceTrigger=PropertyChanged}"
+                                      BorderThickness="0"
+                                      Background="Transparent"
+                                      FontSize="13"
+                                      VerticalAlignment="Center"/>
+
+                            <!-- Loyalty Points Badge & Quick Redeem Button -->
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
+                                        Visibility="{Binding SelectedCustomer, Converter={StaticResource NullToVisibilityConverter}}">
+                                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        Command="{Binding RedeemLoyaltyPointsCommand}"
+                                        Padding="6,2" Height="28" Margin="4,0,0,0"
+                                        Background="#10B981" Foreground="White"
+                                        ToolTip="استبدال نقاط الولاء بخصم مباشر">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="StarCircle" Width="14" Height="14" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                                        <TextBlock Text="{Binding CustomerLoyaltyPoints, StringFormat='{}{0:N0} نقطة'}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Style="{StaticResource MaterialDesignIconButton}"
+                                        Command="{Binding ClearSelectedCustomerCommand}"
+                                        Width="24" Height="24" Margin="2,0,0,0"
+                                        ToolTip="إلغاء اختيار العميل">
+                                    <materialDesign:PackIcon Kind="CloseCircle" Width="16" Height="16" Foreground="#FB7185"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Separator Background="{DynamicResource AlAtmani.BorderBrush}" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- 2. Cart Items List -->
+                <ListView x:Name="CartListView"
+                          Grid.Row="1"
+                          ItemsSource="{Binding CartItems}"
+                          SelectedItem="{Binding SelectedCartItem, Mode=TwoWay}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          SelectionMode="Single"
+                          Padding="10,6"
+                          Background="Transparent">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border CornerRadius="14"
+                                                Background="{DynamicResource AlAtmani.SurfaceBrush}"
+                                                BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
+                                                BorderThickness="1"
+                                                Margin="0,0,0,8"
+                                                Padding="10,8">
+                                            <ContentPresenter/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Info -->
+                                <StackPanel Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Margin="0,0,6,0">
+                                    <TextBlock Text="{Binding Name}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap"
+                                               Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                                        <TextBlock Text="{Binding Quantity}"
+                                                   FontWeight="Bold"
+                                                   Foreground="{DynamicResource AlAtmani.AccentBrush}"
+                                                   FontSize="12"/>
+                                        <TextBlock Text=" × "
+                                                   Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
+                                                   FontSize="12"/>
+                                        <TextBlock Text="{Binding UnitPrice, StringFormat='{}{0:N2}'}"
+                                                   Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
+                                                   FontSize="12"/>
+                                        <TextBlock Text=" = "
+                                                   Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
+                                                   FontSize="12"/>
+                                        <TextBlock Text="{Binding Total, StringFormat='{}{0:N2}'}"
+                                                   FontWeight="Bold"
+                                                   Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
+                                                   FontSize="13"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Actions (+ / - / Count / Remove) -->
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <!-- Minus Button -->
+                                    <Button Focusable="False" Style="{StaticResource MaterialDesignIconButton}"
+                                            Width="28" Height="28"
+                                            Command="{Binding DataContext.DecreaseQuantityCommand, ElementName=RootGrid}"
+                                            CommandParameter="{Binding}"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}">
+                                        <materialDesign:PackIcon Kind="Minus" Width="12" Height="12"/>
+                                    </Button>
+                                    
+                                    <!-- Quantity Display (Click to open Numpad) -->
+                                    <TextBlock Text="{Binding Quantity}"
+                                               Width="32"
+                                               TextAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="15"
+                                               Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                    
+                                    <!-- Plus Button -->
+                                    <Button Focusable="False" Style="{StaticResource MaterialDesignIconButton}"
+                                            Width="28" Height="28"
+                                            Command="{Binding DataContext.IncreaseQuantityCommand, ElementName=RootGrid}"
+                                            CommandParameter="{Binding}"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}">
+                                        <materialDesign:PackIcon Kind="Plus" Width="14" Height="14"/>
+                                    </Button>
+                                    
+                                    <!-- Remove Button -->
+                                    <Button Focusable="False" Style="{StaticResource MaterialDesignIconButton}"
+                                            Width="28" Height="28"
+                                            Margin="6,0,0,0"
+                                            Command="{Binding DataContext.RemoveItemCommand, ElementName=RootGrid}"
+                                            CommandParameter="{Binding}"
+                                            Foreground="#FB7185">
+                                        <materialDesign:PackIcon Kind="Close" Width="16" Height="16"/>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- 3. CHECKOUT & TENDER AREA -->
+                <Border Grid.Row="2"
+                        Background="{DynamicResource AlAtmani.SurfaceBrush}"
+                        BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
+                        BorderThickness="0,1,0,0"
+                        Padding="14,10">
+                    <StackPanel>
+                        <!-- Quick Discount Chips -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="خصم سريع:" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,0,6,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
+                                        Background="{DynamicResource AlAtmani.Surface2Brush}" Command="{Binding ApplyQuickPercentDiscountCommand}" CommandParameter="5" Content="5%"/>
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
+                                        Background="{DynamicResource AlAtmani.Surface2Brush}" Command="{Binding ApplyQuickPercentDiscountCommand}" CommandParameter="10" Content="10%"/>
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
+                                        Background="{DynamicResource AlAtmani.Surface2Brush}" Command="{Binding ApplyQuickPercentDiscountCommand}" CommandParameter="15" Content="15%"/>
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
+                                        Background="{DynamicResource AlAtmani.Surface2Brush}" Command="{Binding ApplyQuickPercentDiscountCommand}" CommandParameter="20" Content="20%"/>
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignRaisedButton}" Height="26" Padding="8,0" Margin="2,0"
+                                        Background="{DynamicResource AlAtmani.AccentBrush}" Foreground="White"
+                                        Command="{Binding ToggleCustomDiscountPopupCommand}" Content="مخصص..."/>
+                                <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
+                                        Background="#FFE4E6" Foreground="#BE123C" Command="{Binding ClearDiscountCommand}" Content="مسح"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Custom Discount Inline Editor -->
+                        <Border Background="{DynamicResource AlAtmani.Surface2Brush}" CornerRadius="10" Padding="8,6" Margin="0,0,0,8"
+                                BorderThickness="1" BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
+                                Visibility="{Binding IsCustomDiscountOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,6,0">
+                                    <RadioButton Content="%" IsChecked="{Binding IsCustomDiscountPercentage}" Margin="0,0,4,0" FontSize="11" GroupName="CustomDiscType"/>
+                                    <RadioButton Content="{Binding CurrencySymbol}" IsChecked="{Binding IsCustomDiscountPercentage, Converter={StaticResource InverseBooleanConverter}}" FontSize="11" GroupName="CustomDiscType"/>
+                                </StackPanel>
+                                <TextBox Grid.Column="1" Text="{Binding CustomDiscountInput, UpdateSourceTrigger=PropertyChanged}"
+                                         Height="30" FontSize="13" FontWeight="Bold" Background="{DynamicResource AlAtmani.SurfaceBrush}" Padding="6,2" VerticalContentAlignment="Center"/>
+                                <Button Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Background="{DynamicResource AlAtmani.AccentBrush}" Height="30" Padding="8,0" Margin="4,0,0,0"
+                                        Command="{Binding ApplyCustomDiscountSubmitCommand}" Content="تطبيق"/>
+                                <Button Grid.Column="3" Style="{StaticResource MaterialDesignIconButton}" Width="26" Height="26" Margin="2,0,0,0"
+                                        Command="{Binding ToggleCustomDiscountPopupCommand}">
+                                    <materialDesign:PackIcon Kind="Close" Width="14" Height="14"/>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <!-- Summary Rows -->
+                        <Grid Margin="0,0,0,3">
+                            <TextBlock Text="الإجمالي الفرعي" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Subtotal, StringFormat='{}{0:N2}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Margin="0,0,0,3" Visibility="{Binding DiscountAmount, Converter={StaticResource NullToVisibilityConverter}}">
+                            <TextBlock Text="قيمة الخصم" Foreground="#10B981" FontSize="12"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding DiscountAmount, StringFormat='{}-{0:N2}'}" FontWeight="Bold" Foreground="#10B981"/>
+                                <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="Bold" Foreground="#10B981" Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Margin="0,0,0,4">
+                            <TextBlock Text="الضريبة" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding TaxAmount, StringFormat='{}{0:N2}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Separator Margin="0,4"/>
+
+                        <!-- MASSIVE TOTAL -->
+                        <Grid Margin="0,2,0,8">
+                            <TextBlock Text="الإجمالي الكلي" FontSize="15" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
+                            <Viewbox HorizontalAlignment="Right" Height="32">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TotalAmount, StringFormat='{}{0:N2}'}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                    <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Viewbox>
+                        </Grid>
+
+                        <!-- Payment Methods Selection -->
+                        <ItemsControl ItemsSource="{Binding PaymentMethods}" Margin="0,0,0,8">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Rows="1"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <RadioButton Style="{StaticResource CategoryChipStyle}"
+                                                 Content="{Binding Converter={StaticResource PaymentMethodToArabicConverter}}"
+                                                 Margin="1" Height="34" FontSize="12" Padding="6,2"
+                                                 Command="{Binding DataContext.SetPaymentMethodCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                 CommandParameter="{Binding}">
+                                        <RadioButton.IsChecked>
+                                            <MultiBinding Converter="{StaticResource EqualityMultiConverter}" Mode="OneWay">
+                                                <Binding Path="DataContext.SelectedPaymentMethod" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                <Binding Path="." />
+                                            </MultiBinding>
+                                        </RadioButton.IsChecked>
+                                    </RadioButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- Quick Cash Tender & Change Due Calculator (Visible on Cash) -->
+                        <Border Background="{DynamicResource AlAtmani.Surface2Brush}" CornerRadius="12" Padding="8" Margin="0,0,0,8">
+                            <StackPanel>
+                                <!-- Quick Tender Denomination Buttons -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                            Height="28" Padding="8,0" Margin="2,0"
+                                            Background="{DynamicResource AlAtmani.AccentBrush}" Foreground="White"
+                                            Command="{Binding SetExactCashTenderCommand}" Content="المبلغ بالظبط"/>
+                                    <ItemsControl ItemsSource="{Binding QuickTenderAmounts}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                        Height="28" Padding="8,0" Margin="2,0"
+                                                        Background="{DynamicResource AlAtmani.SurfaceBrush}"
+                                                        Command="{Binding DataContext.SelectQuickTenderCommand, ElementName=RootGrid}"
+                                                        CommandParameter="{Binding}"
+                                                        Content="{Binding StringFormat='{}{0:N0}'}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+
+                                <!-- Amount Paid & Change Due Large Display -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Amount Paid Input -->
+                                    <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                        <TextBlock Text="المبلغ المدفوع" FontSize="11" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                                        <TextBox Text="{Binding AmountPaid, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:N0}'}"
+                                                 FontSize="16" FontWeight="Bold" Height="36" VerticalContentAlignment="Center"
+                                                 Background="{DynamicResource AlAtmani.SurfaceBrush}"
+                                                 Padding="6,2"/>
+                                    </StackPanel>
+
+                                    <!-- Change Due (Huge Emerald Green Box) -->
+                                    <Border Grid.Column="1" Background="#064E3B" CornerRadius="10" Padding="8,4" Margin="4,0,0,0">
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="الباقي للعميل" Foreground="#6EE7B7" FontSize="10" FontWeight="SemiBold"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding ChangeDue, StringFormat='{}{0:N2}'}" 
+                                                           Foreground="#34D399" FontSize="17" FontWeight="Bold"/>
+                                                <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" 
+                                                           Foreground="#6EE7B7" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Print Checkbox & Final Pay Button -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox Content="🖨️ طباعة" 
+                                      IsChecked="{Binding ShouldPrintReceipt}" 
+                                      Margin="0,0,8,0" 
+                                      Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" 
+                                      FontWeight="SemiBold"
+                                      FontSize="13"
+                                      VerticalAlignment="Center"/>
+
+                            <!-- HUGE PAY BUTTON -->
+                            <Button Focusable="False" Grid.Column="1"
+                                    Command="{Binding SubmitOrderCommand}"
+                                    Style="{StaticResource AlAtmani.CheckoutButton}"
+                                    Height="48" Padding="0">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="CashRegister" Width="24" Height="24" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="إتمام البيع (F2 / Ctrl+Enter)" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- FLOATING NUMPAD: Now rendered as a standalone NumpadWindow (see POSPage.xaml.cs) -->
+        <!-- Window is opened/closed automatically when IsTouchNumpadVisible changes -->
+
+        <!-- ──────────────────────────── OVERLAY 2: PARKED ORDERS ──────────────────────────── -->
+        <Border Grid.ColumnSpan="2" Background="#80000000"
+                Visibility="{Binding IsParkedOrdersOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1000">
+            <materialDesign:Card Width="520" MaxHeight="600" UniformCornerRadius="24" Background="{DynamicResource AlAtmani.SurfaceBrush}" Padding="20"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 materialDesign:ElevationAssist.Elevation="Dp8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="ClockOutline" Width="22" Height="22" Foreground="#F59E0B" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{Binding ParkedOrdersCount, StringFormat='{}الفواتير المعلقة ({0})'}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right"
+                                Command="{Binding ToggleParkedOrdersPopupCommand}" Width="32" Height="32">
+                            <materialDesign:PackIcon Kind="Close" Width="20" Height="20"/>
+                        </Button>
+                    </Grid>
+
+                    <ListView Grid.Row="1" ItemsSource="{Binding ParkedOrders}" Background="Transparent" BorderThickness="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource AlAtmani.Surface2Brush}" CornerRadius="16" Padding="14,10" Margin="0,0,0,10"
+                                        BorderThickness="1" BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding OrderNumber}" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                                <TextBlock Text="{Binding TimeFormatted, StringFormat='{} ({0})'}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                <TextBlock Text="{Binding ItemCount, StringFormat='{}عدد الأصناف: {0} | '}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13"/>
+                                                <TextBlock Text="{Binding TotalAmount, StringFormat='{}الإجمالي: {0:N0} ج.م'}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" FontSize="13"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                                    Background="#10B981" Height="36" Padding="12,0" Margin="0,0,6,0"
+                                                    Command="{Binding DataContext.RecallParkedOrderCommand, ElementName=RootGrid}"
+                                                    CommandParameter="{Binding}" Content="استرجاع"/>
+                                            <Button Style="{StaticResource MaterialDesignIconButton}"
+                                                    Foreground="#FB7185" Width="36" Height="36"
+                                                    Command="{Binding DataContext.DeleteParkedOrderCommand, ElementName=RootGrid}"
+                                                    CommandParameter="{Binding}">
+                                                <materialDesign:PackIcon Kind="DeleteOutline" Width="20" Height="20"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </materialDesign:Card>
+        </Border>
+    </Grid>
+</Page>

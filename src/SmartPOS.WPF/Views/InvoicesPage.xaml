@@ -1,0 +1,141 @@
+<Page x:Class="SmartPOS.WPF.Views.InvoicesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="الفواتير"
+      FontFamily="Segoe UI, Tahoma"
+      FlowDirection="RightToLeft"
+      Loaded="Page_Loaded"
+      Unloaded="Page_Unloaded">
+
+        <Grid Background="{DynamicResource AlAtmani.BackgroundBrush}"
+              Margin="24">
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <materialDesign:Card Grid.Row="0"
+                                     Style="{StaticResource AlAtmani.GlassCard}">
+                        <DockPanel>
+                                <Border Background="#E8F5E9"
+                                        CornerRadius="12"
+                                        Padding="12"
+                                        DockPanel.Dock="Right"
+                                        Margin="0,0,16,0">
+                                        <materialDesign:PackIcon Kind="Receipt"
+                                                                 Width="36"
+                                                                 Height="36"
+                                                                 Foreground="#2E7D32"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="الفواتير"
+                                                   Style="{StaticResource AlAtmani.HeaderText}"
+                                                   Margin="0"/>
+                                        <TextBlock Text="عرض وطباعة الفواتير"
+                                                   FontSize="13"
+                                                   Foreground="#2E7D32"
+                                                   Opacity="0.8"/>
+                                </StackPanel>
+                        </DockPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="1"
+                                     Padding="16"
+                                     Margin="0,0,0,16"
+                                     Style="{StaticResource AlAtmani.GlassCard}">
+                        <DockPanel>
+                                <TextBlock Text="الفترة"
+                                           FontSize="15"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,16,0"/>
+                                <DatePicker SelectedDate="{Binding StartDate}"
+                                            Width="160"
+                                            Margin="0,0,12,0"/>
+                                <DatePicker SelectedDate="{Binding EndDate}"
+                                            Width="160"
+                                            Margin="0,0,12,0"/>
+                                <Button Content="بحث"
+                                        Style="{StaticResource AlAtmani.SoftButton}"
+                                        Width="100"
+                                        Margin="0,0,8,0"
+                                        Command="{Binding FilterCommand}"/>
+                                <Button Content="كشف المشتريات"
+                                        Style="{StaticResource AlAtmani.SoftButton}"
+                                        Width="150"
+                                        Margin="0,0,8,0"
+                                        Background="#E91E63"
+                                        Foreground="White"
+                                        Command="{Binding PrintPurchaseReportCommand}"/>
+                                <Button Content="كشف الإيرادات"
+                                        Style="{StaticResource AlAtmani.SoftButton}"
+                                        Width="150"
+                                        Background="#9C27B0"
+                                        Foreground="White"
+                                        Command="{Binding PrintIncomeReportCommand}"/>
+                        </DockPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="2"
+                                     Style="{StaticResource AlAtmani.GlassCard}"
+                                     Padding="16">
+                        <DataGrid AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True"
+                                  SelectedItem="{Binding SelectedSale}"
+                                  ItemsSource="{Binding Sales}">
+                                <DataGrid.Columns>
+                                        <DataGridTextColumn Header="رقم الفاتورة"
+                                                            Binding="{Binding InvoiceNumber}"
+                                                            Width="*"/>
+                                        <DataGridTextColumn Header="التاريخ"
+                                                            Binding="{Binding SaleDate, StringFormat={}{0:yyyy-MM-dd HH:mm}}"
+                                                            Width="*"/>
+                                        <DataGridTextColumn Header="الكاشير"
+                                                            Binding="{Binding User.FullName}"
+                                                            Width="*"/>
+                                        <DataGridTextColumn Header="العميل"
+                                                            Binding="{Binding Customer.Name}"
+                                                            Width="*"/>
+                                        <DataGridTextColumn Header="الإجمالي"
+                                                            Binding="{Binding TotalAmount, StringFormat='{}{0:F2} ج.م'}"
+                                                            Width="*"/>
+                                        <DataGridTemplateColumn Header="إجراءات"
+                                                                Width="180">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                                <!-- Print Receipt -->
+                                                                <Button Style="{StaticResource MaterialDesignIconButton}"
+                                                                        ToolTip="طباعة حراري"
+                                                                        Width="34" Height="34" Margin="2,0"
+                                                                        Command="{Binding DataContext.PrintInvoiceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                                        CommandParameter="{Binding}">
+                                                                        <materialDesign:PackIcon Kind="Printer" Width="20" Height="20" Foreground="#2E7D32"/>
+                                                                </Button>
+                                                                <!-- Export PDF -->
+                                                                <Button Style="{StaticResource MaterialDesignIconButton}"
+                                                                        ToolTip="حفظ الفاتورة كـ PDF"
+                                                                        Width="34" Height="34" Margin="2,0"
+                                                                        Command="{Binding DataContext.ExportInvoicePdfCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                                        CommandParameter="{Binding}">
+                                                                        <materialDesign:PackIcon Kind="FilePdfBox" Width="20" Height="20" Foreground="#1976D2"/>
+                                                                </Button>
+                                                                <!-- Void / Return Sale -->
+                                                                <Button Style="{StaticResource MaterialDesignIconButton}"
+                                                                        ToolTip="إلغاء الفاتورة واسترداد المخزون"
+                                                                        Width="34" Height="34" Margin="2,0"
+                                                                        Command="{Binding DataContext.VoidSaleCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                                        CommandParameter="{Binding}">
+                                                                        <materialDesign:PackIcon Kind="DeleteForever" Width="20" Height="20" Foreground="#FB7185"/>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                        </DataGrid>
+                </materialDesign:Card>
+        </Grid>
+</Page>

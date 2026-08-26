@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: smartpos-license-web
+    runtime: dotnet
+    rootDir: tools/SmartPOS.LicenseWeb
+    plan: starter
+    buildCommand: dotnet restore && dotnet publish -c Release -o out
+    startCommand: dotnet out/SmartPOS.LicenseWeb.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: LICENSE_ADMIN_USER
+        sync: false
+      - key: LICENSE_ADMIN_PASS
+        sync: false
+      - key: LICENSE_PRIVATE_KEY_PEM
+        sync: false

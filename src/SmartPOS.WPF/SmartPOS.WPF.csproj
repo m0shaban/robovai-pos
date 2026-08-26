@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**</DefaultItemExcludes>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <ApplicationIcon>F:\\Raw\\kasher\\kasher\\favicon.ico</ApplicationIcon>
+    <Product>RobovAI PRO POS</Product>
+    <Company>RoboVAI Solutions Inc.</Company>
+    <Authors>RoboVAI</Authors>
+    <Description>RobovAI PRO POS - Professional POS System | نظام نقاط البيع الاحترافي</Description>
+    <Version>6.0.0</Version>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <FileVersion>6.0.0.0</FileVersion>
+    <InformationalVersion>6.0.0-AI Enterprise Edition</InformationalVersion>
+    <Copyright>Copyright © 2026 RoboVAI Solutions Inc. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\logo.png" />
+    <Resource Include="Assets\logo_small.png" />
+    <Resource Include="Assets\app.ico" />
+    <Resource Include="Assets\Images\PromoWorkspace.jpg" />
+    <Resource Include="Assets\Images\PromoFeatures.jpg" />
+    <Resource Include="Assets\Images\LoginPlatinumBG.png" />
+    <Resource Include="Assets\Images\InstallerPlatinumBG.png" />
+    <Resource Include="Assets\Images\wizard_large.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.2" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.3.2" />
+    <PackageReference Include="MaterialDesignColors" Version="5.3.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="OpenCvSharp4" Version="4.10.0.20241108" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20241108" />
+    <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.10.0.20241108" />
+    <PackageReference Include="QRCoder" Version="1.6.0" />
+    <PackageReference Include="SkiaSharp.Views.WPF" Version="3.119.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPOS.Application\SmartPOS.Application.csproj" />
+    <ProjectReference Include="..\SmartPOS.Infrastructure\SmartPOS.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartPOS.Core\SmartPOS.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\TablesPage.xaml.cs" />
+    <Page Remove="Views\TablesPage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WmsFiles Include="$(MSBuildThisFileDirectory)..\..\LandingPage\wms\**\*.*" />
+  </ItemGroup>
+
+  <Target Name="CopyWmsFiles" AfterTargets="Build;Publish">
+    <Copy SourceFiles="@(WmsFiles)" DestinationFolder="$(TargetDir)wms\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

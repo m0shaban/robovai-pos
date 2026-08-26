@@ -1,0 +1,358 @@
+<Page x:Class="SmartPOS.WPF.Views.ExpensesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="المصروفات"
+      FontFamily="Segoe UI, Tahoma"
+      FlowDirection="RightToLeft"
+      Loaded="Page_Loaded"
+      Unloaded="Page_Unloaded">
+
+    <materialDesign:DialogHost Identifier="ExpensesRootDialog"
+                               IsOpen="{Binding IsAddExpenseDialogOpen}">
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card Padding="32"
+                                 Width="520"
+                                 Style="{StaticResource AlAtmani.GlassCard}">
+                <StackPanel>
+                    <TextBlock Text="إضافة مصروف جديد"
+                               Style="{StaticResource AlAtmani.HeaderText}"
+                               FontSize="22"
+                               Margin="0,0,0,24"/>
+
+                    <TextBox materialDesign:HintAssist.Hint="وصف المصروف *"
+                             Text="{Binding NewExpenseDescription}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             FontSize="16"
+                             Height="56"
+                             Margin="0,0,0,20"/>
+
+                    <TextBox materialDesign:HintAssist.Hint="المبلغ (ج.م) *"
+                             Text="{Binding NewExpenseAmount}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             FontSize="16"
+                             Height="56"
+                             Margin="0,0,0,20"/>
+
+                    <ComboBox materialDesign:HintAssist.Hint="فئة المصروف *"
+                              ItemsSource="{Binding Categories}"
+                              SelectedIndex="{Binding SelectedCategoryIndex}"
+                              Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                              FontSize="16"
+                              Height="56"
+                              Margin="0,0,0,32"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0,8,0,0">
+                        <Button Content="إلغاء"
+                                Command="{Binding CloseAddDialogCommand}"
+                                Style="{StaticResource AlAtmani.SoftButton}"
+                                Width="120"
+                                Height="48"
+                                Margin="0,0,12,0"/>
+                        <Button Content="💾 حفظ"
+                                Command="{Binding AddExpenseCommand}"
+                                Style="{StaticResource AlAtmani.SoftButton}"
+                                Width="120"
+                                Height="48"
+                                Background="#10B981"
+                                Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid Background="{DynamicResource AlAtmani.BackgroundBrush}"
+              Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <materialDesign:Card Grid.Row="0"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Margin="0,0,0,24"
+                                 Padding="24">
+                <StackPanel Orientation="Horizontal">
+                    <Border Background="#FFEBEE"
+                            CornerRadius="12"
+                            Padding="12"
+                            Margin="0,0,16,0"
+                            VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="CurrencyUsd"
+                                                 Width="32"
+                                                 Height="32"
+                                                 Foreground="#F44336"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="إدارة المصروفات"
+                                   Style="{StaticResource AlAtmani.HeaderText}"/>
+                        <TextBlock Text="تسجيل ومتابعة جميع مصروفات المتجر"
+                                   FontSize="14"
+                                   Opacity="0.7"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Statistics Cards -->
+            <UniformGrid Grid.Row="1"
+                         Columns="3"
+                         Margin="0,0,0,16">
+                <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}"
+                                     Margin="0,0,8,0"
+                                     Padding="20">
+                    <StackPanel>
+                        <Border Background="#FFEBEE"
+                                CornerRadius="12"
+                                Padding="10"
+                                HorizontalAlignment="Left"
+                                Margin="0,0,0,12">
+                            <materialDesign:PackIcon Kind="CurrencyUsd"
+                                                     Width="32"
+                                                     Height="32"
+                                                     Foreground="#F44336"/>
+                        </Border>
+                        <TextBlock Text="مصروفات اليوم"
+                                   FontSize="12"
+                                   Opacity="0.7"/>
+                        <TextBlock x:Name="TodayExpensesText"
+                                   Text="{Binding TodayExpenses, StringFormat='{}{0:F2} ج.م'}"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="#F44336"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}"
+                                     Margin="8,0,8,0"
+                                     Padding="20">
+                    <StackPanel>
+                        <Border Background="#FFF3E0"
+                                CornerRadius="12"
+                                Padding="10"
+                                HorizontalAlignment="Left"
+                                Margin="0,0,0,12">
+                            <materialDesign:PackIcon Kind="CalendarMonth"
+                                                     Width="32"
+                                                     Height="32"
+                                                     Foreground="#FF9800"/>
+                        </Border>
+                        <TextBlock Text="مصروفات الشهر"
+                                   FontSize="12"
+                                   Opacity="0.7"/>
+                        <TextBlock x:Name="MonthExpensesText"
+                                   Text="{Binding MonthExpenses, StringFormat='{}{0:F2} ج.م'}"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="#FF9800"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}"
+                                     Margin="8,0,0,0"
+                                     Padding="20">
+                    <StackPanel>
+                        <Border Background="#E0F2F1"
+                                CornerRadius="12"
+                                Padding="10"
+                                HorizontalAlignment="Left"
+                                Margin="0,0,0,12">
+                            <materialDesign:PackIcon Kind="ChartBox"
+                                                     Width="32"
+                                                     Height="32"
+                                                     Foreground="#009688"/>
+                        </Border>
+                        <TextBlock Text="إجمالي المصروفات"
+                                   FontSize="12"
+                                   Opacity="0.7"/>
+                        <TextBlock x:Name="TotalExpensesText"
+                                   Text="{Binding TotalExpenses, StringFormat='{}{0:F2} ج.م'}"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="#009688"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </materialDesign:Card>
+            </UniformGrid>
+
+            <!-- Search and Filter -->
+            <materialDesign:Card Grid.Row="2"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Padding="16"
+                                 Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/> <!-- Start Date -->
+                        <ColumnDefinition Width="Auto"/> <!-- End Date -->
+                        <ColumnDefinition Width="*"/>    <!-- Search -->
+                        <ColumnDefinition Width="Auto"/> <!-- Category -->
+                        <ColumnDefinition Width="Auto"/> <!-- Clear -->
+                        <ColumnDefinition Width="Auto"/> <!-- PDF -->
+                        <ColumnDefinition Width="Auto"/> <!-- Add -->
+                    </Grid.ColumnDefinitions>
+
+                    <DatePicker Grid.Column="0"
+                                materialDesign:HintAssist.Hint="من تاريخ"
+                                SelectedDate="{Binding FilterStartDate, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                Margin="0,0,12,0" Width="130" Height="44"/>
+
+                    <DatePicker Grid.Column="1"
+                                materialDesign:HintAssist.Hint="إلى تاريخ"
+                                SelectedDate="{Binding FilterEndDate, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                Margin="0,0,16,0" Width="130" Height="44"/>
+
+                    <TextBox Grid.Column="2"
+                             x:Name="SearchBox"
+                             materialDesign:HintAssist.Hint="ابحث في الوصف..."
+                             FontSize="16"
+                             Margin="0,0,16,0"
+                             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             materialDesign:TextFieldAssist.HasClearButton="True"
+                             Height="44"/>
+
+                    <ComboBox Grid.Column="3"
+                              x:Name="CategoryFilterComboBox"
+                              materialDesign:HintAssist.Hint="التصنيف"
+                              ItemsSource="{Binding Categories}"
+                              SelectedItem="{Binding SelectedCategoryFilter}"
+                              Margin="0,0,16,0" Width="160" Height="44"/>
+
+                    <Button Grid.Column="4"
+                            Content="مسح"
+                            Height="44"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Command="{Binding ClearFilterCommand}"
+                            Margin="0,0,12,0"/>
+
+                    <Button Grid.Column="5"
+                            Height="44"
+                            Margin="0,0,12,0"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Command="{Binding ExportPdfCommand}"
+                            ToolTip="تصدير إلى PDF">
+                        <materialDesign:PackIcon Kind="FilePdfBox" Foreground="#DC2626" Width="22" Height="22"/>
+                    </Button>
+
+                    <Button Grid.Column="6"
+                            Height="44"
+                            Padding="20,0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Background="#10B981"
+                            BorderBrush="#10B981"
+                            Command="{Binding OpenAddDialogCommand}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="إضافة مصروف" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- Expenses Grid -->
+            <materialDesign:Card Grid.Row="3"
+                                 Style="{StaticResource AlAtmani.GlassCard}"
+                                 Padding="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Toolbar -->
+                    <DockPanel Grid.Row="0"
+                               Margin="0,0,0,16">
+                        <TextBlock Text="قائمة المصروفات"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   DockPanel.Dock="Left"
+                                   VerticalAlignment="Center"/>
+
+                        <Button DockPanel.Dock="Right"
+                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                Command="{Binding LoadExpensesCommand}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Refresh" Width="20" Height="20" Margin="0,0,8,0"/>
+                                    <TextBlock Text="تحديث"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </DockPanel>
+
+                    <!-- DataGrid -->
+                    <DataGrid Grid.Row="1"
+                               x:Name="ExpensesDataGrid"
+                               AutoGenerateColumns="False"
+                               CanUserAddRows="False"
+                               CanUserDeleteRows="False"
+                               IsReadOnly="True"
+                               SelectionMode="Single"
+                               MinHeight="500"
+                               FontSize="15"
+                               materialDesign:DataGridAssist.CellPadding="14"
+                               ItemsSource="{Binding FilteredExpenses}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="التاريخ"
+                                                Binding="{Binding ExpenseDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                                                Width="120"/>
+                            <DataGridTextColumn Header="الوصف"
+                                                Binding="{Binding Description}"
+                                                Width="*"/>
+                            <DataGridTextColumn Header="التصنيف"
+                                                Binding="{Binding Category}"
+                                                Width="120"/>
+                            <DataGridTextColumn Header="المبلغ"
+                                                Binding="{Binding Amount, StringFormat='{}{0:F2} ج.م'}"
+                                                Width="120"/>
+                            <DataGridTextColumn Header="المستخدم"
+                                                Binding="{Binding User.FullName}"
+                                                Width="150"/>
+
+                            <DataGridTemplateColumn Header="الإجراءات"
+                                                    Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource MaterialDesignIconButton}"
+                                                ToolTip="حذف المصروف"
+                                                Width="34" Height="34" HorizontalAlignment="Center"
+                                                Command="{Binding DataContext.DeleteExpenseCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Delete" Width="20" Height="20" Foreground="#FB7185"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- No Data Message -->
+                    <StackPanel Grid.Row="1"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Visibility="{Binding ElementName=ExpensesDataGrid, Path=Items.Count, Converter={StaticResource CountToVisibilityConverter}}">
+                        <materialDesign:PackIcon Kind="CurrencyUsdOff"
+                                                 Width="80"
+                                                 Height="80"
+                                                 Opacity="0.3"
+                                                 Margin="0,0,0,16"/>
+                        <TextBlock Text="لا توجد مصروفات"
+                                   FontSize="18"
+                                   Opacity="0.6"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </materialDesign:DialogHost>
+</Page>

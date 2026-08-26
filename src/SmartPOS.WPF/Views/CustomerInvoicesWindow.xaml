@@ -1,0 +1,71 @@
+﻿<Window x:Class="SmartPOS.WPF.Views.CustomerInvoicesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="سجل مشتريات وفواتير العميل"
+        Height="600"
+        Width="900"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI, Tahoma"
+        FlowDirection="RightToLeft"
+        Background="{StaticResource MaterialDesignPaper}">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                Margin="0,0,0,16">
+            <TextBlock x:Name="txtCustomerName"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+            <TextBlock x:Name="txtCreditLimit"
+                    FontSize="14"
+                    Foreground="Gray"/>
+            <TextBlock x:Name="txtTotalDebt"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="#EF4444"
+                    Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <DataGrid x:Name="dgInvoices"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="رقم الفاتورة"
+                        Binding="{Binding InvoiceNumber}"
+                        Width="1.2*"/>
+                <DataGridTextColumn Header="التاريخ"
+                        Binding="{Binding SaleDate, StringFormat=dd/MM/yyyy hh:mm tt}"
+                        Width="1.6*"/>
+                <DataGridTextColumn Header="طريقة الدفع"
+                        Binding="{Binding PaymentMethodText}"
+                        Width="*"/>
+                <DataGridTextColumn Header="الإجمالي"
+                        Binding="{Binding TotalAmount, StringFormat=N2}"
+                        Width="*"/>
+                <DataGridTextColumn Header="المدفوع"
+                        Binding="{Binding AmountPaid, StringFormat=N2}"
+                        Width="*"/>
+                <DataGridTextColumn Header="المتبقي"
+                        Binding="{Binding RemainingAmount, StringFormat=N2}"
+                        Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="2"
+                Content="إغلاق"
+                Width="120"
+                Height="40"
+                HorizontalAlignment="Center"
+                Margin="0,16,0,0"
+                Click="Close_Click"/>
+    </Grid>
+</Window>

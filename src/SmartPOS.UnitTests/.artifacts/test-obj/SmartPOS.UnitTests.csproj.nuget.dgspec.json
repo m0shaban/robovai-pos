@@ -1,0 +1,358 @@
+{
+  "format": 1,
+  "restore": {
+    "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.UnitTests\\SmartPOS.UnitTests.csproj": {}
+  },
+  "projects": {
+    "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Application\\SmartPOS.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Application\\SmartPOS.Application.csproj",
+        "projectName": "SmartPOS.Application",
+        "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Application\\SmartPOS.Application.csproj",
+        "packagesPath": "C:\\Users\\shaban\\.nuget\\packages\\",
+        "outputPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Application\\.artifacts\\test-obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\shaban\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj": {
+                "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj"
+              },
+              "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj": {
+                "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.105.0, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.2.2, )"
+            },
+            "HarfBuzzSharp": {
+              "target": "Package",
+              "version": "[8.3.1.3, )"
+            },
+            "LiveChartsCore.SkiaSharpView.WPF": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj",
+        "projectName": "SmartPOS.Core",
+        "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj",
+        "packagesPath": "C:\\Users\\shaban\\.nuget\\packages\\",
+        "outputPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\.artifacts\\test-obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\shaban\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj",
+        "projectName": "SmartPOS.Infrastructure",
+        "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\shaban\\.nuget\\packages\\",
+        "outputPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\.artifacts\\test-obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\shaban\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj": {
+                "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2026.2.4, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "System.IO.Ports": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.UnitTests\\SmartPOS.UnitTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.UnitTests\\SmartPOS.UnitTests.csproj",
+        "projectName": "SmartPOS.UnitTests",
+        "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.UnitTests\\SmartPOS.UnitTests.csproj",
+        "packagesPath": "C:\\Users\\shaban\\.nuget\\packages\\",
+        "outputPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.UnitTests\\.artifacts\\test-obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\shaban\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Application\\SmartPOS.Application.csproj": {
+                "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Application\\SmartPOS.Application.csproj"
+              },
+              "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj": {
+                "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Core\\SmartPOS.Core.csproj"
+              },
+              "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj": {
+                "projectPath": "F:\\Raw\\kasher\\kasher\\src\\SmartPOS.Infrastructure\\SmartPOS.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.8.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
