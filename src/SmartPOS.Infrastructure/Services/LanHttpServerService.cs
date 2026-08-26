@@ -844,37 +844,37 @@ public class LanHttpServerService : IHostedService, IDisposable
             if (string.IsNullOrWhiteSpace(relativePath)) relativePath = "index.html";
 
             var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            var wmsBasePath = Path.Combine(baseDir, "wms");
-
-            if (!Directory.Exists(wmsBasePath))
+            var candidateDirs = new List<string>
             {
-                var candidatePaths = new[]
-                {
-                    Path.Combine(baseDir, "LandingPage", "wms"),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "wms")),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "LandingPage", "wms")),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "..", "wms")),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "..", "LandingPage", "wms")),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "LandingPage", "wms")),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "..", "LandingPage", "wms")),
-                    Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "..", "..", "LandingPage", "wms"))
-                };
+                Path.Combine(baseDir, "wms"),
+                Path.Combine(baseDir, "LandingPage", "wms"),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "wms")),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "LandingPage", "wms")),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "..", "wms")),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "..", "LandingPage", "wms")),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "LandingPage", "wms")),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "..", "LandingPage", "wms")),
+                Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..", "..", "..", "LandingPage", "wms")),
+                @"F:\Raw\kasher\kasher\LandingPage\wms",
+                @"F:\Raw\kasher\kasher\publish\final-exe\wms",
+                @"F:\Raw\kasher\kasher\smart-inventory-pro\dist"
+            };
 
-                foreach (var candidate in candidatePaths)
+            string? foundFilePath = null;
+            foreach (var dir in candidateDirs)
+            {
+                if (!Directory.Exists(dir)) continue;
+                var testPath = Path.Combine(dir, relativePath.Replace('/', Path.DirectorySeparatorChar));
+                if (File.Exists(testPath))
                 {
-                    if (Directory.Exists(candidate))
-                    {
-                        wmsBasePath = candidate;
-                        break;
-                    }
+                    foundFilePath = testPath;
+                    break;
                 }
             }
 
-            var filePath = Path.Combine(wmsBasePath, relativePath.Replace('/', Path.DirectorySeparatorChar));
-
-            if (File.Exists(filePath))
+            if (foundFilePath != null && File.Exists(foundFilePath))
             {
-                var ext = Path.GetExtension(filePath).ToLowerInvariant();
+                var ext = Path.GetExtension(foundFilePath).ToLowerInvariant();
                 res.ContentType = ext switch
                 {
                     ".html" => "text/html; charset=utf-8",
@@ -889,14 +889,17 @@ public class LanHttpServerService : IHostedService, IDisposable
                     _ => "application/octet-stream"
                 };
 
-                var fileBytes = await File.ReadAllBytesAsync(filePath);
+                res.AddHeader("Access-Control-Allow-Origin", "*");
+                res.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+
+                var fileBytes = await File.ReadAllBytesAsync(foundFilePath);
                 res.ContentLength64 = fileBytes.Length;
                 await res.OutputStream.WriteAsync(fileBytes);
             }
             else
             {
                 res.StatusCode = 404;
-                await WriteJsonAsync(res, new { error = "ملف WMS غير موجود" });
+                await WriteJsonAsync(res, new { error = "ملف WMS غير موجود", requested = relativePath });
             }
         }
         catch (Exception ex)
