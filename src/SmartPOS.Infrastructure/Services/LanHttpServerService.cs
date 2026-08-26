@@ -184,16 +184,40 @@ public class LanHttpServerService : IHostedService, IDisposable
         {
             RecordClientActivity(req);
 
-            // ── Public WMS PWA Static Files ──
+            // ── Redirect /wms to /wms/ ──
             var rawPath = req.Url?.AbsolutePath ?? "";
-            if (rawPath.Equals("/wms", StringComparison.OrdinalIgnoreCase) || rawPath.StartsWith("/wms/", StringComparison.OrdinalIgnoreCase))
+            if (rawPath.Equals("/wms", StringComparison.OrdinalIgnoreCase))
+            {
+                res.StatusCode = 302;
+                res.RedirectLocation = "/wms/";
+                res.Close();
+                return;
+            }
+
+            // ── Public WMS PWA & Static Assets ──
+            var isStaticAsset = rawPath.StartsWith("/wms/", StringComparison.OrdinalIgnoreCase)
+                || rawPath.StartsWith("/assets/", StringComparison.OrdinalIgnoreCase)
+                || rawPath.StartsWith("/icons/", StringComparison.OrdinalIgnoreCase)
+                || rawPath.StartsWith("/images/", StringComparison.OrdinalIgnoreCase)
+                || rawPath.StartsWith("/user-guide", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".css", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".js", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".ico", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".svg", StringComparison.OrdinalIgnoreCase)
+                || rawPath.EndsWith(".webmanifest", StringComparison.OrdinalIgnoreCase)
+                || (rawPath.EndsWith(".html", StringComparison.OrdinalIgnoreCase) && !rawPath.Equals("/index.html", StringComparison.OrdinalIgnoreCase));
+
+            if (isStaticAsset)
             {
                 await ServeWmsStaticFileAsync(req, res);
                 return;
             }
 
             // ── Public Web Dashboard Endpoint (Root/HTML) ──
-            if (path == "" || path == "/index.html" || path == "/dashboard" || (!path.StartsWith("/api/") && req.HttpMethod == "GET"))
+            if (path == "" || path == "/" || path == "/index.html" || path == "/dashboard")
             {
                 await ServeDashboardHtmlAsync(res);
                 return;
@@ -868,6 +892,11 @@ public class LanHttpServerService : IHostedService, IDisposable
                 if (File.Exists(testPath))
                 {
                     foundFilePath = testPath;
+                    break;
+                }
+                if (!Path.HasExtension(testPath) && File.Exists(testPath + ".html"))
+                {
+                    foundFilePath = testPath + ".html";
                     break;
                 }
             }
