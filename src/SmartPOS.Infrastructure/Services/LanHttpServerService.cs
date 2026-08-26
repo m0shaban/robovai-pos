@@ -102,29 +102,46 @@ public class LanHttpServerService : IHostedService, IDisposable
             _listener.Start();
 
             _logger?.LogInformation("LAN HTTP Server listening on port {Port}. Token: {Token}", port, SessionToken);
-
             _serverTask = RunServerLoopAsync(_cts.Token);
         }
         catch (HttpListenerException ex)
         {
             _logger?.LogWarning(ex,
-                "Could not start LAN HTTP Server on port {Port}. " +
-                "Try running as Administrator or use 'netsh http add urlacl' to grant access. " +
-                "Falling back to localhost only.", port);
+                "Could not start wildcard LAN HTTP Server on port {Port}. Trying specific IP and localhost.", port);
 
-            // Fallback: listen on localhost only (no admin rights needed)
+            // Attempt 2: bind specific local IP + localhost
             try
             {
                 _listener = new HttpListener();
+                if (!string.IsNullOrWhiteSpace(localIp) && localIp != "127.0.0.1")
+                {
+                    _listener.Prefixes.Add($"http://{localIp}:{port}/");
+                }
+                _listener.Prefixes.Add($"http://127.0.0.1:{port}/");
                 _listener.Prefixes.Add($"http://localhost:{port}/");
                 _listener.Start();
-                ServerUrl = $"http://localhost:{port}";
+
+                ServerUrl = $"http://{localIp}:{port}";
                 _serverTask = RunServerLoopAsync(_cts.Token);
-                _logger?.LogInformation("LAN HTTP Server started on localhost only.");
+                _logger?.LogInformation("LAN HTTP Server started on local IP {ServerUrl}.", ServerUrl);
             }
-            catch (Exception fallbackEx)
+            catch (Exception)
             {
-                _logger?.LogError(fallbackEx, "Could not start LAN HTTP Server even on localhost. LAN sync disabled.");
+                // Fallback: listen on localhost only
+                try
+                {
+                    _listener = new HttpListener();
+                    _listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+                    _listener.Prefixes.Add($"http://localhost:{port}/");
+                    _listener.Start();
+                    ServerUrl = $"http://localhost:{port}";
+                    _serverTask = RunServerLoopAsync(_cts.Token);
+                    _logger?.LogInformation("LAN HTTP Server started on localhost only.");
+                }
+                catch (Exception fallbackEx)
+                {
+                    _logger?.LogError(fallbackEx, "Could not start LAN HTTP Server even on localhost. LAN sync disabled.");
+                }
             }
         }
 

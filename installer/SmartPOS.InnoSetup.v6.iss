@@ -187,6 +187,8 @@ Name: "{autodesktop}\RoboVAI Quick Launch";  Filename: "{app}\RoboVAI-Launch.vbs
 Root: HKA; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "{#MyAppName}"; ValueData: """{app}\RoboVAI-Launch.vbs"""; Tasks: autostart; Flags: uninsdeletevalue
 
 [Run]
+Filename: "netsh"; Parameters: "http add urlacl url=http://+:7890/ user=Everyone"; Flags: runhidden
+Filename: "netsh"; Parameters: "advfirewall firewall add rule name=""RoboVAI POS LAN Server (7890)"" dir=in action=allow protocol=TCP localport=7890"; Flags: runhidden
 Filename: "{app}\RoboVAI-Launch.vbs"; Description: "{cm:cm_RunNow}"; Flags: shellexec nowait postinstall skipifsilent
 Filename: "https://drive.google.com/drive/folders/1qnQpUumI5gnv6muZLrPELVraOPGMDXlX?usp=sharing"; Description: "📁 فتح مجلد التحديثات والتحميلات على Google Drive"; Flags: shellexec runasoriginaluser postinstall unchecked
 Filename: "https://robovai.tech"; Description: "🌐 زيارة موقعنا الرسمي (https://robovai.tech)"; Flags: shellexec runasoriginaluser postinstall unchecked
