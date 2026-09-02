@@ -338,7 +338,6 @@ public partial class FirstTimeSetupWindow : Window
             await _settingsService.SaveSettingAsync("IsFirstRunCompleted", "true");
 
             DialogResult = true;
-            Close();
         }
         catch (Exception ex)
         {
@@ -349,7 +348,6 @@ public partial class FirstTimeSetupWindow : Window
     private void Close_Click(object sender, RoutedEventArgs e)
     {
         DialogResult = false;
-        Close();
     }
 
     private void StepBadge_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)

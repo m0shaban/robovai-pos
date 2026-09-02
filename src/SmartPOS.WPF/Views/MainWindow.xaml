@@ -57,7 +57,7 @@
                                        FontSize="13"
                                        Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
                                        HorizontalAlignment="Center"
-                                       Opacity="0.9"/>           Opacity="0.9"/>
+                                       Opacity="0.9"/>
                             <TextBlock Text="v6.0 PRO"
                                        FontSize="11"
                                        FontWeight="Bold"

@@ -38,6 +38,12 @@ public partial class App : System.Windows.Application
         // Predictive crash visibility: show unhandled UI exceptions instead of silently exiting.
         DispatcherUnhandledException += (_, args) =>
         {
+            if (args.Exception is InvalidOperationException inv && inv.Message.Contains("while a Window is closing"))
+            {
+                args.Handled = true;
+                return;
+            }
+
             try
             {
                 MessageBox.Show(

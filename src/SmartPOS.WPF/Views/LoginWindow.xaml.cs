@@ -1,4 +1,4 @@
-﻿using SmartPOS.Application.ViewModels;
+using SmartPOS.Application.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -70,7 +70,6 @@ namespace SmartPOS.WPF.Views
         private void ViewModel_RequestClose()
         {
             DialogResult = true;
-            Close();
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
