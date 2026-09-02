@@ -162,6 +162,10 @@ public partial class App : System.Windows.Application
             var themeService = _host.Services.GetRequiredService<SmartPOS.WPF.Services.IThemeService>();
             themeService.Initialize();
 
+            // Initialize Localization & Language (RTL/LTR)
+            var locService = _host.Services.GetRequiredService<SmartPOS.WPF.Services.LocalizationService>();
+            locService.Initialize();
+
             // Smart Auto-Backup: use settings-configured folder and count
             if (settingsService.AutoBackupEnabled)
             {
@@ -324,6 +328,8 @@ public partial class App : System.Windows.Application
                 services.AddSingleton<ILicenseService, LicenseService>();
                 services.AddSingleton<SmartPOS.Core.Interfaces.IThemeService, SmartPOS.WPF.Services.ThemeService>();
                 services.AddSingleton<SmartPOS.WPF.Services.IThemeService>(sp => (SmartPOS.WPF.Services.IThemeService)sp.GetRequiredService<SmartPOS.Core.Interfaces.IThemeService>());
+                services.AddSingleton<SmartPOS.Core.Interfaces.ILocalizationService, SmartPOS.WPF.Services.LocalizationService>();
+                services.AddSingleton<SmartPOS.WPF.Services.LocalizationService>(sp => (SmartPOS.WPF.Services.LocalizationService)sp.GetRequiredService<SmartPOS.Core.Interfaces.ILocalizationService>());
                 services.AddSingleton<ISoundService, SmartPOS.WPF.Services.SoundService>();
                 services.AddTransient<IAuthorizationService, AuthorizationService>();
 

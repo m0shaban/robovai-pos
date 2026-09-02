@@ -332,6 +332,59 @@
                 </TabItem.Header>
                 <ScrollViewer Margin="0,16,0,0">
                     <StackPanel>
+                        <!-- Language Selection Card (لغة واجهة البرنامج) -->
+                        <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}" Padding="32" Margin="0,0,0,16">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <materialDesign:PackIcon Kind="Translate" Width="26" Height="26" Foreground="#3B82F6" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="لغة واجهة البرنامج (Interface Language)" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Text="اختر لغة واجهة النظام كاملة (العربية أو الإنجليزية) مع تحويل اتجاه الشاشة والنوافذ تلقائياً (RTL / LTR) بدون الحاجة لإعادة تشغيل البرنامج." FontSize="14" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,0,0,20"/>
+
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Arabic Language Button -->
+                                    <Button Grid.Column="0"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Height="110"
+                                            Padding="16"
+                                            Command="{Binding SelectLanguageCommand}"
+                                            CommandParameter="ar"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="🇸🇦 🇪🇬" FontSize="28" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                            <TextBlock Text="العربية (Arabic)" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="الاتجاه من اليمين لليسار (RTL)" FontSize="11" Opacity="0.75" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <!-- English Language Button -->
+                                    <Button Grid.Column="2"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Height="110"
+                                            Padding="16"
+                                            Command="{Binding SelectLanguageCommand}"
+                                            CommandParameter="en"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="🇺🇸 🇬🇧" FontSize="28" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                            <TextBlock Text="English (US / UK)" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Left-to-Right layout (LTR)" FontSize="11" Opacity="0.75" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+
                         <!-- Window Mode & Screen Display Card -->
                         <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}" Padding="32" Margin="0,0,0,16">
                             <StackPanel>

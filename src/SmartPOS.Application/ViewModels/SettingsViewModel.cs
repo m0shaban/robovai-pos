@@ -95,6 +95,7 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
 
     private readonly LanHttpServerService? _lanServer;
     private readonly SmartPOS.Core.Interfaces.IThemeService? _themeService;
+    private readonly SmartPOS.Core.Interfaces.ILocalizationService? _localizationService;
 
     // ── Theme & UI Customization ─────────────────────────────────────────────
     [ObservableProperty] private int _selectedThemeModeIndex = 0;
@@ -104,6 +105,8 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
     [ObservableProperty] private string _uiZoomPercentText = "100%";
     [ObservableProperty] private string _windowMode = "Fullscreen";
     [ObservableProperty] private int _selectedWindowModeIndex = 0;
+    [ObservableProperty] private string _appLanguage = "ar";
+    [ObservableProperty] private int _selectedLanguageIndex = 0;
 
     // ── Regional Market & Currency & Payment Methods ─────────────────────────
     [ObservableProperty] private string _selectedCountryCode = "EG";
@@ -145,7 +148,8 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
         User currentUser,
         IDbContextFactory<AppDbContext> dbContextFactory,
         LanHttpServerService? lanServer = null,
-        SmartPOS.Core.Interfaces.IThemeService? themeService = null)
+        SmartPOS.Core.Interfaces.IThemeService? themeService = null,
+        SmartPOS.Core.Interfaces.ILocalizationService? localizationService = null)
     {
         _settingsService = settingsService;
         _backupService = backupService;
@@ -155,6 +159,7 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
         _currentUser = currentUser;
         _lanServer = lanServer;
         _themeService = themeService;
+        _localizationService = localizationService;
 
         // تهيئة جسر WMS QR
         InitWmsBridge(dbContextFactory, licenseService);
@@ -295,6 +300,10 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
             "Windowed" => 2,
             _ => 0
         };
+
+        // App Interface Language
+        AppLanguage = _settingsService.AppLanguage;
+        SelectedLanguageIndex = AppLanguage == "en" ? 1 : 0;
 
         // Regional Market & Currency
         SelectedCountryCode = _settingsService.CountryCode;
@@ -481,6 +490,17 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
         CommunityToolkit.Mvvm.Messaging.WeakReferenceMessenger.Default.Send(new SmartPOS.Application.Messages.WindowModeChangedMessage(mode));
     }
 
+    [RelayCommand]
+    private async Task SelectLanguageAsync(string lang)
+    {
+        if (string.IsNullOrWhiteSpace(lang)) return;
+        var cleanLang = lang.Trim().ToLowerInvariant() == "en" ? "en" : "ar";
+        AppLanguage = cleanLang;
+        SelectedLanguageIndex = cleanLang == "en" ? 1 : 0;
+        await _settingsService.SaveSettingAsync("AppLanguage", cleanLang);
+        _localizationService?.SetLanguage(cleanLang);
+    }
+
     partial void OnUiZoomFactorChanged(double value)
     {
         UiZoomPercentText = $"{(int)Math.Round(value * 100)}%";
@@ -562,6 +582,10 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
                 await _settingsService.SaveSettingAsync("BranchCount", BranchCount.ToString());
                 await _settingsService.SaveSettingAsync("BranchRole", BranchRole);
                 await _settingsService.SaveSettingAsync("SyncMode", SyncMode);
+
+                // Window Mode & Language
+                await _settingsService.SaveSettingAsync("WindowMode", WindowMode);
+                await _settingsService.SaveSettingAsync("AppLanguage", AppLanguage);
 
                 // Payment Methods
                 var enabledMethodIds = PaymentMethodSettings.Where(p => p.IsEnabled).Select(p => (int)p.Method).ToList();

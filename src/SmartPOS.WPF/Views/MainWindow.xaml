@@ -19,7 +19,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         FontFamily="Segoe UI, Tahoma"
-        FlowDirection="RightToLeft">
+        FlowDirection="{DynamicResource AppFlowDirection}">
 
     <Window.Resources>
         <converters:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter"/>
@@ -41,7 +41,7 @@
                         Padding="16">
                     <DockPanel Background="Transparent">
                         <StackPanel DockPanel.Dock="Top"
-                                    Margin="16">
+                                     Margin="16">
                             <Image Source="{Binding Settings.AppLogoPath, FallbackValue='/Assets/logo.png'}"
                                    Width="80"
                                    Height="80"
@@ -53,11 +53,11 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock Text="نظام نقاط البيع وإدارة المتاجر"
+                            <TextBlock Text="{DynamicResource Loc_AppSubtitle}"
                                        FontSize="13"
                                        Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
                                        HorizontalAlignment="Center"
-                                       Opacity="0.9"/>
+                                       Opacity="0.9"/>           Opacity="0.9"/>
                             <TextBlock Text="v6.0 PRO"
                                        FontSize="11"
                                        FontWeight="Bold"
@@ -91,133 +91,133 @@
                             <ListBoxItem Visibility="{Binding CanViewDashboard, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="ViewDashboard" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="لوحة المعلومات" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavDashboard}" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanAccessPOS, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CashRegister" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
-                                    <TextBlock Text="نقطة البيع (POS)" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavPOS}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanAccessPOS, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="GamepadVariant" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="إدارة الجلسات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavSessions}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageShifts, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="ClockTimeFour" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="إدارة الورديات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavShifts}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanViewReports, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Receipt" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الفواتير" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavInvoices}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageReturns, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="ArrowULeftTop" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="المرتجعات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavReturns}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManagePurchases, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CartArrowDown" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="المشتريات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavPurchases}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageExpenses, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CurrencyUsd" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="المصروفات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavExpenses}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageProducts, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Package" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="المنتجات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavProducts}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageProducts, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="ClipboardCheck" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="جرد المخزون" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavStockAudit}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageCategories, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Shape" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الأقسام" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavCategories}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageSuppliers, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="TruckDelivery" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الموردين" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavSuppliers}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageCustomers, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="AccountGroup" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="العملاء" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavCustomers}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageCustomers, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Star" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="نقاط الولاء" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavLoyalty}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanViewReports, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="ChartBar" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="التقارير" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavReports}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageUsers, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="AccountKey" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="إدارة المستخدمين" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavUsers}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageUsers, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="History" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="سجل النشاط" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavAuditLog}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanViewSettings, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Cog" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الإعدادات" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavSettings}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
 
                             <ListBoxItem Visibility="{Binding CanManageUsers, Converter={StaticResource BoolToVis}}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="StarCircle" Width="22" Height="22" Margin="14,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="مميزات البرنامج" VerticalAlignment="Center" FontSize="16"/>
+                                    <TextBlock Text="{DynamicResource Loc_NavFeatures}" VerticalAlignment="Center" FontSize="16"/>
                                 </StackPanel>
                             </ListBoxItem>
                         </ListBox>
@@ -263,7 +263,7 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <!-- Quick Theme Toggle -->
                                     <Button Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="تبديل السمة (ليلي / نهاري / تلقائي)"
+                                            ToolTip="{DynamicResource Loc_ThemeToggle}"
                                             Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                             Width="32" Height="32" Padding="0"
                                             Margin="2,0"
@@ -275,7 +275,7 @@
 
                                     <!-- Quick Zoom Out -->
                                     <Button Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="تصغير الواجهة (Zoom Out)"
+                                            ToolTip="{DynamicResource Loc_ZoomOut}"
                                             Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                             Width="32" Height="32" Padding="0"
                                             Margin="2,0"
@@ -285,7 +285,7 @@
 
                                     <!-- Quick Zoom Reset Text -->
                                     <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                            ToolTip="إعادة ضبط حجم الواجهة (100%)"
+                                            ToolTip="{DynamicResource Loc_ZoomReset}"
                                             Padding="6,2"
                                             Margin="2,0"
                                             Height="28"
@@ -296,7 +296,7 @@
 
                                     <!-- Quick Zoom In -->
                                     <Button Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="تكبير الواجهة (Zoom In)"
+                                            ToolTip="{DynamicResource Loc_ZoomIn}"
                                             Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                             Width="32" Height="32" Padding="0"
                                             Margin="2,0"
@@ -307,20 +307,20 @@
                             </Border>
 
                             <Button Style="{StaticResource MaterialDesignIconButton}"
-                                    ToolTip="الإشعارات"
+                                    ToolTip="{DynamicResource Loc_Notifications}"
                                     Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                     Margin="4,0">
                                 <materialDesign:PackIcon Kind="Bell" Width="20" Height="20"/>
                             </Button>
                             <Button Style="{StaticResource MaterialDesignIconButton}"
-                                    ToolTip="الإعدادات"
+                                    ToolTip="{DynamicResource Loc_Settings}"
                                     Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                     Margin="4,0"
                                     Click="SettingsButton_Click">
                                 <materialDesign:PackIcon Kind="Cog" Width="20" Height="20"/>
                             </Button>
                             <Button Style="{StaticResource MaterialDesignIconButton}"
-                                    ToolTip="تسجيل الخروج"
+                                    ToolTip="{DynamicResource Loc_NavLogout}"
                                     Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                     Margin="4,0"
                                     Click="LogoutButton_Click">
@@ -335,7 +335,7 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <!-- تصغير -->
                                     <Button Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="تصغير"
+                                            ToolTip="{DynamicResource Loc_Minimize}"
                                             Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                             Width="28" Height="28" Padding="0" Margin="1,0"
                                             Click="MinimizeWindow_Click">
@@ -344,7 +344,7 @@
                                     <!-- تكبير / استعادة -->
                                     <Button x:Name="RestoreMaxBtn"
                                             Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="تكبير / استعادة"
+                                            ToolTip="{DynamicResource Loc_RestoreMaximize}"
                                             Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                                             Width="28" Height="28" Padding="0" Margin="1,0"
                                             Click="RestoreMaxWindow_Click">
@@ -352,7 +352,7 @@
                                     </Button>
                                     <!-- إغلاق -->
                                     <Button Style="{StaticResource MaterialDesignIconButton}"
-                                            ToolTip="إغلاق البرنامج"
+                                            ToolTip="{DynamicResource Loc_Close}"
                                             Foreground="#FB7185"
                                             Width="28" Height="28" Padding="0" Margin="1,0"
                                             Click="CloseApp_Click">

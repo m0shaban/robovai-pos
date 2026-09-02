@@ -149,6 +149,7 @@ public class SettingsService : ISettingsService
     public string AppColorPalette      => GetSetting("AppColorPalette", "CyanSky");
     public string CustomAccentColorHex => GetSetting("CustomAccentColorHex", "#00B4D8");
     public double AppUiZoomFactor      => double.TryParse(GetSetting("AppUiZoomFactor", "1.0"), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var z) ? Math.Clamp(z, 0.75, 2.0) : 1.0;
+    public string AppLanguage          => GetSetting("AppLanguage", "ar");
 
     // ─── Regional Market, Currency & Payment Methods ─────────────────────────
     public string CurrencySymbol           => GetSetting("CurrencySymbol", "ج.م");

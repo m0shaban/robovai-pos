@@ -11,6 +11,7 @@
                                                              PrimaryColor="Blue"
                                                              SecondaryColor="DeepPurple"/>
                                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml"/>
+                                <ResourceDictionary Source="Resources/Strings.ar.xaml"/>
                         </ResourceDictionary.MergedDictionaries>
 
                         <!-- Converters -->

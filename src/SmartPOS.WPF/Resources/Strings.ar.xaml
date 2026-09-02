@@ -1,0 +1,80 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Layout FlowDirection -->
+    <FlowDirection x:Key="AppFlowDirection">RightToLeft</FlowDirection>
+    <HorizontalAlignment x:Key="AppHeaderAlignment">Right</HorizontalAlignment>
+    <HorizontalAlignment x:Key="AppReverseHeaderAlignment">Left</HorizontalAlignment>
+
+    <!-- App Identity -->
+    <system:String x:Key="Loc_AppSubtitle">نظام نقاط البيع وإدارة المتاجر المتكامل</system:String>
+    <system:String x:Key="Loc_AppVersion">v6.0 PRO</system:String>
+
+    <!-- Navigation Menu (القائمة الجانبية) -->
+    <system:String x:Key="Loc_NavDashboard">لوحة المعلومات</system:String>
+    <system:String x:Key="Loc_NavPOS">نقطة البيع (POS)</system:String>
+    <system:String x:Key="Loc_NavSessions">إدارة الجلسات</system:String>
+    <system:String x:Key="Loc_NavShifts">إدارة الورديات</system:String>
+    <system:String x:Key="Loc_NavInvoices">الفواتير</system:String>
+    <system:String x:Key="Loc_NavReturns">المرتجعات</system:String>
+    <system:String x:Key="Loc_NavPurchases">المشتريات</system:String>
+    <system:String x:Key="Loc_NavExpenses">المصروفات</system:String>
+    <system:String x:Key="Loc_NavProducts">المنتجات</system:String>
+    <system:String x:Key="Loc_NavStockAudit">جرد المخزون</system:String>
+    <system:String x:Key="Loc_NavCategories">الأقسام</system:String>
+    <system:String x:Key="Loc_NavSuppliers">الموردين</system:String>
+    <system:String x:Key="Loc_NavCustomers">العملاء</system:String>
+    <system:String x:Key="Loc_NavLoyalty">نقاط الولاء</system:String>
+    <system:String x:Key="Loc_NavReports">التقارير</system:String>
+    <system:String x:Key="Loc_NavUsers">إدارة المستخدمين</system:String>
+    <system:String x:Key="Loc_NavAuditLog">سجل النشاط</system:String>
+    <system:String x:Key="Loc_NavSettings">الإعدادات</system:String>
+    <system:String x:Key="Loc_NavFeatures">مميزات البرنامج</system:String>
+    <system:String x:Key="Loc_NavLogout">تسجيل الخروج</system:String>
+    <system:String x:Key="Loc_NavCloseApp">إغلاق البرنامج</system:String>
+
+    <!-- Header Actions & Controls (الشريط العلوي) -->
+    <system:String x:Key="Loc_Notifications">الإشعارات</system:String>
+    <system:String x:Key="Loc_Settings">الإعدادات</system:String>
+    <system:String x:Key="Loc_ThemeToggle">تبديل السمة (ليلي / نهاري / تلقائي)</system:String>
+    <system:String x:Key="Loc_ZoomOut">تصغير الواجهة (Zoom Out)</system:String>
+    <system:String x:Key="Loc_ZoomIn">تكبير الواجهة (Zoom In)</system:String>
+    <system:String x:Key="Loc_ZoomReset">إعادة ضبط حجم الواجهة (100%)</system:String>
+    <system:String x:Key="Loc_Minimize">تصغير</system:String>
+    <system:String x:Key="Loc_RestoreMaximize">تكبير / استعادة</system:String>
+    <system:String x:Key="Loc_Close">إغلاق</system:String>
+
+    <!-- Language Names -->
+    <system:String x:Key="Loc_LanguageArabic">العربية (Arabic)</system:String>
+    <system:String x:Key="Loc_LanguageEnglish">الإنجليزية (English)</system:String>
+    <system:String x:Key="Loc_LanguageSelectTitle">لغة واجهة البرنامج (Interface Language)</system:String>
+    <system:String x:Key="Loc_LanguageSelectDesc">اختر لغة واجهة النظام كاملة مع تغيير اتجاه العرض تلقائياً (RTL للعربية / LTR للإنجليزية)</system:String>
+
+    <!-- Common Words & Actions -->
+    <system:String x:Key="Loc_Save">حفظ</system:String>
+    <system:String x:Key="Loc_Cancel">إلغاء</system:String>
+    <system:String x:Key="Loc_Add">إضافة</system:String>
+    <system:String x:Key="Loc_Edit">تعديل</system:String>
+    <system:String x:Key="Loc_Delete">حذف</system:String>
+    <system:String x:Key="Loc_Search">بحث...</system:String>
+    <system:String x:Key="Loc_Print">طباعة</system:String>
+    <system:String x:Key="Loc_Export">تصدير</system:String>
+    <system:String x:Key="Loc_Total">الإجمالي</system:String>
+    <system:String x:Key="Loc_SubTotal">المجموع الفرعي</system:String>
+    <system:String x:Key="Loc_Discount">الخصم</system:String>
+    <system:String x:Key="Loc_Tax">الضريبة</system:String>
+    <system:String x:Key="Loc_Paid">المدفوع</system:String>
+    <system:String x:Key="Loc_Remaining">المتبقي</system:String>
+    <system:String x:Key="Loc_Quantity">الكمية</system:String>
+    <system:String x:Key="Loc_Price">السعر</system:String>
+    <system:String x:Key="Loc_Barcode">الباركود</system:String>
+    <system:String x:Key="Loc_Status">الحالة</system:String>
+    <system:String x:Key="Loc_Date">التاريخ</system:String>
+    <system:String x:Key="Loc_Active">نشط</system:String>
+    <system:String x:Key="Loc_Inactive">معطل</system:String>
+    <system:String x:Key="Loc_ConfirmCloseTitle">تأكيد الإغلاق</system:String>
+    <system:String x:Key="Loc_ConfirmCloseMessage">هل أنت متأكد من إغلاق البرنامج؟</system:String>
+    <system:String x:Key="Loc_ConfirmLogoutTitle">تسجيل الخروج</system:String>
+    <system:String x:Key="Loc_ConfirmLogoutMessage">هل تريد تسجيل الخروج والعودة لشاشة الدخول؟</system:String>
+</ResourceDictionary>

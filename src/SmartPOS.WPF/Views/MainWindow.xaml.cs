@@ -97,6 +97,30 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
         catch { }
 
+        // Wire Language change notifications
+        try
+        {
+            var host = ((App)System.Windows.Application.Current).Host;
+            var locService = host.Services.GetService<SmartPOS.Core.Interfaces.ILocalizationService>();
+            if (locService != null)
+            {
+                FlowDirection = locService.IsRtl ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+            }
+
+            WeakReferenceMessenger.Default.Register<SmartPOS.Application.Messages.LanguageChangedMessage>(this, (r, m) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    FlowDirection = m.Value == "en" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+                    if (MenuListBox != null && PageTitle != null)
+                    {
+                        PageTitle.Text = GetPageTitle(MenuListBox.SelectedIndex);
+                    }
+                });
+            });
+        }
+        catch { }
+
         // Wire Theme & UI Scaling
         try
         {
@@ -210,7 +234,16 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         return page;
     }
 
-    private static readonly string[] PageTitles =
+    private static readonly string[] PageTitleResourceKeys =
+    [
+        "Loc_NavDashboard", "Loc_NavPOS", "Loc_NavSessions", "Loc_NavShifts",
+        "Loc_NavInvoices", "Loc_NavReturns", "Loc_NavPurchases", "Loc_NavExpenses", 
+        "Loc_NavProducts", "Loc_NavStockAudit", "Loc_NavCategories", "Loc_NavSuppliers", "Loc_NavCustomers", 
+        "Loc_NavLoyalty", "Loc_NavReports", "Loc_NavUsers", "Loc_NavAuditLog",
+        "Loc_NavSettings", "Loc_NavFeatures"
+    ];
+
+    private static readonly string[] PageTitlesFallback =
     [
         "لوحة المعلومات", "نقطة البيع", "إدارة الجلسات", "إدارة الورديات",
         "الفواتير", "المرتجعات", "المشتريات", "المصروفات", 
@@ -219,13 +252,27 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         "الإعدادات", "مميزات البرنامج"
     ];
 
+    public static string GetPageTitle(int index)
+    {
+        if (index >= 0 && index < PageTitleResourceKeys.Length)
+        {
+            var key = PageTitleResourceKeys[index];
+            if (System.Windows.Application.Current != null && System.Windows.Application.Current.Resources.Contains(key))
+            {
+                return System.Windows.Application.Current.Resources[key]?.ToString() ?? PageTitlesFallback[index];
+            }
+            if (index < PageTitlesFallback.Length) return PageTitlesFallback[index];
+        }
+        return string.Empty;
+    }
+
     private void MenuListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (MenuListBox == null || PageTitle == null || MainFrame == null)
             return;
 
         var idx = MenuListBox.SelectedIndex;
-        if (idx < 0 || idx >= PageTitles.Length) return;
+        if (idx < 0 || idx >= PageTitleResourceKeys.Length) return;
 
         // Backend Protection: Prevent navigation to unauthorized pages
         if (_authService != null)
@@ -269,86 +316,79 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             }
         }
 
-        PageTitle.Text = PageTitles[idx];
+        PageTitle.Text = GetPageTitle(idx);
         MainFrame.Navigate(GetOrCreatePage(idx));
     }
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show(
-            "هل أنت متأكد من تسجيل الخروج؟",
-            "تسجيل الخروج",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
+        var confirmMsg = (System.Windows.Application.Current?.Resources["Loc_ConfirmLogoutMessage"] as string) ?? "هل أنت متأكد من تسجيل الخروج؟";
+        var confirmTitle = (System.Windows.Application.Current?.Resources["Loc_ConfirmLogoutTitle"] as string) ?? "تسجيل الخروج";
+        var result = MessageBox.Show(confirmMsg, confirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
         if (result == MessageBoxResult.Yes)
         {
             try
             {
-                var host = ((App)System.Windows.Application.Current).Host;
-                var userService = host.Services.GetService<IUserService>();
-                userService?.Logout();
-            }
-            catch { }
-
-            _pageCache.Clear();
-
-            // Return to login instead of shutting down
-            try
-            {
-                var host = ((App)System.Windows.Application.Current).Host;
-                var loginWindow = host.Services.GetRequiredService<LoginWindow>();
-                Hide();
-                if (loginWindow.ShowDialog() == true)
+                var app = (App?)System.Windows.Application.Current;
+                if (app?.Host != null)
                 {
+                    var userService = app.Host.Services.GetService<IUserService>();
+                    userService?.Logout();
+
                     _pageCache.Clear();
 
-                    // Refresh current user after re-login
-                    CurrentUser = host.Services.GetService<IUserService>()?.CurrentUser;
-                    DataContext = null;
-                    DataContext = this;
-                    RefreshPermissions(); // Inform UI that properties have changed
-
-                    // Navigate based on new user role
-                    if (CurrentUser?.Role == Core.Entities.UserRole.Cashier)
+                    var loginWindow = app.Host.Services.GetRequiredService<LoginWindow>();
+                    Hide();
+                    if (loginWindow.ShowDialog() == true)
                     {
-                        MenuListBox.SelectedIndex = 1;
+                        _pageCache.Clear();
+
+                        // Refresh current user after re-login
+                        CurrentUser = app.Host.Services.GetService<IUserService>()?.CurrentUser;
+                        DataContext = null;
+                        DataContext = this;
+                        RefreshPermissions(); // Inform UI that properties have changed
+
+                        // Navigate based on new user role
+                        if (CurrentUser?.Role == Core.Entities.UserRole.Cashier)
+                        {
+                            MenuListBox.SelectedIndex = 1;
+                        }
+                        else
+                        {
+                            MenuListBox.SelectedIndex = 0;
+                            MainFrame.Navigate(GetOrCreatePage(0));
+                        }
+
+                        PageTitle.Text = CurrentUser?.Role == Core.Entities.UserRole.Cashier
+                            ? GetPageTitle(1)
+                            : GetPageTitle(0);
+
+                        Show();
                     }
                     else
                     {
-                        MenuListBox.SelectedIndex = 0;
-                        MainFrame.Navigate(GetOrCreatePage(0));
+                        System.Windows.Application.Current?.Shutdown();
                     }
-
-                    PageTitle.Text = CurrentUser?.Role == Core.Entities.UserRole.Cashier
-                        ? "نقطة البيع"
-                        : "لوحة المعلومات";
-
-                    Show();
-                }
-                else
-                {
-                    System.Windows.Application.Current.Shutdown();
                 }
             }
             catch
             {
-                System.Windows.Application.Current.Shutdown();
+                System.Windows.Application.Current?.Shutdown();
             }
         }
     }
 
     private void CloseApp_Click(object sender, RoutedEventArgs e)
     {
-        var result = MessageBox.Show(
-            "هل أنت متأكد من إغلاق البرنامج؟",
-            "تأكيد الإغلاق",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
+        var confirmMsg = (System.Windows.Application.Current?.Resources["Loc_ConfirmCloseMessage"] as string) ?? "هل أنت متأكد من إغلاق البرنامج؟";
+        var confirmTitle = (System.Windows.Application.Current?.Resources["Loc_ConfirmCloseTitle"] as string) ?? "تأكيد الإغلاق";
+        var result = MessageBox.Show(confirmMsg, confirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
         if (result == MessageBoxResult.Yes)
         {
-            System.Windows.Application.Current.Shutdown();
+            System.Windows.Application.Current?.Shutdown();
         }
     }
 
@@ -384,10 +424,10 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void SettingsButton_Click(object sender, RoutedEventArgs e)
     {
-        // Navigate to Settings page (index 10)
-        MenuListBox.SelectedIndex = 10;
-        MainFrame.Navigate(GetOrCreatePage(10));
-        PageTitle.Text = "الإعدادات";
+        // Navigate to Settings page (index 17)
+        MenuListBox.SelectedIndex = 17;
+        MainFrame.Navigate(GetOrCreatePage(17));
+        PageTitle.Text = GetPageTitle(17);
     }
 
     // ─── Window Control: Minimize / Restore-Maximize / Drag ──────────────────

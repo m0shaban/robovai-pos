@@ -100,6 +100,8 @@ public interface ISettingsService
     string CustomAccentColorHex { get; }
     /// <summary>UI Zoom Factor: 0.8 to 1.75 (Default 1.0)</summary>
     double AppUiZoomFactor { get; }
+    /// <summary>App UI Language: "ar" (Arabic RTL) | "en" (English LTR)</summary>
+    string AppLanguage { get; }
 
     // ─── Regional Market, Currency & Payment Methods ─────────────────────────
     string CurrencySymbol { get; }
