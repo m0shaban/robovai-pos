@@ -3,15 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="معالج التهيئة والأتمتة الشاملة – RoboVAI PRO POS"
-        Height="820" Width="1240"
-        MinHeight="750" MinWidth="1180"
+        Height="740" Width="1180"
+        MinHeight="680" MinWidth="1060"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         FontFamily="Segoe UI Variable, Segoe UI, Tahoma"
-        FlowDirection="RightToLeft"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        FlowDirection="RightToLeft">
 
     <Window.Resources>
         <!-- Space Theme Input Styles -->
@@ -135,26 +134,26 @@
 
     <!-- Outer Frame Container with Rich Deep Ambient Shadow -->
     <Grid>
-        <Border Margin="14" CornerRadius="20" Background="#020810">
+        <Border Margin="14" CornerRadius="20" Background="#FF020810">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" BlurRadius="55" ShadowDepth="4" Opacity="0.95"/>
             </Border.Effect>
         </Border>
 
         <!-- Main Content Area with Cosmic Space Aesthetic -->
-        <Border Margin="14" CornerRadius="20" ClipToBounds="True" BorderBrush="#1E3248" BorderThickness="1">
+        <Border Margin="14" CornerRadius="20" ClipToBounds="True" Background="#FF030914" BorderBrush="#1E3248" BorderThickness="1">
             <Grid>
                 <!-- Space Background Image (Identical to Login) -->
-                <Image Source="pack://application:,,,/Assets/Images/wizard_large.jpeg" Stretch="UniformToFill"/>
+                <Image Source="pack://application:,,,/Assets/Images/wizard_large.jpeg" Stretch="UniformToFill" Opacity="0.25"/>
 
                 <!-- Deep Dark Solid/Cosmic Tint Overlay (eliminates text clash from underlying image) -->
                 <Rectangle>
                     <Rectangle.Fill>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FB030812" Offset="0"/>
-                            <GradientStop Color="#F5040C18" Offset="0.45"/>
-                            <GradientStop Color="#EB040E1B" Offset="0.8"/>
-                            <GradientStop Color="#E0040E1B" Offset="1"/>
+                            <GradientStop Color="#FF030812" Offset="0"/>
+                            <GradientStop Color="#FF040C18" Offset="0.45"/>
+                            <GradientStop Color="#FF040E1B" Offset="0.8"/>
+                            <GradientStop Color="#FF040E1B" Offset="1"/>
                         </LinearGradientBrush>
                     </Rectangle.Fill>
                 </Rectangle>
@@ -166,8 +165,8 @@
                         <RowDefinition Height="70"/>   <!-- Glass Navigation Bar -->
                     </Grid.RowDefinitions>
 
-                    <!-- Top Bar with App Badge and Window Controls -->
-                    <Grid Grid.Row="0" FlowDirection="LeftToRight" Background="#50000000">
+                    <!-- Top Bar with App Badge and Window Controls (Drag handle) -->
+                    <Grid Grid.Row="0" FlowDirection="LeftToRight" Background="#60000000" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
                             <Border Background="#00D4FF" CornerRadius="6" Width="8" Height="8" Margin="0,0,8,0">
                                 <Border.Effect>
@@ -237,18 +236,18 @@
                             <!-- Stepper Timeline List -->
                             <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,6">
                                 <!-- Step 1 Badge Item -->
-                                <Border x:Name="Step1Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#0E2C44" BorderBrush="#00D4FF" BorderThickness="1.5">
+                                <Border x:Name="Step1Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#0E2C44" BorderBrush="#00D4FF" BorderThickness="1.5" Cursor="Hand" Tag="1" MouseLeftButtonDown="StepBadge_Click">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="🌍" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="1. السوق والدولة والعملة" Foreground="#FFFFFF" FontWeight="Bold" FontSize="12.5"/>
+                                            <TextBlock x:Name="Step1Text" Text="1. السوق والدولة والعملة" Foreground="#FFFFFF" FontWeight="Bold" FontSize="12.5"/>
                                             <TextBlock Text="العملة الرسمية، الضرائب والقوانين" Foreground="#7E99B5" FontSize="10"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
 
                                 <!-- Step 2 Badge Item -->
-                                <Border x:Name="Step2Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1">
+                                <Border x:Name="Step2Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1" Cursor="Hand" Tag="2" MouseLeftButtonDown="StepBadge_Click">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="🏢" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <StackPanel VerticalAlignment="Center">
@@ -259,7 +258,7 @@
                                 </Border>
 
                                 <!-- Step 3 Badge Item -->
-                                <Border x:Name="Step3Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1">
+                                <Border x:Name="Step3Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1" Cursor="Hand" Tag="3" MouseLeftButtonDown="StepBadge_Click">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="🌐" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <StackPanel VerticalAlignment="Center">
@@ -270,7 +269,7 @@
                                 </Border>
 
                                 <!-- Step 4 Badge Item -->
-                                <Border x:Name="Step4Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1">
+                                <Border x:Name="Step4Badge" CornerRadius="10" Padding="12,8" Margin="0,0,0,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1" Cursor="Hand" Tag="4" MouseLeftButtonDown="StepBadge_Click">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="💳" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <StackPanel VerticalAlignment="Center">
@@ -281,7 +280,7 @@
                                 </Border>
 
                                 <!-- Step 5 Badge Item -->
-                                <Border x:Name="Step5Badge" CornerRadius="10" Padding="12,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1">
+                                <Border x:Name="Step5Badge" CornerRadius="10" Padding="12,8" Background="#081422" BorderBrush="#1A2C40" BorderThickness="1" Cursor="Hand" Tag="5" MouseLeftButtonDown="StepBadge_Click">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="🖨️" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                         <StackPanel VerticalAlignment="Center">
@@ -321,7 +320,7 @@
                                         <TextBlock Text="سيقوم النظام تلقائياً بتهيئة العملة الرسمية ونسبة الضريبة والقوانين وطرق الدفع المناسبة لدولتك." FontSize="12.5" Foreground="#8EA5BE" Margin="0,0,0,12"/>
 
                                         <!-- Country Selection Grid (Fluent Cards) -->
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="340" Margin="0,0,0,14">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="270" Margin="0,0,0,10">
                                             <UniformGrid Columns="2" Rows="4">
                                                 <RadioButton x:Name="RbSaudi" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="3" Checked="Country_Checked" Tag="SA" IsChecked="True">
                                                     <Border Background="#0B1B2B" BorderBrush="#1E354D" BorderThickness="1.5" CornerRadius="9" Padding="10,8">

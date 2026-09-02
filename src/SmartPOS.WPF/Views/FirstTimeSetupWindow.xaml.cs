@@ -23,20 +23,25 @@ public partial class FirstTimeSetupWindow : Window
         InitializeComponent();
         _settingsService = settingsService;
 
-        LoadPrinters();
+        _ = LoadPrintersAsync();
         ApplyCountryDefaults("SA");
         UpdateStepVisibility();
     }
 
-    private void LoadPrinters()
+    private async System.Threading.Tasks.Task LoadPrintersAsync()
     {
         try
         {
-            var printers = new List<string>();
-            foreach (string printer in PrinterSettings.InstalledPrinters)
+            var printers = await System.Threading.Tasks.Task.Run(() =>
             {
-                printers.Add(printer);
-            }
+                var list = new List<string>();
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    list.Add(printer);
+                }
+                return list;
+            });
+
             CmbPrinters.ItemsSource = printers;
             if (printers.Count > 0)
             {
@@ -216,6 +221,7 @@ public partial class FirstTimeSetupWindow : Window
         Step5Badge.Background = _currentStep == 5 ? activeBg : inactiveBg;
         Step5Badge.BorderBrush = _currentStep == 5 ? activeBorder : inactiveBorder;
 
+        if (Step1Text != null) Step1Text.Foreground = _currentStep == 1 ? activeText : inactiveText;
         if (Step2Text != null) Step2Text.Foreground = _currentStep == 2 ? activeText : inactiveText;
         if (Step3Text != null) Step3Text.Foreground = _currentStep == 3 ? activeText : inactiveText;
         if (Step4Text != null) Step4Text.Foreground = _currentStep == 4 ? activeText : inactiveText;
@@ -346,7 +352,19 @@ public partial class FirstTimeSetupWindow : Window
         Close();
     }
 
-    private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void StepBadge_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (sender is FrameworkElement fe && int.TryParse(fe.Tag?.ToString(), out int targetStep))
+        {
+            if (targetStep >= 1 && targetStep <= 5)
+            {
+                _currentStep = targetStep;
+                UpdateStepVisibility();
+            }
+        }
+    }
+
+    private void TitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
         {
