@@ -102,6 +102,8 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
     [ObservableProperty] private string _customAccentHex = "#00B4D8";
     [ObservableProperty] private double _uiZoomFactor = 1.0;
     [ObservableProperty] private string _uiZoomPercentText = "100%";
+    [ObservableProperty] private string _windowMode = "Fullscreen";
+    [ObservableProperty] private int _selectedWindowModeIndex = 0;
 
     // ── Regional Market & Currency & Payment Methods ─────────────────────────
     [ObservableProperty] private string _selectedCountryCode = "EG";
@@ -285,6 +287,15 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
         UiZoomFactor = _settingsService.AppUiZoomFactor;
         UiZoomPercentText = $"{(int)Math.Round(UiZoomFactor * 100)}%";
 
+        // Window & Screen Display Mode
+        WindowMode = _settingsService.GetSetting("WindowMode") ?? "Fullscreen";
+        SelectedWindowModeIndex = WindowMode switch
+        {
+            "Maximized" => 1,
+            "Windowed" => 2,
+            _ => 0
+        };
+
         // Regional Market & Currency
         SelectedCountryCode = _settingsService.CountryCode;
         CurrencySymbol = _settingsService.CurrencySymbol;
@@ -453,6 +464,21 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
             UiZoomPercentText = $"{(int)Math.Round(factor * 100)}%";
             ApplyActiveZoom();
         }
+    }
+
+    [RelayCommand]
+    private async Task SelectWindowModeAsync(string mode)
+    {
+        if (string.IsNullOrWhiteSpace(mode)) return;
+        WindowMode = mode;
+        SelectedWindowModeIndex = mode switch
+        {
+            "Maximized" => 1,
+            "Windowed" => 2,
+            _ => 0
+        };
+        await _settingsService.SaveSettingAsync("WindowMode", mode);
+        CommunityToolkit.Mvvm.Messaging.WeakReferenceMessenger.Default.Send(new SmartPOS.Application.Messages.WindowModeChangedMessage(mode));
     }
 
     partial void OnUiZoomFactorChanged(double value)

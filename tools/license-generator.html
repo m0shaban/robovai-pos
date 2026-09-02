@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔐 RoboVAI POS — لوحة التفعيل الداخلية</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", Tahoma, sans-serif; background: #0f1729; color: #e2e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .container { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 2rem; width: 100%; max-width: 700px; box-shadow: 0 25px 60px rgba(0,0,0,0.5); }
+    h1 { text-align: center; font-size: 1.5rem; color: #38bdf8; margin-bottom: 0.3rem; }
+    .subtitle { text-align: center; color: #64748b; font-size: 0.85rem; margin-bottom: 2rem; }
+    .warning { background: #431407; border: 1px solid #9a3412; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #fed7aa; }
+    label { display: block; font-size: 0.82rem; color: #94a3b8; margin-bottom: 0.4rem; margin-top: 1rem; }
+    input, select { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 0.65rem 0.9rem; color: #e2e8f0; font-size: 0.9rem; direction: ltr; text-align: left; }
+    input:focus, select:focus { outline: none; border-color: #38bdf8; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    button { width: 100%; margin-top: 1.5rem; padding: 0.8rem; background: linear-gradient(135deg, #0ea5e9, #6366f1); border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; }
+    .result { margin-top: 1.5rem; background: #0f172a; border: 1px solid #1e40af; border-radius: 10px; padding: 1.2rem; display: none; }
+    .result.show { display: block; }
+    .result label { color: #60a5fa; margin-top: 0; }
+    .code-box { background: #020617; border: 1px solid #1e40af; border-radius: 6px; padding: 0.75rem 1rem; font-family: "Courier New", monospace; font-size: 0.78rem; word-break: break-all; color: #34d399; margin-top: 0.5rem; cursor: copy; user-select: all; }
+    .copy-btn { margin-top: 0.8rem; padding: 0.5rem 1rem; background: #1e40af; border: none; border-radius: 6px; color: white; cursor: pointer; font-size: 0.82rem; width: auto; }
+    .payload-detail { background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 0.75rem; margin-top: 0.75rem; font-size: 0.78rem; color: #94a3b8; font-family: monospace; white-space: pre-wrap; }
+    .badge { display: inline-block; background: #14532d; color: #86efac; border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; margin-right: 0.3rem; }
+    hr { border: none; border-top: 1px solid #334155; margin: 1.5rem 0; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🔐 RoboVAI POS — لوحة التفعيل الداخلية</h1>
+  <p class="subtitle">أداة توليد أكواد التفعيل الرسمية — للاستخدام الداخلي فقط</p>
+  <div class="warning">⚠️ <strong>سري للغاية:</strong> لا تشارك هذه الصفحة مع أي أحد. احفظها في مكان آمن.</div>
+
+  <label>🗝️ المفتاح السري (OfflineSecretKey)</label>
+  <input type="password" id="secret" value="mohamedshabanibrahimsalamaetmanrobovai-platinum-10y" />
+  <label>🧂 الـ Salt (SecretSalt)</label>
+  <input type="text" id="salt" value="store.license-key.v6.platinum" />
+  <hr />
+  <label>🖥️ معرّف الجهاز (Device ID) — من البرنامج ← الإعدادات ← التفعيل</label>
+  <input type="text" id="machineId" placeholder="مثال: ABC123DEF456GHI789" />
+  <div class="row">
+    <div>
+      <label>📦 الخطة</label>
+      <select id="plan">
+        <option>Standard</option><option>Professional</option><option selected>Enterprise</option><option>Platinum</option>
+      </select>
+    </div>
+    <div>
+      <label>⏳ مدة التفعيل</label>
+      <select id="expiryType" onchange="toggleExpiry()">
+        <option value="LIFETIME" selected>مدى الحياة</option>
+        <option value="1y">سنة واحدة</option>
+        <option value="2y">سنتان</option>
+        <option value="6m">6 أشهر</option>
+        <option value="date">تاريخ محدد</option>
+      </select>
+    </div>
+  </div>
+  <div id="dateRow" style="display:none">
+    <label>📅 تاريخ الانتهاء</label>
+    <input type="date" id="expiryDate" />
+  </div>
+  <div class="row">
+    <div><label>🆔 رقم الطلب (اختياري)</label><input type="number" id="orderId" placeholder="1001" /></div>
+    <div><label>💺 رقم المقعد</label><input type="number" id="seat" value="1" /></div>
+  </div>
+  <button onclick="gen()">⚡ توليد كود التفعيل</button>
+
+  <div class="result" id="result">
+    <label>✅ كود التفعيل:</label>
+    <div class="code-box" id="out" onclick="copy()"></div>
+    <button class="copy-btn" onclick="copy()">📋 نسخ الكود</button>
+    <label style="margin-top:1rem">📄 الـ Payload:</label>
+    <div class="payload-detail" id="detail"></div>
+    <label style="margin-top:1rem">🔖 ملخص:</label>
+    <div style="margin-top:.4rem">
+      <span class="badge" id="b1"></span>
+      <span class="badge" id="b2"></span>
+      <span class="badge" id="b3"></span>
+    </div>
+  </div>
+</div>
+<script>
+function b64u(buf){const b=new Uint8Array(buf);let s='';for(const x of b)s+=String.fromCharCode(x);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+async function hmac(secret,msg){const e=new TextEncoder();const k=await crypto.subtle.importKey('raw',e.encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);const s=await crypto.subtle.sign('HMAC',k,e.encode(msg));return b64u(s)}
+function getExpiry(){const t=document.getElementById('expiryType').value;if(t==='LIFETIME')return'LIFETIME';if(t==='date')return document.getElementById('expiryDate').value||'LIFETIME';const d=new Date();if(t==='1y')d.setFullYear(d.getFullYear()+1);else if(t==='2y')d.setFullYear(d.getFullYear()+2);else if(t==='6m')d.setMonth(d.getMonth()+6);return d.toISOString().split('T')[0]}
+function toggleExpiry(){document.getElementById('dateRow').style.display=document.getElementById('expiryType').value==='date'?'block':'none'}
+async function gen(){
+  const sec=document.getElementById('secret').value.trim();
+  const salt=document.getElementById('salt').value.trim();
+  const mid=document.getElementById('machineId').value.trim().toUpperCase().replace(/\s/g,'');
+  const plan=document.getElementById('plan').value;
+  const exp=getExpiry();
+  const oid=document.getElementById('orderId').value;
+  const seat=document.getElementById('seat').value||'1';
+  if(!sec||!salt||!mid){alert('أكمل جميع الحقول المطلوبة');return}
+  const payload={m:mid,p:plan,e:exp,g:new Date().toISOString().split('T')[0],s:parseInt(seat)};
+  if(oid)payload.o=parseInt(oid);
+  const pj=JSON.stringify(payload);
+  const pb=b64u(new TextEncoder().encode(pj));
+  const sig=await hmac(`${sec}:${salt}`,pb);
+  const code=`${pb}.${sig}`;
+  document.getElementById('out').textContent=code;
+  document.getElementById('detail').textContent=JSON.stringify(payload,null,2);
+  document.getElementById('b1').textContent='📦 '+plan;
+  document.getElementById('b2').textContent='⏳ '+exp;
+  document.getElementById('b3').textContent='🖥️ '+mid.substring(0,14)+'...';
+  document.getElementById('result').className='result show';
+}
+function copy(){navigator.clipboard.writeText(document.getElementById('out').textContent).then(()=>{const b=document.querySelector('.copy-btn');b.textContent='✅ تم النسخ!';setTimeout(()=>b.textContent='📋 نسخ الكود',2000)})}
+</script>
+</body>
+</html>

@@ -332,6 +332,78 @@
                 </TabItem.Header>
                 <ScrollViewer Margin="0,16,0,0">
                     <StackPanel>
+                        <!-- Window Mode & Screen Display Card -->
+                        <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}" Padding="32" Margin="0,0,0,16">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <materialDesign:PackIcon Kind="MonitorDashboard" Width="26" Height="26" Foreground="{DynamicResource AlAtmani.AccentBrush}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="وضع عرض الشاشة والنوافذ (Display &amp; Window Mode)" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock Text="اختر كيفية ظهور نافذة البرنامج: شاشة كاملة بدون حواف مخصصة لنقاط البيع، أو نافذة مكبرة مع أزرار التحكم (تصغير/تكبير/إغلاق)، أو نافذة عادية قابلة للتحريك." FontSize="14" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,0,0,20"/>
+
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="16"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="16"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 1. Fullscreen / Kiosk Mode -->
+                                    <Button Grid.Column="0"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Height="120"
+                                            Padding="16"
+                                            Command="{Binding SelectWindowModeCommand}"
+                                            CommandParameter="Fullscreen"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="Fullscreen" Width="36" Height="36" HorizontalAlignment="Center" Foreground="{DynamicResource AlAtmani.AccentBrush}" Margin="0,0,0,8"/>
+                                            <TextBlock Text="شاشة كاملة (Kiosk Mode)" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="تعبئة كامل الشاشة بدون أشرطة إضافية" FontSize="11" Opacity="0.75" HorizontalAlignment="Center" Margin="0,2,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <!-- 2. Maximized with Controls -->
+                                    <Button Grid.Column="2"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Height="120"
+                                            Padding="16"
+                                            Command="{Binding SelectWindowModeCommand}"
+                                            CommandParameter="Maximized"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="WindowMaximize" Width="36" Height="36" HorizontalAlignment="Center" Foreground="#10B981" Margin="0,0,0,8"/>
+                                            <TextBlock Text="نافذة مكبرة (Maximized)" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="ملء الشاشة مع أزرار تصغير/تكبير/إغلاق" FontSize="11" Opacity="0.75" HorizontalAlignment="Center" Margin="0,2,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <!-- 3. Windowed Frame Mode -->
+                                    <Button Grid.Column="4"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Height="120"
+                                            Padding="16"
+                                            Command="{Binding SelectWindowModeCommand}"
+                                            CommandParameter="Windowed"
+                                            Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="WindowRestore" Width="36" Height="36" HorizontalAlignment="Center" Foreground="#3B82F6" Margin="0,0,0,8"/>
+                                            <TextBlock Text="نافذة حرة (Windowed)" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="قابلة للتحريك والتصغير بجانب البرامج الأخرى" FontSize="11" Opacity="0.75" HorizontalAlignment="Center" Margin="0,2,0,0" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+
                         <!-- Base Theme Mode Card -->
                         <materialDesign:Card Style="{StaticResource AlAtmani.GlassCard}" Padding="32" Margin="0,0,0,16">
                             <StackPanel>

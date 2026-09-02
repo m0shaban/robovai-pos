@@ -87,6 +87,16 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             MainFrame.Navigate(GetOrCreatePage(0));
         }
 
+        // Wire Window Mode change notifications
+        try
+        {
+            WeakReferenceMessenger.Default.Register<SmartPOS.Application.Messages.WindowModeChangedMessage>(this, (r, m) =>
+            {
+                Dispatcher.Invoke(() => ApplyWindowMode(m.Value));
+            });
+        }
+        catch { }
+
         // Wire Theme & UI Scaling
         try
         {
@@ -378,5 +388,90 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         MenuListBox.SelectedIndex = 10;
         MainFrame.Navigate(GetOrCreatePage(10));
         PageTitle.Text = "الإعدادات";
+    }
+
+    // ─── Window Control: Minimize / Restore-Maximize / Drag ──────────────────
+
+    private void MinimizeWindow_Click(object sender, RoutedEventArgs e)
+    {
+        WindowState = WindowState.Minimized;
+    }
+
+    private void RestoreMaxWindow_Click(object sender, RoutedEventArgs e)
+    {
+        if (WindowState == WindowState.Maximized)
+        {
+            WindowState = WindowState.Normal;
+            RestoreMaxIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
+        }
+        else
+        {
+            WindowState = WindowState.Maximized;
+            RestoreMaxIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowRestore;
+        }
+    }
+
+    private void TopBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        // Allow dragging only in windowed (non-fullscreen) mode
+        if (WindowStyle != WindowStyle.None || WindowState != WindowState.Maximized)
+        {
+            if (e.ClickCount == 2)
+            {
+                RestoreMaxWindow_Click(sender, e);
+            }
+            else
+            {
+                try { DragMove(); } catch { }
+            }
+        }
+        else if (e.ClickCount == 2)
+        {
+            // Double-click on topbar in fullscreen → switch to windowed
+            ApplyWindowMode("Windowed");
+            Settings?.SaveSettingAsync("WindowMode", "Windowed");
+        }
+    }
+
+    /// <summary>
+    /// Apply window mode from Settings. Call this on startup and when user changes it.
+    /// mode: "Fullscreen" | "Windowed" | "Maximized"
+    /// </summary>
+    public void ApplyWindowMode(string mode)
+    {
+        switch (mode?.Trim().ToLowerInvariant())
+        {
+            case "windowed":
+                WindowStyle = WindowStyle.None;   // Keep our custom chrome (no OS chrome)
+                ResizeMode = ResizeMode.CanResize;
+                WindowState = WindowState.Normal;
+                Width = 1400;
+                Height = 850;
+                WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                Left = (SystemParameters.PrimaryScreenWidth - Width) / 2;
+                Top = (SystemParameters.PrimaryScreenHeight - Height) / 2;
+                WindowControlsBar.Visibility = Visibility.Visible;
+                break;
+
+            case "maximized":
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.CanResize;
+                WindowState = WindowState.Maximized;
+                WindowControlsBar.Visibility = Visibility.Visible;
+                break;
+
+            case "fullscreen":
+            default:
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.NoResize;
+                WindowState = WindowState.Maximized;
+                WindowControlsBar.Visibility = Visibility.Collapsed;
+                break;
+        }
+        // Update restore/max icon
+        if (RestoreMaxIcon != null)
+            RestoreMaxIcon.Kind = WindowState == WindowState.Maximized
+                ? MaterialDesignThemes.Wpf.PackIconKind.WindowRestore
+                : MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
     }
 }

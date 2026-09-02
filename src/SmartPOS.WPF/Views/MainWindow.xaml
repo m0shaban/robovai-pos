@@ -235,7 +235,8 @@
                                           DockPanel.Dock="Top"
                                           BorderThickness="0,0,0,1"
                                           BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
-                                          materialDesign:ElevationAssist.Elevation="Dp1">
+                                          materialDesign:ElevationAssist.Elevation="Dp1"
+                                          MouseLeftButtonDown="TopBar_MouseLeftButtonDown">
                     <DockPanel>
                         <StackPanel Orientation="Horizontal"
                                     DockPanel.Dock="Left">
@@ -325,13 +326,40 @@
                                     Click="LogoutButton_Click">
                                 <materialDesign:PackIcon Kind="Logout" Width="20" Height="20"/>
                             </Button>
-                            <Button Style="{StaticResource MaterialDesignIconButton}"
-                                    ToolTip="إغلاق البرنامج"
-                                    Foreground="#FB7185"
-                                    Margin="4,0"
-                                    Click="CloseApp_Click">
-                                <materialDesign:PackIcon Kind="Close" Width="20" Height="20"/>
-                            </Button>
+
+                            <!-- Window Control Buttons (تصغير / تكبير / إغلاق) -->
+                            <Border x:Name="WindowControlsBar"
+                                    Background="{DynamicResource AlAtmani.Surface2Brush}"
+                                    CornerRadius="8" Margin="8,0,0,0" Padding="2,1"
+                                    BorderThickness="1" BorderBrush="{DynamicResource AlAtmani.BorderBrush}">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <!-- تصغير -->
+                                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                                            ToolTip="تصغير"
+                                            Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
+                                            Width="28" Height="28" Padding="0" Margin="1,0"
+                                            Click="MinimizeWindow_Click">
+                                        <materialDesign:PackIcon Kind="WindowMinimize" Width="14" Height="14"/>
+                                    </Button>
+                                    <!-- تكبير / استعادة -->
+                                    <Button x:Name="RestoreMaxBtn"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            ToolTip="تكبير / استعادة"
+                                            Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
+                                            Width="28" Height="28" Padding="0" Margin="1,0"
+                                            Click="RestoreMaxWindow_Click">
+                                        <materialDesign:PackIcon x:Name="RestoreMaxIcon" Kind="WindowMaximize" Width="14" Height="14"/>
+                                    </Button>
+                                    <!-- إغلاق -->
+                                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                                            ToolTip="إغلاق البرنامج"
+                                            Foreground="#FB7185"
+                                            Width="28" Height="28" Padding="0" Margin="1,0"
+                                            Click="CloseApp_Click">
+                                        <materialDesign:PackIcon Kind="Close" Width="14" Height="14"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
                         </StackPanel>
                     </DockPanel>
                 </materialDesign:ColorZone>

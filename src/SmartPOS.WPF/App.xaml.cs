@@ -195,6 +195,9 @@ public partial class App : System.Windows.Application
                 MainWindow = mainWindow;
                 ShutdownMode = ShutdownMode.OnMainWindowClose;
                 mainWindow.Show();
+                // Apply saved window mode (Fullscreen / Maximized / Windowed)
+                var windowMode = settingsService.GetSetting("WindowMode") ?? "Fullscreen";
+                mainWindow.ApplyWindowMode(windowMode);
             }
             else
             {
