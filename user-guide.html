@@ -336,9 +336,12 @@
                 <li><a href="#loyalty"><i class="fas fa-medal fa-fw"></i> نقاط الولاء</a></li>
                 <li><a href="#reports"><i class="fas fa-chart-pie fa-fw"></i> التقارير التفصيلية</a></li>
                 <li><a href="#users"><i class="fas fa-user-shield fa-fw"></i> المستخدمين والصلاحيات</a></li>
-                <li><a href="#activity"><i class="fas fa-history fa-fw"></i> سجل النشاط</a></li>
                 <li><a href="#settings"><i class="fas fa-cogs fa-fw"></i> الإعدادات</a></li>
-                <li><a href="#wms"><i class="fas fa-mobile-alt fa-fw"></i> ربط WMS وسحابة 🆕</a></li>
+                <li><a href="#wms"><i class="fas fa-mobile-alt fa-fw"></i> ربط WMS وسحابة</a></li>
+                <li><a href="#languages" style="color: var(--primary);"><i class="fas fa-globe fa-fw"></i> تعدد اللغات (6 لغات) 🆕</a></li>
+                <li><a href="#smart-import" style="color: #10B981;"><i class="fas fa-file-excel fa-fw"></i> الاستيراد الذكي للأصناف 🆕</a></li>
+                <li><a href="#telegram" style="color: #0088cc;"><i class="fab fa-telegram fa-fw"></i> بوت التليجرام التلقائي 🆕</a></li>
+                <li><a href="#database-robustness" style="color: #8B5CF6;"><i class="fas fa-database fa-fw"></i> صلابة الأداء وانعدام الـ Lag 🆕</a></li>
             </ul>
         </aside>
 
@@ -618,67 +621,228 @@
                 </div>
             </section>
 
-            <!-- 19. WMS Integration -->
+            <!-- 19. Local Web Services & WMS Hub -->
             <section id="wms" class="module-section">
                 <div class="module-header">
-                    <div class="module-icon" style="background: linear-gradient(135deg, #7B1FA2, #43A047);"><i class="fas fa-qrcode"></i></div>
+                    <div class="module-icon" style="background: linear-gradient(135deg, #2563EB, #6366F1);"><i class="fas fa-network-wired"></i></div>
                     <div>
-                        <h2 class="module-title">ربط WMS الويب عبر QR 🆕</h2>
-                        <span class="module-subtitle">وصّل كاشيرك بهاتفك في ثوانٍ</span>
+                        <h2 class="module-title">المنظومة الرقمية والربط الشبكي المحلي (Web Dashboard &amp; Smart WMS v6.0) 🚀</h2>
+                        <span class="module-subtitle">لوحة تحكم إدارية ومنصة مخازن محمولة تعملان أوفلاين على المنفذ 7890</span>
                     </div>
                 </div>
-                <p class="module-desc">نظام RoboVAI v2.0 بيجيب معاه تطبيق ويب اسمه <strong>Smart Inventory Pro (WMS)</strong> — بيشتغل على أي موبايل أو تابلت من المتصفح بدون تثبيت. تقدر تربطه بكاشير الويندوز بثوانٍ عبر QR كود.</p>
+                <p class="module-desc">يحتوي نظام <strong>RoboVAI PRO POS v6.0</strong> على سيرفر ويب داخلي فائق السرعة يعمل تلقائياً في الخلفية على المنفذ <strong>7890</strong>. يتيح لك ولأمين المخزن إدارة المنشأة بالكامل ومتابعة المبيعات من أي جهاز أو هاتف عبر شبكة الواي فاي بدون إنترنت.</p>
+
+                <!-- Core Local Web Services Grid -->
+                <div class="feature-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin: 25px 0;">
+                    <!-- Service 1: Dashboard -->
+                    <div class="feature-card" style="background: white; padding: 24px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(37,99,235,0.2);">
+                        <h3 style="color: #2563EB; font-size: 1.2rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-chart-pie"></i> 1. لوحة معلومات الإدارة والتحكم (Web Dashboard)
+                        </h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px;">
+                            لوحة تحكم تفاعلية للمدير والمالك تعرض مبيعات اليوم الحية، صافي الأرباح، ساعات الذروة، تنبيهات نواقص المخزون، والأجهزة المتصلة. تتحدث تلقائياً كل 30 ثانية.
+                        </p>
+                        <div style="background: #EFF6FF; padding: 10px 14px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; color: #1E40AF; font-weight: bold;">
+                            🔗 الرابط المحلي: http://localhost:7890/
+                        </div>
+                    </div>
+
+                    <!-- Service 2: WMS Web App -->
+                    <div class="feature-card" style="background: white; padding: 24px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(99,102,241,0.2);">
+                        <h3 style="color: #6366F1; font-size: 1.2rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-boxes"></i> 2. منصة إدارة المخازن والجرد (Smart WMS PWA)
+                        </h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px;">
+                            تطبيق ويب تقدمي لأمين المخزن لمسح الباركود بكاميرا الموبايل، إجراء الجرد الذكي، تسجيل أذونات الوارد والصادر، وتحديث المخزون لحظياً مع قاعدة بيانات الكاشير.
+                        </p>
+                        <div style="background: #EEF2FF; padding: 10px 14px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; color: #3730A3; font-weight: bold;">
+                            🔗 الرابط المحلي: http://localhost:7890/wms/
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 Steps Mobile Guide -->
+                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 16px; padding: 24px; margin: 25px 0;">
+                    <h3 style="color: #166534; font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-mobile-alt"></i> خطوات تشغيل وربط هواتف وتابلت الموظفين (4 خطوات سهلة):
+                    </h3>
+                    <div class="tips-grid" style="margin-top: 10px;">
+                        <div class="tip-card" style="border-right-color: #10B981;">
+                            <h4>1️⃣ شبكة الواي فاي (WiFi)</h4>
+                            <p>تأكد من اتصال الهاتف أو التابلت بنفس شبكة الواي فاي المتصل بها جهاز الكاشير الرئيسي.</p>
+                        </div>
+                        <div class="tip-card" style="border-right-color: #10B981;">
+                            <h4>2️⃣ فتح الرابط بالمتصفح</h4>
+                            <p>افتح متصفح الموبايل واكتب الرابط الشبكي الظاهر بشاشة الإعدادات: <code>http://[IP-الكاشير]:7890/wms/</code> أو امسح كود QR.</p>
+                        </div>
+                        <div class="tip-card" style="border-right-color: #10B981;">
+                            <h4>3️⃣ تسجيل الدخول</h4>
+                            <p>سجل الدخول بالحساب الافتراضي: اسم المستخدم: <strong>admin</strong> | كلمة المرور: <strong>123456</strong>.</p>
+                        </div>
+                        <div class="tip-card" style="border-right-color: #10B981;">
+                            <h4>4️⃣ تثبيت كتطبيق (PWA)</h4>
+                            <p>من خيارات المتصفح (⋮) اضغط "إضافة للشاشة الرئيسية" ليعمل كـ تطبيق هاتف فوري ومستقل.</p>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <h4><i class="fas fa-link"></i> خطوات الربط (Pairing)</h4>
-                        <ol style="margin: 10px 0 0 0; padding-right: 20px; line-height: 2.2;">
-                            <li>افتح برنامج الكاشير (SmartPOS WPF)</li>
-                            <li>اذهب لـ <strong>الإعدادات → تبويب "ربط هذا الجهاز بـ WMS"</strong></li>
-                            <li>اضغط <strong>"توليد QR الربط"</strong></li>
-                            <li>افتح <a href="https://pos.robovai.tech/wms" target="_blank" style="color: #7B1FA2;">pos.robovai.tech/wms</a> على هاتفك</li>
-                            <li>من قائمة ≡ → <strong>الإعدادات → "ربط بكاشير RoboVAI POS"</strong></li>
-                            <li>امسح QR الظاهر على شاشة الكاشير</li>
-                            <li>✅ ستظهر رسالة "مرتبط بكاشير: [اسم الجهاز]"</li>
-                        </ol>
+                        <h4><i class="fas fa-qrcode"></i> جسر الاقتران السريع (FastPair QR Bridge)</h4>
+                        <p>من داخل شاشة <strong>الإعدادات → تبويب المنظومة الرقمية</strong>، اضغط على <strong>"توليد كود QR للربط المباشر"</strong>، ثم اقرأ الكود بكاميرا الموبايل لربط الجهاز في <strong>0.05 ثانية</strong> بدون أي كتابة يدوية.</p>
                     </div>
                     <div class="tip-card">
-                        <h4><i class="fas fa-cloud"></i> المزامنة السحابية (Firebase)</h4>
-                        <p>بعد الربط، تقدر تصدر بيانات المخزون من الكاشير وتستوردها في WMS والعكس. كل بيانات WMS محفوظة على Firebase Cloud — آمنة ومتاحة من أي مكان.</p>
-                        <ul style="margin-top: 10px; margin-right: 20px; line-height: 2;">
-                            <li>سجّل بحسابك على WMS (Google أو إيميل)</li>
-                            <li>أضف المنتجات والفئات من أي جهاز</li>
-                            <li>المخزون يتزامن بين الهاتف والكاشير</li>
-                            <li>تقارير مبسطة على الهاتف في أي وقت</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tips-grid" style="margin-top: 20px;">
-                    <div class="tip-card">
-                        <h4><i class="fas fa-mobile-alt"></i> رابط تطبيق WMS</h4>
-                        <p>التطبيق متاح على: <a href="https://pos.robovai.tech/wms" target="_blank" style="color: #7B1FA2; font-weight: bold;">pos.robovai.tech/wms</a></p>
-                        <p style="margin-top: 8px;">يعمل على Android وiOS وأي متصفح حديث. يمكن تثبيته على الهاتف كـ PWA من خيار "إضافة للشاشة الرئيسية".</p>
-                    </div>
-                    <div class="tip-card">
-                        <h4><i class="fas fa-exchange-alt"></i> تبادل البيانات</h4>
-                        <p>من داخل WMS، اضغط "استيراد من POS" لجلب قائمة المنتجات من الكاشير. والعكس من داخل الكاشير اضغط "تصدير للـ WMS" لرفع أحدث بيانات المخزون.</p>
+                        <h4><i class="fas fa-shield-alt"></i> أمان وحفظ البيانات اللحظي</h4>
+                        <p>كل حركة تعديل مخزون أو جرد أو استلام صنف من الهاتف يتم حفظها فوراً وتلقائياً داخل قاعدة بيانات SQLITE الآمنة لجهاز الكاشير الرئيسي.</p>
                     </div>
                 </div>
             </section>
-            </section>
 
-            <!-- 18. Settings -->
+            <!-- 18. Settings & Regional Customization -->
             <section id="settings" class="module-section">
                 <div class="module-header">
                     <div class="module-icon"><i class="fas fa-cogs"></i></div>
                     <div>
-                        <h2 class="module-title">الإعدادات (Settings)</h2>
-                        <span class="module-subtitle">ظبط السيستم على مزاجك</span>
+                        <h2 class="module-title">الإعدادات والتخصيص الإقليمي (Settings &amp; Regional Markets)</h2>
+                        <span class="module-subtitle">تخصيص كامل للسوق السعودي، المصري، والخليجي</span>
                     </div>
                 </div>
-                <p class="module-desc">شاشة التحكم الكاملة. من هنا تقدر ترفع لوجو المحل اللي هيطبع على الريسيت، تحدد الطابعات (طابعة الكاشير وطابعة المطبخ)، تظبط سكانر الباركود، وتتحكم في ضريبة القيمة المضافة ودرج النقدية.</p>
-                <img src="assets/images/18-settings.png" alt="الإعدادات" class="module-image">
+                <p class="module-desc">شاشة التحكم الشاملة لضبط النظام ليلائم متجرك وأعمالك في أي دولة:</p>
+                
+                <div class="feature-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: var(--primary); margin-bottom: 8px;"><i class="fas fa-magic"></i> معالج التهيئة لأول مرة</h4>
+                        <p>عند تشغيل البرنامج لأول مرة، يظهر معالج ذكي من 4 خطوات لضبط الدولة، العملة، بيانات المتجر، طرق الدفع، والطابعات لتكون جاهزاً للبيع في دقيقة واحدة.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #10B981; margin-bottom: 8px;"><i class="fas fa-globe"></i> دعم الأسواق وتغيير العملة</h4>
+                        <p>دعم كامل للسوق السعودي (ر.س)، المصري (ج.م)، الإماراتي (د.إ)، الكويتي (د.ك)، أو أي عملة مخصصة مع تحديث كافة الواجهات والفواتير تلقائياً.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #F59E0B; margin-bottom: 8px;"><i class="fas fa-credit-card"></i> طرق الدفع المخصصة</h4>
+                        <p>تفعيل وإلغاء طرق الدفع بنقرة واحدة: دعم مدى (Mada)، STC Pay، Apple Pay، انستاباي (InstaPay)، فودافون كاش، تمارا، تابي، الدفع الآجل، والوجبات.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #8B5CF6; margin-bottom: 8px;"><i class="fas fa-calculator"></i> لوحة أرقام لمسية عائمة</h4>
+                        <p>لوحة أرقام ذكية قابلة للسحب والتحريك بحرية على الشاشة اللمسية، لتعديل الكميات والأسعار والمبالغ المدفوعة دون حجب الفاتورة وسلة الأصناف.</p>
+                    </div>
+                </div>
+            <!-- Module 19: Multi-Language Architecture -->
+            <section id="languages" class="module-section">
+                <div class="module-header">
+                    <div class="module-icon" style="background: linear-gradient(135deg, #0ea5e9, #6366f1);"><i class="fas fa-globe"></i></div>
+                    <div>
+                        <h2 class="module-title">منظومة اللغات والواجهات العالمية (6 لغات عالمية)</h2>
+                        <span class="module-subtitle">تبديل فوري بين العربية والإنجليزية والفرنسية والإسبانية والتركية والأردية</span>
+                    </div>
+                </div>
+                <p class="module-desc">تم تصميم النظام ليكون منصة دولية جاهزة للعمل في أي بلد حول العالم ولخدمة كافة أطقم العمل من مختلف الجنسيات:</p>
+
+                <div class="feature-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #0ea5e9; margin-bottom: 8px;"><i class="fas fa-arrows-split-up-and-left"></i> قلب الاتجاه الفوري (RTL / LTR)</h4>
+                        <p>بمجرد اختيار لغة لاتينية كالإنجليزية أو الفرنسية، ينقلب اتجاه كافة النوافذ وعناصر الإدخال والجداول تلقائياً من اليسار لليمين والعكس، بدون الحاجة لإعادة تشغيل البرنامج.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #10b981; margin-bottom: 8px;"><i class="fas fa-quote-left"></i> ترجمة النصائح والاقتباسات الإرشادية</h4>
+                        <p>تتم ترجمة كافة الاقتباسات والعبارات التحفيزية والإرشادية اليومية الـ 11 في شاشة الدخول إلى اللغة المحددة آلياً لتقديم تجربة مستخدم راقية.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #f59e0b; margin-bottom: 8px;"><i class="fas fa-toggle-on"></i> التبديل من شاشة البداية والدخول</h4>
+                        <p>تجد قائمة منسدلة أنيقة في الشريط العلوي لمعالج الإعداد لأول مرة وكذلك في شاشة تسجيل الدخول لاختيار لغة الواجهة فور بدء التشغيل.</p>
+                    </div>
+                </div>
+
+                <div class="tips-grid">
+                    <div class="tip-card" style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 16px;">
+                        <h4 style="color: #166534; margin-bottom: 8px;"><i class="fas fa-lightbulb"></i> نصيحة للمتاجر ذات العمالة متعددة الجنسيات</h4>
+                        <p style="color: #14532d; font-size: 0.95rem;">يمكن لكل موظف كاشير اختيار اللغة التي يفضلها (مثل الأردية أو الإنجليزية) عند بدء ورديته لتقليل الأخطاء وزيادة سرعة العمل إلى أقصى حد.</p>
+                    </div>
+                </div>
+                <img src="assets/images/19-languages.png" alt="منظومة اللغات الستة" class="module-image">
+            </section>
+
+            <!-- Module 20: Smart Import & Export Engine -->
+            <section id="smart-import" class="module-section">
+                <div class="module-header">
+                    <div class="module-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fas fa-file-excel"></i></div>
+                    <div>
+                        <h2 class="module-title">محرك الاستيراد الذكي للأصناف (Smart Auto-Import)</h2>
+                        <span class="module-subtitle">انقل أصنافك من أي شيت إكسيل ملخبط أو من أي برنامج قديم في ثوانٍ</span>
+                    </div>
+                </div>
+                <p class="module-desc">لا داعي لإعادة كتابة أو تنسيق جداول الأصناف يدوياً، النظام مزود بمحرك تعرف تلقائي ذكي يستوعب أي ملف:</p>
+
+                <div class="feature-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #10b981; margin-bottom: 8px;"><i class="fas fa-shuffle"></i> قراءة الأعمدة المبعثرة تلقائياً</h4>
+                        <p>مهما كان ترتيب الأعمدة في شيت الإكسيل (الباركود في الأول أو في الآخر، الاسم بالعربي أو الإنجليزي)، يتعرف النظام على طبيعة البيانات ويطابقها تلقائياً.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #0ea5e9; margin-bottom: 8px;"><i class="fas fa-coins"></i> تنقية رموز العملات والفواصل</h4>
+                        <p>يفهم المحرك جميع رموز واختصارات العملات مثل (ج.م.، ر.س.، $، LE، SAR) والفواصل العشرية، ويحولها إلى قيم رقمية دقيقة ونظيفة بدون أي أخطاء.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #8b5cf6; margin-bottom: 8px;"><i class="fas fa-folder-plus"></i> إنشاء الأقسام وتحديث الأرصدة</h4>
+                        <p>إذا كان الصنف ينتمي لقسم غير مسجل، ينشئه النظام آلياً. وعند وجود صنف مكرر، يخيرك النظام بين جمع الرصيد أو تحديث السعر والمخزون.</p>
+                    </div>
+                </div>
+                <img src="assets/images/21-smart-import.png" alt="الاستيراد الذكي للأصناف" class="module-image">
+            </section>
+
+            <!-- Module 21: Telegram Cloud Alerts Bot -->
+            <section id="telegram" class="module-section">
+                <div class="module-header">
+                    <div class="module-icon" style="background: linear-gradient(135deg, #0088cc, #0ea5e9);"><i class="fab fa-telegram"></i></div>
+                    <div>
+                        <h2 class="module-title">بوت التليجرام التلقائي (Telegram Instant Alerts)</h2>
+                        <span class="module-subtitle">إشعارات مبيعات لحظية وتقارير الورديات Z-Report على هاتفك أينما كنت</span>
+                    </div>
+                </div>
+                <p class="module-desc">تابع كل ما يدور في محلك لحظة بلحظة دون الحاجة لفتح شاشات الكاشير أو التواجد في المتجر:</p>
+
+                <div class="feature-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #0088cc; margin-bottom: 8px;"><i class="fas fa-bell"></i> إشعار فوري مع كل فاتورة</h4>
+                        <p>تصلك رسالة فورية بقيمة الفاتورة، طريقة الدفع، اسم العميل، والمنتجات المباعة في نفس ثانية الضغط على طباعة.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #10b981; margin-bottom: 8px;"><i class="fas fa-file-invoice"></i> تقرير تقفيل الوردية (Z-Report)</h4>
+                        <p>بمجرد إغلاق الكاشير لورديته، يرسل البوت كشفاً مفصلاً بإجمالي المبيعات، عجز أو زيادة الخزينة، والمصروفات التي تمت خلال الوردية.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #f59e0b; margin-bottom: 8px;"><i class="fas fa-bolt"></i> اقتران آلي ذكي</h4>
+                        <p>لا تحتاج للبحث عن أرقام الـ Chat ID المعقدة؛ بمجرد فتح البوت وإرسال أي رسالة ترحيبية، يتعرف النظام على حسابك ويربطه تلقائياً.</p>
+                    </div>
+                </div>
+                <img src="assets/images/22-telegram-alerts.png" alt="بوت التليجرام التلقائي" class="module-image">
+            </section>
+
+            <!-- Module 22: Enterprise Robustness & Zero-Lag -->
+            <section id="database-robustness" class="module-section">
+                <div class="module-header">
+                    <div class="module-icon" style="background: linear-gradient(135deg, #6366f1, #a855f7);"><i class="fas fa-database"></i></div>
+                    <div>
+                        <h2 class="module-title">استقرار الأداء وانعدام الـ Lag (Enterprise Robustness)</h2>
+                        <span class="module-subtitle">معمارية صلبة تتحمل مئات الآلاف من الفواتير والضغط المكثف بدون أي بطء</span>
+                    </div>
+                </div>
+                <p class="module-desc">بنية برمجية معززة تضمن أعلى درجات السرعة حتى في أوقات الذروة ومواسم الأعياد:</p>
+
+                <div class="feature-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #6366f1; margin-bottom: 8px;"><i class="fas fa-feather-pointed"></i> وضع الكتابة المتوازية (WAL Mode)</h4>
+                        <p>يتيح للقراء والباحثين قراءة البيانات واستخراج التقارير والبحث بالباركود في نفس اللحظة التي يكتب فيها الكاشير فواتير جديدة بدون أي تعارض (Zero Locking).</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #0ea5e9; margin-bottom: 8px;"><i class="fas fa-sitemap"></i> فهارس التغطية الذكية (Covering Indexes)</h4>
+                        <p>فهارس شجرية B-Tree مركبة على جداول المبيعات، النواقص، والأصناف تضمن استجابة الاستعلامات في أجزاء من الملي ثانية وتلغي المسح الشامل للجداول نهائياً.</p>
+                    </div>
+                    <div class="feature-card" style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border);">
+                        <h4 style="color: #10b981; margin-bottom: 8px;"><i class="fas fa-broom"></i> الصيانة وتفريغ الرام الدوري كل 15 دقيقة</h4>
+                        <p>خدمة خلفية تعمل بصمت تام تفرغ الذاكرة غير المستخدمة (LOH Compaction) وتحدث إحصائيات الجداول وتدمج ملفات التسجيل لضمان بقاء الجهاز خفيفاً وسريعاً لأسابيع.</p>
+                    </div>
+                </div>
             </section>
 
             <footer style="text-align: center; margin-top: 80px; padding-top: 30px; border-top: 1px solid var(--glass-border);">

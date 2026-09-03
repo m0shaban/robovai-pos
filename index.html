@@ -3,47 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoboVAI PRO POS | نظام كاشير متفصل على مقاسك</title>
+    <title>RoboVAI PRO POS v6.0 | المنظومة الذكية المتكاملة للكاشير وإدارة المخازن</title>
     
-    <meta name="description" content="برنامج كاشير ذكي بيفهم دماغك. سيبك من البرامج المعقدة، نظامنا مصمم لراحتك وسرعة مبيعاتك. توافق تام مع كل الأجهزة القديمة والحديثة.">
+    <meta name="description" content="منظومة RoboVAI PRO POS v6.0 المتكاملة: برنامج كاشير ويندوز فائق السرعة، سيرفر ويب داخلي للوحة التحكم، تطبيق WMS تقدمي للهواتف، وجسر اقتران QR فوري بدون إنترنت.">
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/style.css?v=1.2">
+    <link rel="stylesheet" href="css/style.css?v=6.0">
 </head>
 <body>
 
-    <!-- Ambient Glows -->
+    <!-- Ambient Light Glows -->
     <div class="ambient-glow glow-blue"></div>
     <div class="ambient-glow glow-cyan"></div>
+    <div class="ambient-glow glow-emerald"></div>
 
-    <!-- Navigation -->
-    <nav class="navbar" aria-label="Main Navigation">
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar" aria-label="Main Navigation">
         <div class="container nav-container">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                <img src="assets/images/logo.png" alt="RoboVAI Logo" style="height: 40px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));" onerror="this.src='https://placehold.co/40x40/111/00a8ff?text=RV'" />
-                <span class="logo-text" style="font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; color: #fff; line-height: 1;">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="RoboVAI Logo" onerror="this.src='assets/images/robovai-solutions.png'" />
+                <span class="logo-text">
                     ROBOVAI <span style="color: var(--primary); font-weight: 300;">PRO POS</span>
+                    <span class="badge-pill" style="font-size: 0.75rem; padding: 2px 8px; margin-right: 6px;">v6.0 🚀</span>
                 </span>
             </a>
             
             <div class="nav-menu" id="navMenu">
                 <ul class="nav-links">
+                    <li><a href="#hub" onclick="toggleMenu()">المنظومة الرقمية 🌐</a></li>
                     <li><a href="#bento" onclick="toggleMenu()">القدرات الجبارة</a></li>
                     <li><a href="#stacked-gallery" onclick="toggleMenu()">استكشف النظام</a></li>
                     <li><a href="#hardware" onclick="toggleMenu()">التوافق</a></li>
-                    <li><a href="#pricing" onclick="toggleMenu()">الأسعار</a></li>
-                    <li><span style="color: #f59e0b; font-weight: 700; font-size: 0.9rem; padding: 5px 12px; background: rgba(245, 158, 11, 0.1); border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.25);">نظام الجرد (قريباً 🚀)</span></li>
-                    <li><a href="user-guide.html" style="color: var(--primary);">دليل الاستخدام</a></li>
+                    <li><a href="#pricing" onclick="toggleMenu()">الأسعار والباقات</a></li>
+                    <li><a href="user-guide.html" style="color: var(--primary); font-weight: 700;">📖 دليل الاستخدام</a></li>
                 </ul>
-                <a href="https://wa.me/201121891913" class="btn btn-blue nav-cta" target="_blank">تواصل واتساب</a>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <a href="https://wa.me/201121891913?text=مرحباً، أود الاستفسار عن نظام RoboVAI PRO POS v6.0" class="btn btn-emerald btn-sm" target="_blank">
+                        <i class="fab fa-whatsapp"></i> تواصل واتساب
+                    </a>
+                </div>
             </div>
 
-            <!-- Hamburger Icon -->
+            <!-- Hamburger Button -->
             <div class="hamburger" id="hamburger" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </div>
@@ -54,286 +60,643 @@
     <header class="hero">
         <div class="container hero-container">
             <div class="hero-content reveal-blur">
-                <h1 class="hero-title">سيبك من التعطيل.<br><span class="text-gradient">ركّز في أرباحك.</span></h1>
-                <p class="hero-subtitle">وداعاً للبرامج العقيمة اللي بتستنزف مجهودك. إحنا صممنالك "عقل إلكتروني" شغال معاك أوفلاين، سريع طلقة، بيدير محلك ومخزنك وحساباتك بالقرش. كل اللي في دماغك موجود.. واللي مش موجود نبرمجه لك تفصيل!</p>
+                <div class="badge-pill emerald" style="margin-bottom: 15px;">
+                    <i class="fas fa-circle" style="font-size: 0.55rem;"></i> الإصدار الأحدث عالمياً v6.0 جاهز الآن
+                </div>
+                <h1 class="hero-title">
+                    سيبك من التعطيل.<br>
+                    <span class="text-gradient">ركّز في نمو أرباحك.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    منظومة متكاملة <strong>100% أوفلاين</strong> تجمع بين قوة وسرعة كاشير الويندوز، ولوحة معلومات إدارية بالمتصفح، وتطبيق مخازن ذكي للهواتف مع ربط QR في <strong>0.05 ثانية</strong>. صُممت لراحتك وسرعة مبيعاتك بدون أي اشتراكات إجبارية!
+                </p>
                 
                 <div class="btn-group">
-                    <a href="#pricing" class="btn btn-outline-glow">شوف الأسعار <i class="fas fa-arrow-left" style="margin-right: 10px;"></i></a>
-                    <a href="https://drive.google.com/drive/folders/1qnQpUumI5gnv6muZLrPELVraOPGMDXlX?usp=sharing" target="_blank" class="btn btn-blue"><i class="fab fa-google-drive" style="margin-left: 8px;"></i> تحميل من Google Drive المباشر</a>
+                    <a href="https://drive.google.com/drive/folders/1qnQpUumI5gnv6muZLrPELVraOPGMDXlX?usp=sharing" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-google-drive"></i> تحميل البرنامج (V6.0 EXE)
+                    </a>
+                    <a href="#pricing" class="btn btn-outline-glow">
+                        <i class="fas fa-tags"></i> استعراض الباقات والأسعار
+                    </a>
+                    <a href="user-guide.html" class="btn btn-outline-glow" style="border-color: rgba(255,255,255,0.2);">
+                        <i class="fas fa-book-open"></i> الدليل الشامل
+                    </a>
                 </div>
 
-                <div class="platforms">
-                    <span style="display: flex; align-items: center; gap: 8px; color: #fff;"><i class="fab fa-windows text-gradient" style="font-size: 1.5rem;"></i> متاح للويندوز أوفلاين 100%</span>
-                    <span style="display: flex; align-items: center; gap: 8px; opacity: 0.6;"><i class="fas fa-shield-alt" style="font-size: 1.5rem;"></i> أمان تام لبياناتك</span>
+                <!-- Hero Live Stats -->
+                <div class="hero-stats-grid">
+                    <div class="hero-stat-card">
+                        <h4>0.05s</h4>
+                        <p>⚡ ربط وتوليد QR</p>
+                    </div>
+                    <div class="hero-stat-card">
+                        <h4>100%</h4>
+                        <p>🔒 أوفلاين بدون نت</p>
+                    </div>
+                    <div class="hero-stat-card">
+                        <h4>18+</h4>
+                        <p>📦 موديول متكامل</p>
+                    </div>
                 </div>
             </div>
-            <div class="hero-image-wrapper reveal-blur" style="transition-delay: 0.2s;">
-                <img src="assets/images/hero.jpeg" alt="واجهة برنامج كاشير RoboVAI" class="hero-img-ios">
+            <div class="hero-image-wrapper reveal-blur" style="transition-delay: 0.15s;">
+                <img src="assets/images/hero.jpeg" alt="واجهة برنامج كاشير RoboVAI PRO POS v6.0" class="hero-img-showcase">
             </div>
         </div>
     </header>
+
+    <!-- 🌐 Special Section: Local Web Services & WMS Hub (v6.0 Engine) -->
+    <section class="section" id="hub">
+        <div class="container">
+            <div class="section-title reveal-blur">
+                <div class="badge-pill" style="margin-bottom: 12px;">
+                    <i class="fas fa-bolt"></i> ثورة الإصدار v6.0
+                </div>
+                <h2>المنظومة الرقمية المدمجة <span class="text-gradient">على المنفذ 7890</span></h2>
+                <p>سيرفر داخلي فائق السرعة يعمل في الخلفية تلقائياً يمنحك لوحة تحكم إدارية وتطبيق مخازن محمول بدون أي برامج خارجية أو إنترنت.</p>
+            </div>
+
+            <div class="hub-showcase-grid">
+                <!-- Hub 1: Web Dashboard -->
+                <div class="hub-card ios-glass-card reveal-blur">
+                    <div class="hub-card-header">
+                        <div class="hub-icon-box" style="background: rgba(56, 189, 248, 0.15); color: var(--primary);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.35rem; font-weight: 800;">1. لوحة معلومات الإدارة (Web Dashboard)</h3>
+                            <span style="font-size: 0.9rem; color: var(--text-muted);">متابعة حية للمبيعات والأرباح من أي متصفح في المكان</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.7;">
+                        لوحة تحكم إدارية تفاعلية تعرض مبيعات اليوم، صافي الأرباح، ساعات الذروة، تنبيهات نواقص المخزون، والأجهزة المتصلة. تتحدث لحظياً كل 30 ثانية.
+                    </p>
+                    <div class="hub-url-box">
+                        <span>🔗 الرابط المحلي المباشر:</span>
+                        <strong>http://localhost:7890/</strong>
+                    </div>
+                    <ul style="color: #cbd5e1; font-size: 0.95rem; line-height: 2; margin-top: 10px;">
+                        <li><i class="fas fa-check text-gradient" style="margin-left: 8px;"></i> رسم بياني لساعات الذروة والمبيعات بالساعة</li>
+                        <li><i class="fas fa-check text-gradient" style="margin-left: 8px;"></i> كشف الورديات وأداء الكاشيرات المفتوحة</li>
+                        <li><i class="fas fa-check text-gradient" style="margin-left: 8px;"></i> جدول تنبيهات الأصناف التي قاربت على النفاد</li>
+                    </ul>
+                    <img src="assets/images/20-web-dashboard.png" alt="لوحة معلومات الإدارة عبر المتصفح" style="margin-top: 20px; border: 1px solid var(--card-border); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+
+                <!-- Hub 2: Smart WMS Mobile App -->
+                <div class="hub-card ios-glass-card reveal-blur" style="transition-delay: 0.15s;">
+                    <div class="hub-card-header">
+                        <div class="hub-icon-box" style="background: rgba(99, 102, 241, 0.15); color: var(--secondary);">
+                            <i class="fas fa-mobile-screen-button"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.35rem; font-weight: 800;">2. منصة إدارة المخازن والجرد (Smart WMS)</h3>
+                            <span style="font-size: 0.9rem; color: var(--text-muted);">تطبيق ويب تقدمي (PWA) لأمين المخزن بكاميرا الموبايل</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.7;">
+                        امسح الباركود بكاميرا هاتفك المحمول لإجراء الجرد السريع، تسجيل أذونات الوارد والصادر، وتحديث رصيد المخزن في قاعدة بيانات الكاشير لحظياً.
+                    </p>
+                    <div class="hub-url-box" style="border-color: rgba(99, 102, 241, 0.4); color: #818cf8;">
+                        <span>📱 الرابط الشبكي للهواتف:</span>
+                        <strong>http://[IP-الكاشير]:7890/wms/</strong>
+                    </div>
+                    <ul style="color: #cbd5e1; font-size: 0.95rem; line-height: 2; margin-top: 10px;">
+                        <li><i class="fas fa-check text-gradient" style="margin-left: 8px;"></i> تسجيل دخول بالحساب الافتراضي: (admin / 123456)</li>
+                        <li><i class="fas fa-check text-gradient" style="margin-left: 8px;"></i> تثبيت كتطبيق هاتف فوري من خيار "إضافة للشاشة الرئيسية"</li>
+                        <li><i class="fas fa-check text-gradient" style="margin-left: 8px;"></i> اقتران فوري عبر كود QR في 0.05 ثانية بدون إعدادات</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Bento Grid Capabilities -->
     <section class="section" id="bento">
         <div class="container">
             <div class="section-title reveal-blur">
-                <h2>إمكانيات <span class="text-gradient">متفصلة على مقاسك</span></h2>
-                <p>درسنا مشاكل السوق المصري خطوة بخطوة عشان نطلع بنظام يريّح دماغك ويسد كل ثغرات السرقة.</p>
+                <h2>إمكانيات ذكية <span class="text-gradient">متفصلة على مقاسك</span></h2>
+                <p>درسنا تفاصيل وحركات التجارة اليومية لتصميم منظومة تسد كل ثغرات الهدر والتلاعب وتمنحك السيطرة المطلقة.</p>
             </div>
 
             <div class="bento-grid">
-                <div class="bento-card span-2 row-span-2 reveal-blur ios-glass-card">
-                    <h3>لوحة تحكم (Dashboard) بتفهمك</h3>
-                    <p>راقب أرباحك الصافية، مصروفاتك، ومبيعاتك من خلال واجهة ذكية جداً تحلل الأرقام وتديك الخلاصة اللي تبني عليها قراراتك بسرعة.</p>
-                    <img src="assets/images/01-dashboard.png" alt="تحليلات الأرباح والمبيعات" class="ios-img">
+                <!-- Bento 1 -->
+                <div class="bento-card span-2 ios-glass-card reveal-blur">
+                    <i class="fas fa-bolt bento-icon" style="color: var(--primary);"></i>
+                    <h3>نقطة بيع سريعة باللمس والباركود (POS)</h3>
+                    <p>واجهة كاشير طلقة تنهي الفاتورة في أقل من ثانيتين مع دعم كامل للوحة الأرقام اللمسية العائمة، ومبيعات الوجبات للمطاعم، وتوليد فواتير إلكترونية متوافقة مع الأنظمة الضريبية.</p>
+                    <img src="assets/images/03-pos.jpeg" alt="كاشير المبيعات" style="margin-top: 20px; border: 1px solid var(--card-border);">
                 </div>
 
-                <div class="bento-card span-2 reveal-blur ios-glass-card" style="transition-delay: 0.1s;">
-                    <i class="fas fa-bolt icon-gradient"></i>
-                    <h3>نقطة بيع (POS) طلقة</h3>
-                    <p>عشان الطوابير والزحمة، صممنا شاشة الكاشير تخلص الفاتورة في أقل من 3 ثواني. تدعم اختصارات الكيبورد والباركود.</p>
+                <!-- Bento 2 -->
+                <div class="bento-card ios-glass-card reveal-blur" style="transition-delay: 0.1s;">
+                    <i class="fas fa-gamepad bento-icon" style="color: var(--accent-purple);"></i>
+                    <h3>إدارة صالات الألعاب والبلايستيشن</h3>
+                    <p>عدادات وقت دقيقة لكل جهاز أو طاولة، مع إمكانية إضافة المشروبات والطلبات للفاتورة وحساب التكلفة والوقت الإضافي آلياً بالقرش.</p>
                 </div>
 
-                <div class="bento-card reveal-blur ios-glass-card" style="transition-delay: 0.2s;">
-                    <i class="fas fa-boxes-stacked icon-gradient"></i>
-                    <h3>جرد يظبط مخزنك</h3>
-                    <p>عنيك على بضاعتك لحظة بلحظة. تتبع الأصناف واستلم تنبيهات قبل ما الصنف يخلص عشان تلحق تطلب.</p>
+                <!-- Bento 3 -->
+                <div class="bento-card ios-glass-card reveal-blur" style="transition-delay: 0.15s;">
+                    <i class="fas fa-receipt bento-icon" style="color: var(--accent-emerald);"></i>
+                    <h3>تقفيل الوردية وتقرير Z-Report</h3>
+                    <p>مطابقة النقدية بدرج الكاشير، كشف عجز أو زيادة الوردية، وتفصيل دقيق لطرق الدفع (نقدي، شبكة، فيزا، محفظة إلكترونية، وآجل).</p>
                 </div>
 
-                <div class="bento-card reveal-blur ios-glass-card" style="transition-delay: 0.3s;">
-                    <i class="fas fa-user-shield icon-gradient"></i>
-                    <h3>حماية وصلاحيات حديد</h3>
-                    <p>اقفل باب التلاعب. مفيش كاشير يقدر يمسح فاتورة أو يغير سعر من غير باسوردك كمدير.</p>
+                <!-- Bento 4 -->
+                <div class="bento-card ios-glass-card reveal-blur" style="transition-delay: 0.2s;">
+                    <i class="fas fa-truck-ramp-box bento-icon" style="color: var(--accent-amber);"></i>
+                    <h3>المشتريات وديون الموردين</h3>
+                    <p>تسجيل فواتير الشراء، إدارة حسابات الموردين والدفعات النقدية والآجلة، وتحديث متوسط تكلفة الشراء تلقائياً لضبط هوامش الربح.</p>
                 </div>
 
-                <div class="bento-card span-4 reveal-blur ios-glass-card bento-custom-card">
-                    <i class="fas fa-code icon-gradient" style="font-size: 6rem; margin: 0;"></i>
+                <!-- Bento 5 -->
+                <div class="bento-card ios-glass-card reveal-blur" style="transition-delay: 0.25s;">
+                    <i class="fas fa-award bento-icon" style="color: #f43f5e;"></i>
+                    <h3>برنامج ولاء ونقاط العملاء</h3>
+                    <p>احتساب نقاط مكافأة تلقائية مع كل عملية شراء، واستبدال النقاط بخصومات نقدية لضمان ولاء العميل وعودته المستمرة لمتجرك.</p>
+                </div>
+
+                <!-- Bento New 1: Multi-Language Switcher (6 Languages) -->
+                <div class="bento-card span-2 ios-glass-card reveal-blur" style="background: linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(56,189,248,0.12) 100%);">
+                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                        <i class="fas fa-globe bento-icon" style="color: #38bdf8; margin: 0; font-size: 2.2rem;"></i>
+                        <div>
+                            <span class="badge-pill" style="font-size: 0.75rem; padding: 2px 10px; margin-bottom: 4px;">جديد في v6.0 ✨</span>
+                            <h3 style="font-size: 1.4rem; margin: 0;">منظومة عالمية تدعم 6 لغات بضغطة زر</h3>
+                        </div>
+                    </div>
+                    <p style="color: #cbd5e1; font-size: 1.02rem; line-height: 1.8;">
+                        واجهات متكاملة تدعم <strong>العربية (AR)، الإنجليزية (EN)، الفرنسية (FR)، الإسبانية (ES)، التركية (TR)، والأردية (UR)</strong> مع تحويل الاتجاه التلقائي (RTL / LTR) فورياً. تتيح للموظفين من مختلف الجنسيات العمل بكفاءة وسهولة مع تعريب وترجمة كاملة لكافة القوائم والاقتباسات.
+                    </p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                        <span class="badge-pill" style="border-color: rgba(56,189,248,0.4); color: #fff;">🇪🇬 العربية</span>
+                        <span class="badge-pill" style="border-color: rgba(56,189,248,0.4); color: #fff;">🇬🇧 English</span>
+                        <span class="badge-pill" style="border-color: rgba(56,189,248,0.4); color: #fff;">🇫🇷 Français</span>
+                        <span class="badge-pill" style="border-color: rgba(56,189,248,0.4); color: #fff;">🇪🇸 Español</span>
+                        <span class="badge-pill" style="border-color: rgba(56,189,248,0.4); color: #fff;">🇹🇷 Türkçe</span>
+                        <span class="badge-pill" style="border-color: rgba(56,189,248,0.4); color: #fff;">🇵🇰 اردو</span>
+                    </div>
+                    <img src="assets/images/19-languages.png" alt="التبديل بين 6 لغات عالمية" style="margin-top: 20px; border: 1px solid var(--card-border); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+
+                <!-- Bento New 2: Smart Excel/CSV Import ("تلقط منه") -->
+                <div class="bento-card ios-glass-card reveal-blur" style="transition-delay: 0.1s;">
+                    <i class="fas fa-file-excel bento-icon" style="color: #10b981;"></i>
+                    <span class="badge-pill emerald" style="font-size: 0.75rem; padding: 2px 8px; margin-bottom: 8px;">ذكاء فوري 📥</span>
+                    <h3>الاستيراد الذكي للأصناف (تلقط منه)</h3>
+                    <p>انقل أصنافك من أي شيت إكسيل ملخبط أو من أي برنامج كاشير قديم بدون إعادة ترتيب الأعمدة. يتعرف النظام تلقائياً على الباركود، الاسم، والسعر، ويفهم العملات (`ج.م.`، `ر.س.`، `$`) والفواصل آلياً في ثوانٍ.</p>
+                    <img src="assets/images/21-smart-import.png" alt="الاستيراد الذكي للأصناف" style="margin-top: 15px; border: 1px solid var(--card-border); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+                </div>
+
+                <!-- Bento New 3: Zero-Lag Enterprise Database -->
+                <div class="bento-card ios-glass-card reveal-blur" style="transition-delay: 0.15s;">
+                    <i class="fas fa-database bento-icon" style="color: #6366f1;"></i>
+                    <span class="badge-pill" style="font-size: 0.75rem; padding: 2px 8px; margin-bottom: 8px; border-color: rgba(99,102,241,0.4); color: #818cf8;">صلابة هندسية ⚡</span>
+                    <h3>قواعد بيانات صخرية فائقة التحمل</h3>
+                    <p>معمارية SQLite WAL متقدمة مع فهارس تغطية ذكية (Covering Indexes). تسمح بالقراءة المتزامنة أثناء عمليات البيع المكثفة دون أي تجميد (Zero Blocking)، مع صيانة وضغط تلقائي للذاكرة كل 15 دقيقة.</p>
+                </div>
+
+                <!-- Bento New 4: Telegram Cloud Alerts Bot -->
+                <div class="bento-card span-2 ios-glass-card reveal-blur" style="transition-delay: 0.2s; background: linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(99,102,241,0.12) 100%);">
+                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 12px;">
+                        <i class="fab fa-telegram bento-icon" style="color: #0088cc; margin: 0; font-size: 2.2rem;"></i>
+                        <div>
+                            <span class="badge-pill" style="font-size: 0.75rem; padding: 2px 10px; margin-bottom: 4px; border-color: rgba(0,136,204,0.4); color: #38bdf8;">إشعارات فورية 📲</span>
+                            <h3 style="font-size: 1.35rem; margin: 0;">بوت تليجرام التلقائي لصاحب المنشأة</h3>
+                        </div>
+                    </div>
+                    <p style="color: #cbd5e1; font-size: 1.02rem; line-height: 1.8;">
+                        اربط حساب التليجرام بضغطة زر واحدة بدون تعقيدات البرمجة. تصلك إشعارات حية ومباشرة على موبايلك مع كل عملية بيع، إغلاق وردية Z-Report مفصل، وتنبيهات فورية عند وصول أي منتج للحد الأدنى في المخزن.
+                    </p>
+                    <img src="assets/images/22-telegram-alerts.png" alt="بوت التليجرام" style="margin-top: 20px; border: 1px solid var(--card-border); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+
+                <!-- Bento 6: Custom Development Banner -->
+                <div class="bento-card span-3 ios-glass-card reveal-blur" style="background: linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(37,99,235,0.15) 100%);">
+                    <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                        <i class="fas fa-code bento-icon" style="font-size: 3.5rem; color: var(--primary); margin: 0;"></i>
+                        <div style="flex: 1; min-width: 280px;">
+                            <h3 style="font-size: 1.6rem; margin-bottom: 6px;">أنت تطلب.. وفريقنا البرمجي يطور</h3>
+                            <p style="font-size: 1.1rem; color: var(--text-muted);">
+                                نحن المطورون الأصليون لمنظومة RoboVAI POS. إذا كانت لديك متطلبات محاسبية فريدة، أو تقارير خاصة، أو ربط مع أجهزة إضافية.. <strong>نقوم ببرمجتها خصيصاً لتناسب منشأتك.</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Language Morphing Interactive Showcase -->
+    <section class="section" id="language-morph">
+        <div class="container">
+            <div class="section-title reveal-blur">
+                <div class="badge-pill">
+                    <i class="fas fa-globe"></i> تجربة حية تفاعلية
+                </div>
+                <h2>جرّب التبديل بين اللغات بنفسك <span class="text-gradient">6 لغات عالمية</span> 🌐</h2>
+                <p>اضغط على أي علم لتشاهد كيف ينقلب اتجاه الواجهة (RTL ⇄ LTR) فورياً وتتغير نصوص النظام والاقتباسات اليومية بسلاسة متناهية.</p>
+            </div>
+
+            <div class="lang-switcher-bar reveal-blur">
+                <button class="lang-btn active" id="btn-lang-ar" onclick="switchMorphLang('ar')">🇪🇬 العربية (RTL)</button>
+                <button class="lang-btn" id="btn-lang-en" onclick="switchMorphLang('en')">🇬🇧 English (LTR)</button>
+                <button class="lang-btn" id="btn-lang-fr" onclick="switchMorphLang('fr')">🇫🇷 Français (LTR)</button>
+                <button class="lang-btn" id="btn-lang-es" onclick="switchMorphLang('es')">🇪🇸 Español (LTR)</button>
+                <button class="lang-btn" id="btn-lang-tr" onclick="switchMorphLang('tr')">🇹🇷 Türkçe (LTR)</button>
+                <button class="lang-btn" id="btn-lang-ur" onclick="switchMorphLang('ur')">🇵🇰 اردو (RTL)</button>
+            </div>
+
+            <!-- Terminal Live Morph Card -->
+            <div class="terminal-morph-card tilt-card reveal-blur" id="morphCard" dir="rtl">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 25px;">
+                    <div style="display: flex; gap: 8px;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                    </div>
+                    <div id="morphActivePill" class="badge-pill" style="font-size: 0.85rem; padding: 4px 14px;">
+                        🇪🇬 العربية (RTL)
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; align-items: center;">
                     <div>
-                        <h3 style="font-size: 2.5rem; margin-bottom: 10px;">أنت تطلب.. وإحنا نبرمج</h3>
-                        <p style="font-size: 1.3rem;">إحنا المطورين الأساسيين للبرنامج. لو عندك فكرة مجنونة، نظام عمولات معقد، أو تقرير نفسك فيه.. <strong>بنبرمجهولك تفصيل ويبقى جزء من نظامك.</strong></p>
+                        <h3 id="morphTitle" style="font-size: 1.8rem; font-weight: 900; margin-bottom: 6px; color: #fff;">مرحباً بك مجدداً</h3>
+                        <p id="morphSubtitle" style="color: #94a3b8; font-size: 1rem; margin-bottom: 20px;">سجّل الدخول لمنظومة الكاشير والمبيعات</p>
+                        
+                        <div style="margin-bottom: 14px;">
+                            <label id="morphUserLabel" style="display: block; margin-bottom: 6px; color: #94a3b8; font-size: 0.9rem;">اسم المستخدم</label>
+                            <div style="background: rgba(2,6,23,0.7); border: 1px solid rgba(255,255,255,0.12); padding: 12px 16px; border-radius: 12px; color: #fff; display: flex; justify-content: space-between;">
+                                <span>admin</span>
+                                <i class="fas fa-user text-muted" style="color: #64748b;"></i>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label id="morphPassLabel" style="display: block; margin-bottom: 6px; color: #94a3b8; font-size: 0.9rem;">كلمة المرور</label>
+                            <div style="background: rgba(2,6,23,0.7); border: 1px solid rgba(255,255,255,0.12); padding: 12px 16px; border-radius: 12px; color: #fff; display: flex; justify-content: space-between;">
+                                <span>••••••••</span>
+                                <i class="fas fa-eye text-muted" style="color: #64748b;"></i>
+                            </div>
+                        </div>
+
+                        <button id="morphBtn" class="btn btn-primary" style="width: 100%; padding: 14px; font-weight: 800; border-radius: 12px;">
+                            تسجيل الدخول للمنظومة <i class="fas fa-arrow-left" style="margin-right: 8px;"></i>
+                        </button>
+                    </div>
+
+                    <div>
+                        <div style="background: rgba(56, 189, 248, 0.05); border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 18px; padding: 22px; margin-bottom: 15px;">
+                            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 700; margin-bottom: 8px;">
+                                <i class="fas fa-sparkles"></i> <span id="morphQuoteHeader">اقتباس اليوم التحفيزي</span>
+                            </div>
+                            <p id="morphQuoteText" style="font-size: 1.05rem; color: #cbd5e1; font-style: italic; line-height: 1.7;">
+                                "التجارة شطارة، وحسن معاملة الزبون هي رأس مالك الحقيقي الذي لا ينفد."
+                            </p>
+                        </div>
+                        <div style="font-size: 0.88rem; color: #94a3b8; line-height: 1.8;">
+                            <i class="fas fa-check-circle text-gradient" style="margin-left: 6px;"></i> جميع الحقول والأزرار وتلميحات النظام تترجم في أجزاء من الثانية دون إعادة تشغيل البرنامج.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    
-    <!-- Interactive POS Demo -->
-    <section class="section">
-        <div class="container reveal">
-            <h2 class="section-title">محاكي الكاشير السريع ⚡</h2>
-            <p class="section-subtitle">جرب تضرب أوردر بنفسك وشوف السرعة اللي هتخلي الزحمة تختفي في ثواني.</p>
-            <div class="pos-demo-container ios-glass">
-                <div class="scan-flash" id="demo-flash"></div>
-                <div class="pos-demo-items">
-                    <div class="pos-item-btn" onclick="addToReceipt('قهوة اسبريسو', 35)">
-                        <i class="fas fa-coffee"></i>
-                        <div class="pos-item-name">قهوة اسبريسو</div>
-                        <div class="pos-item-price">35 ج.م</div>
+    <!-- Interactive Live POS Demo / Web Cashier -->
+    <section class="section" id="live-demo">
+        <div class="container reveal-blur">
+            <div class="section-title">
+                <div class="badge-pill emerald">
+                    <i class="fas fa-play"></i> تجربة تفاعلية مباشرة
+                </div>
+                <h2>محاكي الكاشير السريع مع إصدار الفاتورة ⚡</h2>
+                <p>جرّب مسح الباركود، إضافة الأصناف، حساب الضريبة، وطباعة فاتورة تجريبية فورية كما لو كنت أمام جهاز الكاشير الحقيقي!</p>
+            </div>
+
+            <div class="pos-demo-container ios-glass-card tilt-card">
+                <!-- POS Catalog & Scanner Simulator -->
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <!-- Barcode Search Box -->
+                    <div style="display: flex; gap: 10px; background: rgba(2,6,23,0.8); border: 1px solid rgba(255,255,255,0.12); padding: 12px 18px; border-radius: 14px; align-items: center;">
+                        <i class="fas fa-barcode" style="font-size: 1.5rem; color: var(--primary);"></i>
+                        <input type="text" id="demoBarcodeInput" placeholder="امسح الباركود أو اضغط Enter للتجربة..." style="background: transparent; border: none; color: #fff; width: 100%; outline: none; font-size: 1rem;" onkeydown="if(event.key==='Enter') scanRandomItem()">
+                        <button onclick="scanRandomItem()" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem; border-radius: 8px; white-space: nowrap;">
+                            <i class="fas fa-bolt"></i> مسح باركود 🔊
+                        </button>
                     </div>
-                    <div class="pos-item-btn" onclick="addToReceipt('برجر لحم', 120)">
-                        <i class="fas fa-hamburger"></i>
-                        <div class="pos-item-name">برجر لحم</div>
-                        <div class="pos-item-price">120 ج.م</div>
-                    </div>
-                    <div class="pos-item-btn" onclick="addToReceipt('بيتزا مارجريتا', 150)">
-                        <i class="fas fa-pizza-slice"></i>
-                        <div class="pos-item-name">بيتزا مارجريتا</div>
-                        <div class="pos-item-price">150 ج.م</div>
-                    </div>
-                    <div class="pos-item-btn" onclick="addToReceipt('كولا كانز', 20)">
-                        <i class="fas fa-wine-glass-alt"></i>
-                        <div class="pos-item-name">كولا كانز</div>
-                        <div class="pos-item-price">20 ج.م</div>
-                    </div>
-                    <div class="pos-item-btn" onclick="addToReceipt('آيس كريم', 40)">
-                        <i class="fas fa-ice-cream"></i>
-                        <div class="pos-item-name">آيس كريم</div>
-                        <div class="pos-item-price">40 ج.م</div>
-                    </div>
-                    <div class="pos-item-btn" style="background: rgba(231, 76, 60, 0.2); border-color: #e74c3c;" onclick="clearReceipt()">
-                        <i class="fas fa-trash" style="color: #e74c3c;"></i>
-                        <div class="pos-item-name">إلغاء الفاتورة</div>
-                        <div class="pos-item-price">Clear</div>
+
+                    <!-- Items Grid -->
+                    <div class="pos-demo-items">
+                        <div class="pos-item-btn" onclick="addToReceiptWithSound('قهوة اسبريسو دبل', 35, 'hot')">
+                            <i class="fas fa-mug-hot"></i>
+                            <div class="pos-item-name">قهوة اسبريسو دبل</div>
+                            <div class="pos-item-price">35 ج.م</div>
+                        </div>
+                        <div class="pos-item-btn" onclick="addToReceiptWithSound('برجر لحم دوبل', 120, 'burger')">
+                            <i class="fas fa-burger"></i>
+                            <div class="pos-item-name">برجر لحم دوبل</div>
+                            <div class="pos-item-price">120 ج.م</div>
+                        </div>
+                        <div class="pos-item-btn" onclick="addToReceiptWithSound('بيتزا مارجريتا حجم وسط', 150, 'pizza')">
+                            <i class="fas fa-pizza-slice"></i>
+                            <div class="pos-item-name">بيتزا مارجريتا</div>
+                            <div class="pos-item-price">150 ج.م</div>
+                        </div>
+                        <div class="pos-item-btn" onclick="addToReceiptWithSound('كولا كانز 330 مل', 20, 'drink')">
+                            <i class="fas fa-wine-glass"></i>
+                            <div class="pos-item-name">كولا كانز بارد</div>
+                            <div class="pos-item-price">20 ج.م</div>
+                        </div>
+                        <div class="pos-item-btn" onclick="addToReceiptWithSound('شيبسي عائلي بالجبنة', 25, 'snack')">
+                            <i class="fas fa-cookie"></i>
+                            <div class="pos-item-name">شيبسي عائلي</div>
+                            <div class="pos-item-price">25 ج.م</div>
+                        </div>
+                        <div class="pos-item-btn" onclick="addToReceiptWithSound('جلسة بلايستيشن 1 ساعة', 60, 'ps5')">
+                            <i class="fas fa-gamepad"></i>
+                            <div class="pos-item-name">جلسة بلايستيشن</div>
+                            <div class="pos-item-price">60 ج.م</div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Digital Cart & Receipt Actions -->
                 <div class="pos-demo-receipt">
-                    <div class="receipt-header">فاتورة مبيعات - رقم 1042</div>
-                    <div class="receipt-items" id="receipt-items-container">
-                        <div id="empty-receipt-msg" style="text-align: center; margin-top: 50px; color: #999;">اضغط على أي صنف لإضافته للفاتورة</div>
+                    <div class="receipt-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>فاتورة مبيعات #1084</span>
+                        <span class="badge-pill emerald" style="font-size: 0.75rem; padding: 2px 10px;">كاشير مباشر 🟢</span>
                     </div>
-                    <div class="receipt-total">
-                        <span>الإجمالي:</span>
-                        <span id="receipt-total-value">0 ج.م</span>
+                    
+                    <div class="receipt-items" id="receipt-items-container" style="max-height: 240px; overflow-y: auto;">
+                        <div id="empty-receipt-msg" style="text-align: center; margin-top: 45px; color: #94a3b8;">
+                            <i class="fas fa-cart-shopping" style="font-size: 2.2rem; margin-bottom: 10px; color: #475569; display: block;"></i>
+                            اضغط على أي صنف أو امسح الباركود للتجربة
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px; margin-top: 10px; font-size: 0.9rem; color: #94a3b8;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>المبلغ قبل الضريبة:</span>
+                            <span id="receipt-subtotal-value">0.00 ج.م</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span>ضريبة القيمة المضافة (14%):</span>
+                            <span id="receipt-vat-value">0.00 ج.م</span>
+                        </div>
+                        <div class="receipt-total" style="font-size: 1.3rem; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2);">
+                            <span>الإجمالي المطلوب:</span>
+                            <span id="receipt-total-value" style="color: #00ff88;">0 ج.م</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 16px;">
+                        <button class="btn btn-primary" onclick="openPrintModal()" style="flex: 2; padding: 12px; font-weight: 800; border-radius: 12px;">
+                            <i class="fas fa-print"></i> طباعة الفاتورة (تجربة)
+                        </button>
+                        <button class="btn btn-outline-glow" onclick="clearReceipt()" style="flex: 1; padding: 12px; border-color: rgba(239,68,68,0.4); color: #ef4444; border-radius: 12px;">
+                            <i class="fas fa-trash"></i> مسح
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Thermal Receipt Modal Simulation -->
+    <div class="receipt-modal-backdrop" id="receiptModal" onclick="if(event.target === this) closePrintModal()">
+        <div class="thermal-paper">
+            <div style="text-align: center; border-bottom: 1px dashed #94a3b8; padding-bottom: 12px; margin-bottom: 12px;">
+                <h3 style="font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; color: #000;">ROBOVAI PRO STORE</h3>
+                <p style="font-size: 0.8rem; color: #64748b;">الفرع الرئيسي — هاتف: 01121891913</p>
+                <p style="font-size: 0.78rem; color: #64748b;">رقم ضريبي: 300123456789003</p>
+            </div>
+            
+            <div style="font-size: 0.82rem; margin-bottom: 12px; display: flex; justify-content: space-between;">
+                <span>فاتورة رقم: #INV-1084</span>
+                <span id="modalReceiptTime">2026-09-03 20:30</span>
+            </div>
+
+            <div style="border-bottom: 1px solid #111; padding-bottom: 4px; margin-bottom: 8px; font-weight: bold; display: flex; justify-content: space-between;">
+                <span>الصنف</span>
+                <span>السعر</span>
+            </div>
+
+            <div id="modalReceiptItemsList" style="min-height: 80px; max-height: 180px; overflow-y: auto; margin-bottom: 12px;">
+                <!-- Injected Items -->
+            </div>
+
+            <div style="border-top: 1px dashed #94a3b8; padding-top: 8px; font-size: 0.88rem;">
+                <div style="display: flex; justify-content: space-between;"><span>الإجمالي قبل الضريبة:</span><span id="modalSubtotal">0.00 ج.م</span></div>
+                <div style="display: flex; justify-content: space-between;"><span>الضريبة (14%):</span><span id="modalVat">0.00 ج.م</span></div>
+                <div style="display: flex; justify-content: space-between; font-weight: 900; font-size: 1.1rem; border-top: 1px solid #000; margin-top: 6px; padding-top: 6px;">
+                    <span>الصافي المطلوب:</span><span id="modalGrandTotal">0.00 ج.م</span>
+                </div>
+            </div>
+
+            <!-- Simulated QR Code -->
+            <div style="text-align: center; margin-top: 16px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=ROBOVAI-INVOICE-1084-VERIFIED" alt="QR فاتورة إلكترونية" style="width: 100px; height: 100px; margin: 0 auto; display: block; border: 1px solid #cbd5e1; border-radius: 8px;" onerror="this.src='assets/images/logo.png'">
+                <p style="font-size: 0.75rem; color: #64748b; margin-top: 6px;">فاتورة إلكترونية ضريبية معتمدة</p>
+                <p style="font-size: 0.8rem; font-weight: bold; margin-top: 4px;">شكراً لزيارتكم ونتمنى لكم يوماً سعيداً!</p>
+            </div>
+
+            <button onclick="closePrintModal()" style="margin-top: 16px; width: 100%; background: #0f172a; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                <i class="fas fa-times"></i> إغلاق المعاينة
+            </button>
+        </div>
+    </div>
 
     <!-- Hardware Compatibility -->
     <section class="section" id="hardware">
         <div class="container">
             <div class="section-title reveal-blur">
-                <h2>جاهز يشتغل مع <span class="text-gradient">أجهزتك الحالية</span></h2>
-                <p>مفيش داعي تكلف نفسك أجهزة جديدة. نظامنا Plug & Play بيقرأ الأجهزة القديمة والحديثة فورا.</p>
+                <h2>جاهز للعمل مع <span class="text-gradient">أجهزتك الحالية</span></h2>
+                <p>لا داعي لشراء أجهزة جديدة باهظة الثمن. نظامنا يتعرف على كافة طابعات الفواتير وأجهزة الباركود فورياً (Plug & Play).</p>
             </div>
-            <div class="hardware-grid">
-                <div class="hardware-text reveal-blur ios-glass-card" style="padding: 50px;">
-                    <h3 style="font-size: 2.2rem; margin-bottom: 25px;">شغال طلقة مع:</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 20px; font-size: 1.3rem; display: flex; align-items: center; gap: 15px;"><i class="fas fa-print text-gradient" style="font-size: 1.8rem;"></i> طابعات الفواتير (الريسيت) بكل أنواعها ومقاساتها</li>
-                        <li style="margin-bottom: 20px; font-size: 1.3rem; display: flex; align-items: center; gap: 15px;"><i class="fas fa-barcode text-gradient" style="font-size: 1.8rem;"></i> سكانر الباركود السلكي واللاسلكي</li>
-                        <li style="margin-bottom: 20px; font-size: 1.3rem; display: flex; align-items: center; gap: 15px;"><i class="fas fa-box text-gradient" style="font-size: 1.8rem;"></i> أدراج النقدية الأوتوماتيكية</li>
-                        <li style="margin-bottom: 20px; font-size: 1.3rem; display: flex; align-items: center; gap: 15px;"><i class="fas fa-scale-balanced text-gradient" style="font-size: 1.8rem;"></i> الموازين الإلكترونية للسوبر ماركت</li>
-                        <li style="margin-bottom: 20px; font-size: 1.3rem; display: flex; align-items: center; gap: 15px;"><i class="fas fa-credit-card text-gradient" style="font-size: 1.8rem;"></i> ماكينات الدفع الفيزا (POS Terminals)</li>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: center;">
+                <div class="ios-glass-card" style="padding: 40px;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 25px; font-weight: 800;">توافق تام مع:</h3>
+                    <ul style="line-height: 2.2; font-size: 1.1rem;">
+                        <li><i class="fas fa-print text-gradient" style="margin-left: 12px; font-size: 1.4rem;"></i> طابعات الفواتير والريسيت الحرارية (USB / Network / Bluetooth)</li>
+                        <li><i class="fas fa-barcode text-gradient" style="margin-left: 12px; font-size: 1.4rem;"></i> أجهزة قراءة الباركود السلكية واللاسلكية وكاميرات الموبايل</li>
+                        <li><i class="fas fa-cash-register text-gradient" style="margin-left: 12px; font-size: 1.4rem;"></i> أدراج النقدية الأوتوماتيكية مع الفتح التلقائي عند الحفظ</li>
+                        <li><i class="fas fa-scale-balanced text-gradient" style="margin-left: 12px; font-size: 1.4rem;"></i> الموازين الإلكترونية وقراءة باركود الوزن للسوبرماركت</li>
+                        <li><i class="fas fa-credit-card text-gradient" style="margin-left: 12px; font-size: 1.4rem;"></i> ماكينات الدفع والشبكة (Mada, Visa, Mastercard, Apple Pay)</li>
                     </ul>
                 </div>
-                <div class="hardware-images reveal-blur" style="transition-delay: 0.2s;">
-                    <img src="assets/images/extra1.jpeg" alt="الأجهزة المتوافقة">
-                    <img src="assets/images/extra2.jpeg" alt="معدات نقاط البيع">
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <img src="assets/images/extra1.jpeg" alt="الأجهزة المتوافقة مع كاشير RoboVAI" class="ios-glass-card" style="padding: 10px;">
+                    <img src="assets/images/extra2.jpeg" alt="معدات نقاط البيع" class="ios-glass-card" style="padding: 10px;">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stacked Gallery -->
+    <!-- Stacked Gallery Walkthrough -->
     <section class="section" id="stacked-gallery">
         <div class="container">
             <div class="section-title reveal-blur">
-                <h2>استكشف النظام <span class="text-gradient">من جوه</span></h2>
-                <p>نظام شيك، ألوانه مريحة للعين، والتعامل معاه بديهي جداً من غير ما تحتاج كورس عشانه.</p>
+                <h2>استكشف النظام <span class="text-gradient">من الداخل</span></h2>
+                <p>واجهات راقية وعصرية، ألوان مريحة للعين في ساعات العمل الطويلة، وتجربة مستخدم بديهية بدون أي تعقيد.</p>
             </div>
             
             <div class="stacked-cards-container">
                 <article class="stack-card" style="--index: 1;">
                     <div class="card-inner ios-glass-card">
                         <div class="card-text">
-                            <span class="step-num">01</span>
-                            <h3>شاشة مبيعات المطاعم (Touch)</h3>
-                            <p>واجهة كاشير سريعة جداً باللمس بتعرض الأصناف بالصور، ممتازة لزحمة المطاعم، الكافيهات، وصالات الجيم.</p>
+                            <span class="step-num">موديول 01</span>
+                            <h3>لوحة تحكم إدارية تفاعلية</h3>
+                            <p>متابعة حية للمبيعات والأرباح وصافي الدخل ومقارنات الأداء اليومي والشهري بنقرة واحدة.</p>
                         </div>
-                        <div class="card-img"><img src="assets/images/03-pos.jpeg" alt="كاشير المبيعات"></div>
+                        <div class="card-img"><img src="assets/images/01-dashboard.png" alt="لوحة التحكم"></div>
                     </div>
                 </article>
+
                 <article class="stack-card" style="--index: 2;">
                     <div class="card-inner ios-glass-card">
                         <div class="card-text">
-                            <span class="step-num">02</span>
-                            <h3>إدارة طاولات البلايستيشن والكافيه</h3>
-                            <p>افتح وقت، ضيف مشروبات للفاتورة، والنظام هيحسبلك التكلفة بالقرش أول ما العميل يقفل جلسته.</p>
+                            <span class="step-num">موديول 02</span>
+                            <h3>كاشير اللمس ومبيعات الوجبات</h3>
+                            <p>شاشة مبيعات سريعة جداً للمطاعم والكافيهات مع تصنيفات بالصور ولوحة أرقام لمسية عائمة.</p>
+                        </div>
+                        <div class="card-img"><img src="assets/images/03-pos.jpeg" alt="شاشة الكاشير"></div>
+                    </div>
+                </article>
+
+                <article class="stack-card" style="--index: 3;">
+                    <div class="card-inner ios-glass-card">
+                        <div class="card-text">
+                            <span class="step-num">موديول 03</span>
+                            <h3>إدارة الجلسات والألعاب بالساعة</h3>
+                            <p>حساب أوقات أجهزة البلايستيشن وغرف الألعاب وإضافة المشاريب للفاتورة بضغطة زر واحدة.</p>
                         </div>
                         <div class="card-img"><img src="assets/images/04-sessions.png" alt="إدارة الجلسات"></div>
                     </div>
                 </article>
-                <article class="stack-card" style="--index: 3;">
+
+                <article class="stack-card" style="--index: 4;">
                     <div class="card-inner ios-glass-card">
                         <div class="card-text">
-                            <span class="step-num">03</span>
-                            <h3>المنتجات والمخزون</h3>
-                            <p>إضافة الأصناف، تحديد أسعار البيع والشراء، وتوليد الباركود وتتبع النواقص أوتوماتيكياً.</p>
+                            <span class="step-num">موديول 04</span>
+                            <h3>المخزون والجرد وتنبيهات النواقص</h3>
+                            <p>إدارة الأصناف، طباعة الباركود، تتبع حركات المخزن، وتنبيهات فورية قبل نفاد أي سلعة.</p>
                         </div>
                         <div class="card-img"><img src="assets/images/09-inventory.png" alt="إدارة المخزون"></div>
                     </div>
                 </article>
-                <article class="stack-card" style="--index: 4;">
-                    <div class="card-inner ios-glass-card">
-                        <div class="card-text">
-                            <span class="step-num">04</span>
-                            <h3>تقفيل الوردية في ثواني</h3>
-                            <p>آخر اليوم، النظام بيطبعلك تقرير كامل (Z-Report) يطابق درج الكاشير باللي اتسجل عشان تعرف العجز فين بالضبط.</p>
-                        </div>
-                        <div class="card-img"><img src="assets/images/05-zreport.png" alt="تقفيل الوردية"></div>
-                    </div>
-                </article>
+
                 <article class="stack-card" style="--index: 5;">
                     <div class="card-inner ios-glass-card">
                         <div class="card-text">
-                            <span class="step-num">05</span>
-                            <h3>حسابات الشركات والموردين</h3>
-                            <p>سجل كل بضاعة دخلت المخزن، وتابع ديون الموردين ومواعيد الدفع بمنتهى الدقة من غير ما تضيع قرش.</p>
+                            <span class="step-num">موديول 05</span>
+                            <h3>التقارير الشاملة وتقفيل الوردية</h3>
+                            <p>تقارير الأرباح والخسائر، كشف الورديات Z-Report، كشف حركة الكاشيرات، وتصدير إكسيل بضغطة زر.</p>
                         </div>
-                        <div class="card-img"><img src="assets/images/12-suppliers.png" alt="الموردين"></div>
+                        <div class="card-img"><img src="assets/images/15-reports.png" alt="التقارير"></div>
                     </div>
                 </article>
             </div>
             
-            <div style="text-align: center; margin-top: 50px;" class="reveal-blur">
-                <a href="user-guide.html" class="btn btn-blue" style="font-size: 1.3rem; padding: 15px 40px;">
-                    شوف الدليل الكامل والـ 18 موديول <i class="fas fa-arrow-left" style="margin-right: 10px;"></i>
+            <div style="text-align: center; margin-top: 40px;" class="reveal-blur">
+                <a href="user-guide.html" class="btn btn-primary" style="font-size: 1.15rem; padding: 15px 35px;">
+                    استعراض الدليل الشامل لكافة الـ 18 موديول <i class="fas fa-arrow-left" style="margin-right: 10px;"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    
-    <!-- ROI Calculator -->
+    <!-- ROI Savings Calculator -->
     <section class="section">
-        <div class="container reveal">
-            <h2 class="section-title">احسب أرباحك الضايعة 💸</h2>
-            <p class="section-subtitle">حرك الشريط واعرف RoboVAI هيوفرلك كام من إغلاق ثغرات الكاشير (المتوسط 3% لـ 5% هدر وسرقات).</p>
-            <div class="roi-calculator ios-glass">
-                <h3>متوسط مبيعاتك اليومية: <span id="daily-sales-label" style="color: var(--primary);">5,000</span> ج.م</h3>
+        <div class="container reveal-blur">
+            <div class="section-title">
+                <h2>احسب أرباحك التي سيوفرها النظام 💸</h2>
+                <p>حرك المؤشر واعرف كم يوفر لك RoboVAI شهرياً من سد ثغرات الكاشير والتلاعب والمخزون المفقود (المتوسط 3% إلى 5%).</p>
+            </div>
+            <div class="roi-calculator ios-glass-card">
+                <h3>متوسط مبيعاتك اليومية: <span id="daily-sales-label" style="color: var(--primary); font-weight: 900;">5,000</span> ج.م</h3>
                 <div class="roi-slider-container">
                     <input type="range" min="1000" max="50000" step="500" value="5000" class="range-slider" id="roiSlider" oninput="calculateROI()">
-                    <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 10px; color: #888;">
-                        <span>1,000</span>
-                        <span>50,000</span>
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 8px; color: var(--text-muted); font-size: 0.95rem;">
+                        <span>1,000 ج.م</span>
+                        <span>25,000 ج.م</span>
+                        <span>50,000 ج.م</span>
                     </div>
                 </div>
                 <div class="roi-result">
-                    <h4>السيستم هيوفرلك شهرياً حوالي:</h4>
+                    <h4 style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 6px;">الوفورات المالية الشهرية التقديرية لمحلك:</h4>
                     <div class="roi-value" id="roi-savings">4,500 ج.م</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Strategy -->
+    <!-- Pricing Strategy & Packages -->
     <section class="section" id="pricing">
         <div class="container">
             <div class="section-title reveal-blur">
-                <h2>استثمر في <span class="text-gradient">راحة بالك</span></h2>
-                <p>البرنامج ده هيرجعلك أضعاف تمنه من خلال قفلة أبواب الهدر والسرقة.</p>
+                <div class="badge-pill amber" style="margin-bottom: 12px;">
+                    <i class="fas fa-shield-halved"></i> استثمار مضمون يغطي تكلفته في أيام
+                </div>
+                <h2>باقات تناسب <span class="text-gradient">حجم أعمالك</span></h2>
+                <p>اختر الباقة المناسبة لمنشأتك مع ضمان كامل للدعم الفني والتحديثات دون أي التزامات خفية.</p>
             </div>
 
             <div class="pricing-wrapper">
-                <div class="price-card decoy reveal-blur ios-glass-card">
-                    <h3 class="price-title">نصف سنوي</h3>
-                    <div class="price-value">3,999<span> ج.م</span></div>
-                    <p class="price-desc">باقة تجريبية ممتازة للبدايات.</p>
+                <!-- Plan 1 -->
+                <div class="price-card ios-glass-card reveal-blur">
+                    <h3 class="price-title">الباقة الأساسية (Single POS)</h3>
+                    <div class="price-value">3,999<span> ج.م</span> <span style="font-size: 0.9rem; color: var(--text-subtle); display: block;">(أو 499 ر.س)</span></div>
+                    <p class="price-desc">مثالية للمحلات الصغيرة والمبتدئة لكاشير واحد.</p>
                     <ul class="price-features">
-                        <li><i class="fas fa-check"></i> ترخيص لمدة 6 شهور</li>
-                        <li><i class="fas fa-check"></i> دعم فني بالهاتف</li>
-                        <li class="disabled"><i class="fas fa-times"></i> بدون تحديثات الميزات الجديدة</li>
+                        <li><i class="fas fa-check"></i> ترخيص كاشير ويندوز لجهاز واحد</li>
+                        <li><i class="fas fa-check"></i> نقطة البيع السريعة وإدارة المخزون</li>
+                        <li><i class="fas fa-check"></i> تقارير المبيعات وتقفيل الوردية</li>
+                        <li class="disabled"><i class="fas fa-times"></i> لا تشمل سيرفر الويب وتطبيق WMS</li>
+                        <li class="disabled"><i class="fas fa-times"></i> لا تشمل التحديثات الكبرى مجاناً</li>
                     </ul>
-                    <a href="https://wa.me/201121891913?text=مرحباً، أريد الاشتراك النصف سنوي بـ 3999" class="btn btn-ios-outline" target="_blank">ابعتلنا واتس واشترك</a>
+                    <a href="https://wa.me/201121891913?text=مرحباً، أود الاشتراك في الباقة الأساسية بـ 3999" class="btn btn-outline-glow" target="_blank">
+                        طلب الباقة الأساسية
+                    </a>
                 </div>
 
-                <div class="price-card star reveal-blur ios-glass-card" style="transition-delay: 0.2s;">
-                    <div class="star-badge">الأكثر اختياراً</div>
-                    <h3 class="price-title" style="color: #fff;">الاشتراك السنوي الذهبي</h3>
-                    <div class="price-value text-gradient">6,999<span> ج.م</span></div>
-                    <p class="price-desc" style="color: #ddd;">وفّر فلوسك واحصل على الدعم الماسي والتحديثات المجانية طول السنة.</p>
+                <!-- Plan 2: Complete Edition (The One Complete Edition) -->
+                <div class="price-card star ios-glass-card reveal-blur" style="transition-delay: 0.15s; border-color: rgba(56,189,248,0.5);">
+                    <div class="star-badge">🌟 النسخة الموحدة الشاملة</div>
+                    <h3 class="price-title" style="color: #fff;">النسخة المتكاملة (v6.0 Complete Edition)</h3>
+                    <div class="price-value text-gradient">6,999<span> ج.م</span> <span style="font-size: 0.9rem; color: #a5f3fc; display: block;">(أو 899 ر.س شاملة كافة الخصائص)</span></div>
+                    <p class="price-desc" style="color: #cbd5e1;">نسخة واحدة كاملة متطورة تضم جميع إمكانيات المنظومة بلا قيود أو باقات مجتزأة.</p>
                     <ul class="price-features">
-                        <li><i class="fas fa-check text-cyan"></i> ترخيص لعام كامل (يغطي الفروع)</li>
-                        <li><i class="fas fa-check text-cyan"></i> <strong>تحديثات مجانية لكل الميزات</strong></li>
-                        <li><i class="fas fa-check text-cyan"></i> أولوية في التعديلات والبرمجة الخاصة</li>
-                        <li><i class="fas fa-check text-cyan"></i> دعم فني فوري بـ AnyDesk</li>
+                        <li><i class="fas fa-check"></i> <strong>دعم كامل لـ 6 لغات عالمية مع تحويل RTL / LTR</strong></li>
+                        <li><i class="fas fa-check"></i> <strong>محرك الاستيراد الذكي (Smart Excel/CSV Import)</strong></li>
+                        <li><i class="fas fa-check"></i> <strong>قواعد بيانات صخرية فائقة التحمل (Zero-Lag Engine)</strong></li>
+                        <li><i class="fas fa-check"></i> <strong>سيرفر الويب المدمج بالمتصفح (Port 7890)</strong></li>
+                        <li><i class="fas fa-check"></i> <strong>تطبيق المخازن الذكي للموبايل WMS + اقتران QR</strong></li>
+                        <li><i class="fas fa-check"></i> <strong>بوت التليجرام التلقائي لإشعارات وتقارير الورديات</strong></li>
+                        <li><i class="fas fa-check"></i> جميع الـ 18 موديول (ألعاب، وجبات، مطاعم، ولاء، فواتير)</li>
+                        <li><i class="fas fa-check"></i> <strong>تحديثات مستمرة + دعم فني مخصص</strong></li>
                     </ul>
-                    <a href="https://wa.me/201121891913?text=مرحباً، أريد الاشتراك السنوي الذهبي بـ 6999" class="btn btn-blue" style="width: 100%;" target="_blank">تواصل واتس لطلب الباقة</a>
+                    <a href="https://wa.me/201121891913?text=مرحباً، أود الحصول على النسخة المتكاملة RoboVAI POS v6.0 Complete Edition" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-whatsapp"></i> الحصول على النسخة المتكاملة
+                    </a>
                 </div>
 
-                <div class="price-card decoy reveal-blur ios-glass-card" style="transition-delay: 0.4s;">
-                    <h3 class="price-title">مدى الحياة</h3>
-                    <div class="price-value">19,999<span> ج.م</span></div>
-                    <p class="price-desc">ادفع مرة واحدة وامتلك النسخة للأبد لجهازك.</p>
+                <!-- Plan 3: Lifetime Enterprise -->
+                <div class="price-card ios-glass-card reveal-blur" style="transition-delay: 0.3s;">
+                    <h3 class="price-title">باقة التمليك مدى الحياة (Lifetime)</h3>
+                    <div class="price-value">19,999<span> ج.م</span> <span style="font-size: 0.9rem; color: var(--text-subtle); display: block;">(أو 2,499 ر.س)</span></div>
+                    <p class="price-desc">ادفع مرة واحدة وامتلك رخصة دائمة بدون أي مصاريف تجديد.</p>
                     <ul class="price-features">
-                        <li><i class="fas fa-check"></i> رخصة تمليك نهائية لجهاز واحد</li>
-                        <li class="disabled"><i class="fas fa-times"></i> لا يشمل التحديثات إطلاقاً</li>
-                        <li class="disabled"><i class="fas fa-times"></i> الدعم والصيانة برسوم إضافية</li>
+                        <li><i class="fas fa-check"></i> رخصة تمليك دائمة ومفتوحة</li>
+                        <li><i class="fas fa-check"></i> تشغيل سيرفر الويب المحلي وWMS</li>
+                        <li><i class="fas fa-check"></i> دعم قواعد بيانات غير محدودة الحجم</li>
+                        <li><i class="fas fa-check"></i> دعم فني مخصص للتهيئة الأولى</li>
+                        <li><i class="fas fa-check"></i> أولوية في التعديلات والبرمجة الخاصة</li>
                     </ul>
-                    <a href="https://wa.me/201121891913?text=مرحباً، أريد باقة مدى الحياة بـ 19999" class="btn btn-ios-outline" target="_blank">ابعتلنا واتس واشترك</a>
+                    <a href="https://wa.me/201121891913?text=مرحباً، أود شراء باقة التمليك مدى الحياة بـ 19999" class="btn btn-outline-glow" target="_blank">
+                        طلب باقة التمليك الدائمة
+                    </a>
                 </div>
             </div>
         </div>
@@ -343,66 +706,398 @@
     <section class="section" id="faq">
         <div class="container">
             <div class="section-title reveal-blur">
-                <h2>الأسئلة <span class="text-gradient">اللي بتدور في دماغك</span></h2>
-                <p>إجابات واضحة وصريحة لكل أسئلتك قبل ما تشتري.</p>
+                <h2>الأسئلة <span class="text-gradient">الشائعة والأكثر تكراراً</span></h2>
+                <p>إجابات واضحة ومباشرة لكل ما يدور في ذهنك قبل بدء الاستخدام.</p>
             </div>
             
             <div class="faq-container reveal-blur">
-                <details class="faq-item">
-                    <summary class="faq-question">هل البرنامج بيحتاج إنترنت عشان يشتغل؟</summary>
-                    <div class="faq-answer">لا خالص! إحنا صممنا البرنامج إنه يكون <strong>Offline 100%</strong> عشان بياناتك وحساباتك تبقى بأمان على جهازك، وميتوقفش شغلك لو النت فصل.</div>
+                <details class="faq-item" open>
+                    <summary class="faq-question">هل يحتاج النظام إلى إنترنت ليعمل؟</summary>
+                    <div class="faq-answer">
+                        إطلاقاً! المنظومة تعمل <strong>أوفلاين 100%</strong>. حتى سيرفر لوحة التحكم وتطبيق المخازن WMS يعملان محلياً عبر شبكة الواي فاي الداخلية لجهازك على المنفذ <code>7890</code> بدون الحاجة لأي اتصال بالإنترنت.
+                    </div>
                 </details>
+
                 <details class="faq-item">
-                    <summary class="faq-question">أنا عندي برنامج قديم.. هل هفقد الأصناف والبيانات بتاعتي؟</summary>
-                    <div class="faq-answer">مستحيل! عندنا أداة سحرية تسحب كل بياناتك وأصنافك من ملفات Excel بضغطة زر واحدة. يعني هتنقل على نظامنا في ثواني.</div>
+                    <summary class="faq-question">هل يمكنني نقل بياناتي وأصنافي من برنامجي القديم؟</summary>
+                    <div class="faq-answer">
+                        نعم بكل سهولة! يحتوي النظام على أداة استيراد وتصدير ذكية تدعم ملفات Excel وJSON لسحب كافة الأصناف، الباركود، والأسعار بضغطة زر واحدة.
+                    </div>
                 </details>
+
                 <details class="faq-item">
-                    <summary class="faq-question">أنا محتاج تقرير معين وميزة غريبة مش موجودة في السوق، هتعملوهالي؟</summary>
-                    <div class="faq-answer">بكل تأكيد. إحنا المبرمجين الأساسيين للنظام، أي ميزة تتخيلها أو طريقة شغل معينة في محلك، فريقنا البرمجي هينفذهالك تفصيل لتناسب مقاسك بالظبط.</div>
+                    <summary class="faq-question">كيف يعمل تطبيق المخازن (WMS) على الهواتف؟</summary>
+                    <div class="faq-answer">
+                        بمجرد تشغيل كاشير الويندوز، يتصل الهاتف بنفس شبكة الواي فاي ويفتح الرابط <code>http://[IP-الكاشير]:7890/wms/</code> أو يمسح كود QR الظاهر في شاشة الإعدادات. يعمل التطبيق فوراً ويمكن تثبيته كـ تطبيق هاتف PWA لمسح الباركود بالكاميرا وتعديل المخزون.
+                    </div>
                 </details>
+
                 <details class="faq-item">
-                    <summary class="faq-question">هل البرنامج هيشتغل على الميزان الإلكتروني وطابعة الريسيت اللي عندي؟</summary>
-                    <div class="faq-answer">أيوة، النظام Plug & Play، بيتعرف على الطابعات الحرارية، أدراج الكاشير، أجهزة الباركود، والموازين المتوفرة في مصر والشرق الأوسط بكل سهولة.</div>
+                    <summary class="faq-question">هل يدعم النظام عملات وأسواق أخرى خارج مصر؟</summary>
+                    <div class="faq-answer">
+                        نعم! يحتوي النظام على معالج تهيئة إقليمي يدعم السوق المصري (ج.م)، السوق السعودي (ر.س)، السوق الإماراتي (د.إ)، الكويتي (د.ك)، أو أي عملة مخصصة، مع ضبط الضريبة وتنسيق الفواتير تلقائياً.
+                    </div>
                 </details>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="ios-glass" style="margin-top: 100px; padding: 80px 0 30px;">
+    <footer id="contact">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <img src="assets/images/robovai-solutions.png" alt="RoboVAI Solutions Company" style="height: 65px; margin-bottom: 25px; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.8));">
-                <p>إحنا شركة برمجيات متخصصة بنبني حلول عشان تخلي إدارة محلك ومبيعاتك أسهل وأمان أكتر. متقبلش بالأنظمة القديمة، اختار الصح واكسب راحة بالك.</p>
+                <img src="assets/images/robovai-solutions.png" alt="RoboVAI Solutions Company" style="height: 60px; margin-bottom: 20px; filter: drop-shadow(0 2px 10px rgba(56,189,248,0.3));">
+                <p>نحن شركة حلول برمجية ذكية متخصصة في بناء أنظمة نقاط البيع وإدارة المنشآت التجارية لتوفير أعلى درجات الأمان والسرعة وراحة البال لأصحاب الأعمال.</p>
             </div>
             <div class="footer-links">
-                <h4>تصفح سريع</h4>
+                <h4>روابط سريعة</h4>
                 <ul>
-                    <li><a href="#bento">القدرات الجبارة</a></li>
-                    <li><a href="#hardware">توافق الأجهزة</a></li>
-                    <li><a href="#stacked-gallery">جولة في البرنامج</a></li>
-                    <li><a href="#pricing">الأسعار</a></li>
-                    <li><a href="user-guide.html" style="color: var(--primary);">دليل الاستخدام الشامل</a></li>
+                    <li><a href="#hub">المنظومة الرقمية (Port 7890)</a></li>
+                    <li><a href="#bento">المزايا والقدرات الجبارة</a></li>
+                    <li><a href="#stacked-gallery">جولة في شاشات النظام</a></li>
+                    <li><a href="#pricing">الأسعار والباقات</a></li>
+                    <li><a href="user-guide.html" style="color: var(--primary);">📖 دليل الاستخدام الشامل</a></li>
                 </ul>
             </div>
             <div class="footer-links">
-                <h4>كلم المبيعات والدعم</h4>
+                <h4>المبيعات والدعم الفني</h4>
                 <ul>
-                    <li><i class="fab fa-whatsapp text-gradient" style="font-size: 1.3rem;"></i> +20 112 189 1913</li>
-                    <li><i class="fas fa-envelope text-gradient" style="font-size: 1.3rem;"></i> info@robovai.tech</li>
-                    <li><i class="fas fa-location-dot text-gradient" style="font-size: 1.3rem;"></i> مقر الشركة: مدينه 6 اكتوبر الحي الثاني مصر</li>
+                    <li><i class="fab fa-whatsapp text-gradient" style="font-size: 1.2rem; margin-left: 8px;"></i> واتساب: +20 112 189 1913</li>
+                    <li><i class="fas fa-envelope text-gradient" style="font-size: 1.2rem; margin-left: 8px;"></i> البريد: info@robovai.tech</li>
+                    <li><i class="fas fa-location-dot text-gradient" style="font-size: 1.2rem; margin-left: 8px;"></i> المقر: مدينة 6 أكتوبر، الجيزة، مصر</li>
                 </ul>
             </div>
         </div>
-        <div class="copyright" style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">
-            صُنع بكل حب وفخر في مصر 🇪🇬 من &copy; 2026 RoboVAI Solutions
+        <div class="container" style="text-align: center; margin-top: 40px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.06); color: var(--text-muted); font-size: 1rem;">
+            صُنع بكل فخر واحترافية في مصر 🇪🇬 &copy; 2026 RoboVAI Solutions. جميع الحقوق محفوظة.
         </div>
     </footer>
 
+    <!-- Lenis Momentum Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <!-- JavaScript Interactions -->
     <script src="js/main.js"></script>
 
     <script>
-        // Mobile Menu Toggle
+        // 1. Lenis Smooth Scroll Initialization (Apple / Linear standard)
+        try {
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smoothWheel: true,
+                    touchMultiplier: 1.5
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }
+        } catch (e) {
+            console.log('Lenis initialization skipped:', e);
+        }
+
+        // 2. Aceternity 3D Perspective Tilt Physics with mouse tracking
+        function init3DTiltCards() {
+            const cards = document.querySelectorAll('.tilt-card, .bento-card, .hub-card, .price-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -7;
+                    const rotateY = ((x - centerX) / centerX) * 7;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                    card.style.transition = 'transform 0.4s ease';
+                });
+
+                card.addEventListener('mouseenter', () => {
+                    card.style.transition = 'transform 0.1s ease-out';
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', init3DTiltCards);
+
+        // 3. Live Language Morphing Data & Engine (6 Languages)
+        const morphLangs = {
+            ar: {
+                dir: 'rtl',
+                pill: '🇪🇬 العربية (RTL)',
+                title: 'مرحباً بك مجدداً',
+                subtitle: 'سجّل الدخول لمنظومة الكاشير والمبيعات',
+                user: 'اسم المستخدم',
+                pass: 'كلمة المرور',
+                btn: 'تسجيل الدخول للمنظومة',
+                quoteHeader: 'اقتباس اليوم التحفيزي',
+                quote: '"التجارة شطارة، وحسن معاملة الزبون هي رأس مالك الحقيقي الذي لا ينفد."'
+            },
+            en: {
+                dir: 'ltr',
+                pill: '🇬🇧 English (LTR)',
+                title: 'Welcome Back',
+                subtitle: 'Sign in to your cashier terminal',
+                user: 'Username',
+                pass: 'Password',
+                btn: 'Sign In To Terminal',
+                quoteHeader: 'Daily Motivational Quote',
+                quote: '"Success is not final; failure is not fatal: it is the courage to continue that counts."'
+            },
+            fr: {
+                dir: 'ltr',
+                pill: '🇫🇷 Français (LTR)',
+                title: 'Bienvenue à Nouveau',
+                subtitle: 'Connectez-vous à votre terminal de caisse',
+                user: "Nom d'utilisateur",
+                pass: 'Mot de passe',
+                btn: 'Se Connecter au Terminal',
+                quoteHeader: 'Citation Inspirante du Jour',
+                quote: '"La meilleure façon de prédire l\'avenir est de le créer avec excellence."'
+            },
+            es: {
+                dir: 'ltr',
+                pill: '🇪🇸 Español (LTR)',
+                title: 'Bienvenido de Nuevo',
+                subtitle: 'Inicie sesión en su terminal de punto de venta',
+                user: 'Nombre de usuario',
+                pass: 'Contraseña',
+                btn: 'Iniciar Sesión en Terminal',
+                quoteHeader: 'Cita Motivacional del Día',
+                quote: '"El secreto del éxito comercial radica en servir con rapidez y honestidad."'
+            },
+            tr: {
+                dir: 'ltr',
+                pill: '🇹🇷 Türkçe (LTR)',
+                title: 'Tekrar Hoş Geldiniz',
+                subtitle: 'Kasiyer satış terminalinize giriş yapın',
+                user: 'Kullanıcı Adı',
+                pass: 'Şifre',
+                btn: 'Terminale Giriş Yap',
+                quoteHeader: 'Günün İlham Verici Sözü',
+                quote: '"Ticaret cesaret ve dürüstlükle büyür; müşteri memnuniyeti en büyük kazançtır."'
+            },
+            ur: {
+                dir: 'rtl',
+                pill: '🇵🇰 اردو (RTL)',
+                title: 'دوبارہ خوش آمدید',
+                subtitle: 'اپنے کیشئر سیلز ٹرمینل میں لاگ ان کریں',
+                user: 'صارف کا نام',
+                pass: 'پاس ورڈ',
+                btn: 'ٹرمینل میں لاگ ان کریں',
+                quoteHeader: 'آج کا سبق آموز قول',
+                quote: '"ایمانداری اور بہترین کسٹمر سروس ہی کاروبار کی اصل کامیابی ہے۔"'
+            }
+        };
+
+        function switchMorphLang(lang) {
+            const data = morphLangs[lang];
+            if (!data) return;
+
+            // Highlight Active Button
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-lang-${lang}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Animate Card Morphing
+            const card = document.getElementById('morphCard');
+            card.style.opacity = '0.5';
+            card.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                card.setAttribute('dir', data.dir);
+                document.getElementById('morphActivePill').innerText = data.pill;
+                document.getElementById('morphTitle').innerText = data.title;
+                document.getElementById('morphSubtitle').innerText = data.subtitle;
+                document.getElementById('morphUserLabel').innerText = data.user;
+                document.getElementById('morphPassLabel').innerText = data.pass;
+                document.getElementById('morphBtn').innerHTML = `${data.btn} <i class="fas ${data.dir === 'rtl' ? 'fa-arrow-left' : 'fa-arrow-right'}" style="margin-${data.dir === 'rtl' ? 'right' : 'left'}: 8px;"></i>`;
+                document.getElementById('morphQuoteHeader').innerText = data.quoteHeader;
+                document.getElementById('morphQuoteText').innerText = data.quote;
+
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }, 180);
+        }
+
+        // 4. Interactive POS Simulator with Web Audio Synthesized Beep
+        let cartItems = [];
+        let receiptTotal = 0;
+
+        function playScanBeep() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1850, ctx.currentTime);
+                gain.gain.setValueAtTime(0.18, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.08);
+            } catch (e) {
+                // AudioContext not allowed before user interaction
+            }
+        }
+
+        function addToReceiptWithSound(name, price, type) {
+            playScanBeep();
+            
+            const existing = cartItems.find(i => i.name === name);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cartItems.push({ name, price, qty: 1 });
+            }
+            renderCart();
+        }
+
+        function scanRandomItem() {
+            const input = document.getElementById('demoBarcodeInput');
+            const sampleItems = [
+                { name: 'قهوة اسبريسو دبل', price: 35 },
+                { name: 'برجر لحم دوبل', price: 120 },
+                { name: 'بيتزا مارجريتا حجم وسط', price: 150 },
+                { name: 'كولا كانز 330 مل', price: 20 },
+                { name: 'شيبسي عائلي بالجبنة', price: 25 },
+                { name: 'عصير برتقال طبيعي', price: 40 }
+            ];
+            const randomItem = sampleItems[Math.floor(Math.random() * sampleItems.length)];
+            addToReceiptWithSound(randomItem.name, randomItem.price, 'scan');
+            if (input) {
+                input.value = `622100${Math.floor(100000 + Math.random() * 900000)}`;
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById('receipt-items-container');
+            const totalEl = document.getElementById('receipt-total-value');
+            const subtotalEl = document.getElementById('receipt-subtotal-value');
+            const vatEl = document.getElementById('receipt-vat-value');
+
+            if (cartItems.length === 0) {
+                container.innerHTML = `
+                    <div id="empty-receipt-msg" style="text-align: center; margin-top: 45px; color: #94a3b8;">
+                        <i class="fas fa-cart-shopping" style="font-size: 2.2rem; margin-bottom: 10px; color: #475569; display: block;"></i>
+                        اضغط على أي صنف أو امسح الباركود للتجربة
+                    </div>
+                `;
+                subtotalEl.innerText = '0.00 ج.م';
+                vatEl.innerText = '0.00 ج.م';
+                totalEl.innerText = '0 ج.م';
+                receiptTotal = 0;
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = cartItems.map(item => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                return `
+                    <div class="receipt-line" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <div>
+                            <strong style="color: #fff;">${item.name}</strong>
+                            <div style="font-size: 0.8rem; color: #94a3b8;">${item.qty} × ${item.price} ج.م</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 800; color: #38bdf8;">${itemTotal} ج.م</span>
+                            <button onclick="changeQty('${item.name}', -1)" style="background: rgba(239,68,68,0.2); border: none; color: #ef4444; width: 22px; height: 22px; border-radius: 4px; cursor: pointer;">-</button>
+                            <button onclick="changeQty('${item.name}', 1)" style="background: rgba(16,185,129,0.2); border: none; color: #10b981; width: 22px; height: 22px; border-radius: 4px; cursor: pointer;">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const vat = subtotal * 0.14;
+            receiptTotal = subtotal + vat;
+
+            subtotalEl.innerText = subtotal.toFixed(2) + ' ج.م';
+            vatEl.innerText = vat.toFixed(2) + ' ج.م';
+            totalEl.innerText = Math.round(receiptTotal).toLocaleString() + ' ج.م';
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function changeQty(name, delta) {
+            const item = cartItems.find(i => i.name === name);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cartItems = cartItems.filter(i => i.name !== name);
+            }
+            renderCart();
+        }
+
+        function clearReceipt() {
+            cartItems = [];
+            renderCart();
+            const input = document.getElementById('demoBarcodeInput');
+            if (input) input.value = '';
+        }
+
+        // 5. Thermal Receipt Print Modal
+        function openPrintModal() {
+            if (cartItems.length === 0) {
+                alert('الرجاء إضافة صنف واحد على الأقل للمعاينة!');
+                return;
+            }
+            const modal = document.getElementById('receiptModal');
+            const itemsList = document.getElementById('modalReceiptItemsList');
+            const subtotalEl = document.getElementById('modalSubtotal');
+            const vatEl = document.getElementById('modalVat');
+            const grandTotalEl = document.getElementById('modalGrandTotal');
+            const timeEl = document.getElementById('modalReceiptTime');
+
+            const now = new Date();
+            timeEl.innerText = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            let subtotal = 0;
+            itemsList.innerHTML = cartItems.map(i => {
+                const lineTotal = i.price * i.qty;
+                subtotal += lineTotal;
+                return `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span>${i.name} (×${i.qty})</span>
+                        <span>${lineTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const vat = subtotal * 0.14;
+            const total = subtotal + vat;
+
+            subtotalEl.innerText = subtotal.toFixed(2) + ' ج.م';
+            vatEl.innerText = vat.toFixed(2) + ' ج.م';
+            grandTotalEl.innerText = total.toFixed(2) + ' ج.م';
+
+            modal.classList.add('active');
+        }
+
+        function closePrintModal() {
+            const modal = document.getElementById('receiptModal');
+            modal.classList.remove('active');
+        }
+
+        // 6. Navbar & Mobile Menu
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 40) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
         function toggleMenu() {
             const navMenu = document.getElementById('navMenu');
             navMenu.classList.toggle('active');
@@ -416,45 +1111,7 @@
             }
         }
 
-        // POS Demo Logic
-        let receiptTotal = 0;
-        function addToReceipt(name, price) {
-            const container = document.getElementById('receipt-items-container');
-            const emptyMsg = document.getElementById('empty-receipt-msg');
-            const totalEl = document.getElementById('receipt-total-value');
-            const flash = document.getElementById('demo-flash');
-            
-            if(emptyMsg) emptyMsg.style.display = 'none';
-            
-            // Visual flash
-            flash.style.animation = 'none';
-            void flash.offsetWidth; // trigger reflow
-            flash.style.animation = 'flash 0.3s ease-out';
-            
-            // Add item
-            const item = document.createElement('div');
-            item.className = 'receipt-line';
-            item.innerHTML = `<span>${name}</span><span>${price} ج.م</span>`;
-            container.appendChild(item);
-            
-            // Scroll to bottom
-            container.scrollTop = container.scrollHeight;
-            
-            // Update total
-            receiptTotal += price;
-            totalEl.innerText = receiptTotal.toLocaleString() + ' ج.م';
-        }
-        
-        function clearReceipt() {
-            const container = document.getElementById('receipt-items-container');
-            const totalEl = document.getElementById('receipt-total-value');
-            
-            container.innerHTML = '<div id="empty-receipt-msg" style="text-align: center; margin-top: 50px; color: #999;">اضغط على أي صنف لإضافته للفاتورة</div>';
-            receiptTotal = 0;
-            totalEl.innerText = '0 ج.م';
-        }
-
-        // ROI Calculator Logic
+        // 7. ROI Calculator
         function calculateROI() {
             const slider = document.getElementById('roiSlider');
             const label = document.getElementById('daily-sales-label');
@@ -463,27 +1120,8 @@
             const dailySales = parseInt(slider.value);
             label.innerText = dailySales.toLocaleString();
             
-            // Assuming 3% daily loss/theft/errors, times 30 days = monthly savings
-            const monthlySavings = dailySales * 0.03 * 30;
+            const monthlySavings = Math.round(dailySales * 0.03 * 30);
             savings.innerText = monthlySavings.toLocaleString() + ' ج.م';
-        }
-
-        // Navbar Mobile Toggle
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            const hamburger = document.getElementById('hamburger');
-            if (menu && hamburger) {
-                menu.classList.toggle('active');
-                // Change icon if needed
-                const icon = hamburger.querySelector('i');
-                if (menu.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            }
         }
     </script>
 

@@ -30,114 +30,115 @@
     />
 
     <!-- Custom Style -->
-    <script type="module" crossorigin src="./assets/index-B2PjetO-.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-B1vglWp_.css">
+    <script type="module" crossorigin src="./assets/index-9NKer3Iu.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-C8G47ln2.css">
   </head>
   <body>
     <!-- Login Overlay -->
     <div
       id="login-overlay"
-      style="
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: #0f172a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-      "
+      class="login-backdrop"
     >
-      <div class="glass" style="width: 100%; max-width: 400px; padding: 2rem">
-        <div
-          style="
-            text-align: center;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          "
-        >
-          <img
-            src="./icons/icon-192.png"
-            alt="Smart Inventory Pro Logo"
-            width="96"
-            height="96"
-            style="
-              margin-bottom: 1rem;
-              border-radius: 1.25rem;
-              box-shadow: 0 0 24px rgba(0, 212, 255, 0.4);
-            "
-          />
-          <h2
-            style="
-              color: var(--text-main);
-              margin-bottom: 0.5rem;
-              font-family: 'Cairo', sans-serif;
-            "
-          >
+      <div class="glass login-card">
+        <div class="login-header">
+          <div class="login-logo-wrap">
+            <img
+              src="./icons/icon-192.png"
+              alt="Smart Inventory Pro Logo"
+              width="84"
+              height="84"
+              class="login-logo-img"
+            />
+          </div>
+          <h2 class="login-title">
             مخزني الذكي Pro
           </h2>
-          <p
-            style="
-              color: var(--text-muted);
-              font-size: 0.85rem;
-              letter-spacing: 1px;
-            "
-          >
-            RoboVAI WMS PLATFORM
+          <p class="login-subtitle">
+            RoboVAI WMS Enterprise v6.0
           </p>
         </div>
         <form id="login-form">
-          <div class="input-group">
-            <label>اسم المستخدم</label>
-            <input
-              type="text"
-              id="login-username"
-              value="admin"
-              required
-              dir="ltr"
-              style="text-align: left"
-            />
+          <div class="form-group-modern">
+            <label class="form-label-modern" for="login-username">
+              <span>اسم المستخدم</span>
+              <span class="label-hint">Default: admin</span>
+            </label>
+            <div class="input-wrapper-modern">
+              <span class="input-icon">👤</span>
+              <input
+                type="text"
+                id="login-username"
+                class="input-modern"
+                value="admin"
+                placeholder="أدخل اسم المستخدم..."
+                required
+                dir="ltr"
+                autocomplete="username"
+              />
+            </div>
           </div>
-          <div class="input-group">
-            <label>كلمة المرور</label>
-            <input
-              type="password"
-              id="login-password"
-              value="123456"
-              required
-              dir="ltr"
-              style="text-align: left"
-            />
+          <div class="form-group-modern">
+            <label class="form-label-modern" for="login-password">
+              <span>كلمة المرور</span>
+              <span class="label-hint">Default: 123456</span>
+            </label>
+            <div class="input-wrapper-modern">
+              <span class="input-icon">🔒</span>
+              <input
+                type="password"
+                id="login-password"
+                class="input-modern"
+                value="123456"
+                placeholder="••••••"
+                required
+                dir="ltr"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                id="toggle-password-btn"
+                class="password-toggle-btn"
+                tabindex="-1"
+                title="إظهار / إخفاء كلمة المرور"
+                onclick="const p=document.getElementById('login-password'); p.type = p.type==='password'?'text':'password';"
+              >
+                👁️
+              </button>
+            </div>
           </div>
           <button
             type="submit"
             id="login-submit-btn"
-            class="btn btn-primary"
-            style="margin-top: 1rem; width: 100%"
+            class="btn btn-primary btn-glow"
+            style="margin-top: 1.25rem; width: 100%"
           >
-            <span id="login-btn-text">دخول</span>
+            <span id="login-btn-text">تسجيل الدخول للنظام</span>
           </button>
           <button
             type="button"
             class="btn btn-outline"
             onclick="startAuthQRScan()"
             style="
-              margin-top: 0.6rem;
+              margin-top: 0.75rem;
               width: 100%;
               display: flex;
               align-items: center;
               justify-content: center;
               gap: 0.5rem;
-              font-size: 0.9rem;
             "
           >
             <i data-lucide="scan-line" style="width: 18px; height: 18px"></i>
-            دخول بـ QR كود
+            <span>دخول سريع بـ FastPair QR</span>
           </button>
-          <div style="margin-top: 0.8rem; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 8px 12px; text-align: center; font-size: 0.82rem; color: #93c5fd;">
-            🔑 بيانات الدخول الافتراضية: المستخدم <strong>admin</strong> | الباسورد <strong>123456</strong>
+
+          <!-- Quick Fill Preset Badge -->
+          <div
+            class="quick-creds-box"
+            onclick="document.getElementById('login-username').value='admin'; document.getElementById('login-password').value='123456';"
+            title="انقر للتعبئة التلقائية السريعة"
+          >
+            <div class="quick-creds-title">🔑 بيانات الدخول الافتراضية (انقر للتعبئة):</div>
+            <div class="quick-creds-body">المستخدم: <strong>admin</strong> &nbsp;|&nbsp; كلمة المرور: <strong>123456</strong></div>
           </div>
         </form>
         <noscript>
@@ -156,19 +157,14 @@
             Server) ليعمل بشكل صحيح.
           </div>
         </noscript>
-        <div style="margin-top: 1rem; text-align: center">
+        <div style="margin-top: 1.25rem; text-align: center">
           <a
             href="user-guide.html"
             target="_blank"
             rel="noopener noreferrer"
-            style="
-              color: var(--accent);
-              font-size: 0.82rem;
-              text-decoration: none;
-              opacity: 0.8;
-            "
+            class="guide-link-btn"
           >
-            📖 دليل الاستخدام
+            📖 فتح دليل الاستخدام الشامل
           </a>
         </div>
       </div>
@@ -1066,6 +1062,72 @@
         </div>
       </section>
 
+      
+      <!-- LAN SYNC SECTION -->
+      <section id="lan-sync">
+        <h2>نقل البيانات LAN</h2>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem;">نقل ملايين المنتجات بين المخزن والكاشير عبر Wi-Fi.</p>
+        <div class="glass" style="padding:1.25rem;margin-bottom:1rem;border:1px solid rgba(99,102,241,0.3);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+            <h3 style="margin:0;font-size:1rem;">حالة الاتصال</h3>
+            <span id="lan-connection-badge" style="font-size:0.85rem;font-weight:600;color:var(--danger);">غير متصل</span>
+          </div>
+          <div id="lan-sync-status" style="padding:0.75rem;border-radius:0.75rem;background:rgba(255,255,255,0.04);font-size:0.88rem;color:var(--text-muted);margin-bottom:0.75rem;min-height:2.5rem;">جاهز للاتصال...</div>
+          <div style="background:rgba(255,255,255,0.05);border-radius:99px;height:8px;overflow:hidden;margin-bottom:0.5rem;">
+            <div id="lan-sync-progress-bar" style="width:0%;height:100%;background:linear-gradient(to left,#6366f1,#a855f7);border-radius:99px;transition:width 0.3s ease;"></div>
+          </div>
+          <div style="text-align:center;font-size:0.8rem;color:var(--text-muted);"><span id="lan-sync-progress-pct">0%</span></div>
+        </div>
+        <div class="glass" style="padding:1.25rem;margin-bottom:1rem;">
+          <h3 style="font-size:1rem;margin-bottom:0.5rem;">ادخال يدوي</h3>
+          <div class="input-group"><label>عنوان IP الكاشير</label><input type="text" id="lan-server-ip" dir="ltr" placeholder="192.168.1.10" style="text-align:left;" /></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+            <div class="input-group" style="margin-bottom:0;"><label>المنفذ</label><input type="number" id="lan-server-port" dir="ltr" value="7890" style="text-align:left;" /></div>
+            <div class="input-group" style="margin-bottom:0;"><label>رمز الجلسة</label><input type="text" id="lan-server-token" dir="ltr" placeholder="robovai-xxxx" style="text-align:left;" /></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
+            <button class="btn btn-primary" onclick="LanSync.connectManual()">اتصال</button>
+            <button class="btn btn-outline" onclick="LanSync.discover()">اكتشاف تلقائي</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;">
+            <input type="checkbox" id="lan-auto-pull" style="width:auto;accent-color:var(--primary);" />
+            <label for="lan-auto-pull" style="font-size:0.88rem;color:var(--text-muted);cursor:pointer;">استلام تلقائي بعد الاقران</label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <button class="btn btn-primary" id="btn-lan-push" onclick="LanSync.push()" disabled>ارسال للكاشير</button>
+            <button class="btn btn-outline" id="btn-lan-pull" onclick="LanSync.pull()" disabled>استلام من الكاشير</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMIN PANEL SECTION -->
+      <section id="admin-panel">
+        <h2>لوحة الادارة المركزية</h2>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem;">مراقبة جميع الفروع والاجهزة المتصلة في الوقت الفعلي.</p>
+        <div class="stats-grid" style="margin-bottom:1.5rem;">
+          <div class="glass stat-card"><span id="admin-total-branches" class="stat-value">--</span><span class="stat-label">اجمالي الفروع</span></div>
+          <div class="glass stat-card" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04);"><span id="admin-active-branches" class="stat-value" style="color:#10b981;">--</span><span class="stat-label">فروع متصلة الان</span></div>
+        </div>
+        <div class="glass" style="padding:1.25rem;margin-bottom:1rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <h3 style="margin:0;font-size:1rem;">الاجهزة المتصلة</h3>
+            <button class="btn btn-outline" style="width:auto;padding:0.4rem 0.75rem;font-size:0.82rem;" onclick="refreshAdminPanel()">تحديث</button>
+          </div>
+          <div id="admin-device-list" style="text-align:center;padding:2rem;color:var(--text-muted);">اتصل بالسيرفر لعرض الاجهزة</div>
+        </div>
+        <div class="glass" style="padding:1.25rem;margin-bottom:1rem;">
+          <h3 style="font-size:1rem;margin-bottom:0.75rem;">اجراءات سريعة</h3>
+          <div style="display:grid;gap:0.75rem;">
+            <button class="btn btn-outline" onclick="adminBroadcastSync()" id="btn-admin-sync-all">ارسال تحديث المنتجات لجميع الفروع</button>
+            <button class="btn btn-outline" onclick="adminExportReport()">تصدير تقرير شامل لجميع الفروع</button>
+          </div>
+        </div>
+        <div class="glass" style="padding:1.25rem;">
+          <h3 style="font-size:1rem;margin-bottom:0.75rem;">سجل المزامنة</h3>
+          <div id="admin-sync-log" style="max-height:200px;overflow-y:auto;font-size:0.82rem;direction:ltr;color:var(--text-muted);"><div style="direction:rtl;text-align:center;padding:1rem;opacity:0.5;">لا توجد سجلات بعد...</div></div>
+        </div>
+      </section>
+
       <!-- SETTINGS SECTION -->
       <section id="settings">
         <h2>الإعدادات والنظام</h2>
@@ -1405,7 +1467,7 @@
         </div>
 
         <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
-          <h4 style="margin-bottom: 0.5rem"><i data-lucide="download-cloud"></i> تحميل النسخة الكاملة والتحديثات</h4>
+          </h4>
           <p
             style="
               font-size: 0.85rem;
@@ -1413,16 +1475,11 @@
               margin-bottom: 1rem;
             "
           >
-            حمل أحدث نسخ برنامج الويندوز وتطبيق WMS مباشرة من مجلد Google Drive الرسمي.
+            ثبّت التطبيق على جهازك للحصول على أداء أسرع وعمل متواصل بدون إنترنت.
           </p>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="https://drive.google.com/drive/folders/1qnQpUumI5gnv6muZLrPELVraOPGMDXlX?usp=sharing" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-              <i data-lucide="external-link"></i> فتح مجلد Google Drive الرسمي
-            </a>
-            <button class="btn btn-outline" onclick="triggerInstallPrompt()">
-              <i data-lucide="download"></i> تثبيت التطبيق المحمول (PWA)
-            </button>
-          </div>
+          <button class="btn btn-primary" onclick="triggerInstallPrompt()">
+            <i data-lucide="download"></i> تثبيت التطبيق (Add to Home Screen)
+          </button>
         </div>
 
         <div class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem">
@@ -1729,6 +1786,24 @@
       </button>
       <button
         class="nav-item"
+        data-view="lan-sync"
+        id="nav-lan-sync"
+        style="flex-shrink: 0"
+      >
+        <i data-lucide="wifi"></i>
+        <span>LAN نقل</span>
+      </button>
+      <button
+        class="nav-item"
+        data-view="admin-panel"
+        id="nav-admin-panel"
+        style="flex-shrink: 0"
+      >
+        <i data-lucide="layout-grid"></i>
+        <span>الإدارة</span>
+      </button>
+      <button
+        class="nav-item"
         data-view="settings"
         id="nav-settings"
         style="flex-shrink: 0"
@@ -1881,6 +1956,9 @@
     </div>
 
     <!-- Scripts -->
+    <script src="js/lan-sync.js"></script>
+    <script src="js/admin-panel.js"></script>
+    <script src="js/owner-dashboard.js"></script>
 
     <!-- ══════════════════════════════════════════════════════ -->
     <!--  Auth QR — بطاقة دخول المستخدم (يعرضها Admin)        -->
