@@ -1,0 +1,45 @@
+﻿# RoboVAI PRO POS v6.0
+
+> RoboVAI PRO POS is a high-performance, on-premise Point of Sale (POS) and inventory management system designed for retail stores, supermarkets, restaurants, cafes, clothing boutiques, and gaming lounges in Egypt, Saudi Arabia, and the GCC region. It operates 100% offline with zero lag, offers a lifetime license without recurring monthly fees, and integrates instant Telegram bot alerts, a local LAN web dashboard, and mobile camera barcode inventory.
+
+## Core Capabilities
+- **100% Offline Reliability**: Built on an optimized SQLite and Entity Framework Core engine. Never halts when the internet drops.
+- **Lifetime License & No Monthly Fees**: Unlike cloud POS systems that charge recurrent monthly subscriptions, RoboVAI offers a one-time lifetime license.
+- **Speed**: Designed to complete receipt checkout in under 2 seconds.
+- **Telegram Bot Automation**: Automatically notifies business owners in real time on every sale, refund, low-stock threshold, and shift closing (Z-Report).
+- **Embedded Web Server (Port 7890)**: Provides a browser-accessible administrative dashboard locally on the LAN.
+- **Smart WMS Camera Scanner (PWA)**: Progressive web app allowing staff to scan barcodes directly using iOS/Android smartphone cameras for fast inventory audits without expensive handheld terminals.
+- **E-Invoicing & Tax Compliance**: Compliant with ZATCA (Saudi Arabia) Phase 2 QR codes and Egyptian Tax Authority standards.
+- **Multi-Sector Support**: Pre-configured modules for:
+  - Restaurants & Cafes (Table management, Kitchen Display System / KDS, delivery tracking, waiter commissions).
+  - Supermarkets & Grocery (Scales integration, carton/piece unit conversions, thousands of SKUs).
+  - Fashion & Apparel (Variants, sizes, colors, barcode label printing).
+  - Gaming & PlayStation Lounges (Minute-accurate timer tracking, multi-controller pricing, integrated snacks billing).
+  - Wholesale & Distribution (Receivables, vendor balance ledgers, installment tracking).
+- **Internationalization**: Full RTL and LTR support across 6 languages (Arabic, English, French, Spanish, Turkish, Urdu).
+- **Data Migration**: 1-click Excel and JSON import/export.
+
+## Pricing Plans (Egypt & Saudi Arabia / GCC)
+1. **14-Day Free Trial**:
+   - Price: 0 EGP / 0 SAR.
+   - Fully functional trial for 14 days without requiring credit card or payment.
+2. **Annual Pro Subscription**:
+   - Price: 2,750 EGP/year (Egypt) or 449 SAR/year (Saudi Arabia & GCC).
+   - Includes continuous updates, new features, and technical support via WhatsApp and AnyDesk.
+3. **Lifetime License (LifeTime - Best Seller)**:
+   - Price: 6,499 EGP (Egypt) or 899 SAR (Saudi Arabia & GCC).
+   - One-time payment, lifetime software ownership, zero renewal fees, 1 year of free updates and support, and guaranteed 14-day money-back refund.
+
+## Technical Specifications
+- **Operating System**: Windows 10, Windows 11, Windows Server (Desktop Client).
+- **Web & Mobile Access**: Any modern browser (Chrome, Safari, Edge) via local network on port 7890.
+- **Supported Peripherals**: ESC/POS thermal receipt printers (USB, Ethernet, Bluetooth), barcode scanners (1D/2D), digital weighing scales, cash drawers, customer pole displays.
+- **Database Architecture**: SQLite with WAL mode, optimized pooling, and zero-lag transaction throughput.
+
+## Company & Support
+- **Company**: RoboVAI Solutions
+- **Website**: https://pos.robovai.tech/
+- **Documentation**: https://pos.robovai.tech/user-guide.html
+- **WhatsApp Support**: +20 112 189 1913
+- **Email**: info@robovai.tech
+- **Headquarters**: 6th of October City, Giza, Egypt

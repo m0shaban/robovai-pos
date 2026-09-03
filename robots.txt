@@ -1,0 +1,35 @@
+﻿# Robots.txt for RoboVAI PRO POS Official Portal
+# https://pos.robovai.tech/
+
+User-agent: *
+Allow: /
+Disallow: /scratch/
+Disallow: /tmp/
+
+# AI Crawlers & LLM Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Canonical Sitemap & LLM Specs
+Sitemap: https://pos.robovai.tech/sitemap.xml
