@@ -1,4 +1,4 @@
-﻿import os
+import os
 import time
 import requests
 from dotenv import load_dotenv
@@ -91,13 +91,22 @@ def run_polling():
 
                     # Handle /start
                     if text == "/start":
-                        welcome = """
-👋 مرحباً بك في **غرفة التحكم الذكية لنشر محتوى RoboVAI POS**!
-أنا مساعدك الآلي لصناعة المحتوى التسويقي وإدارته.
+                        env_file = os.path.join(os.path.dirname(__file__), ".env")
+                        if os.path.exists(env_file):
+                            with open(env_file, "r", encoding="utf-8") as f:
+                                c = f.read()
+                            if "TELEGRAM_ADMIN_CHAT_ID=\n" in c or "TELEGRAM_ADMIN_CHAT_ID=\r\n" in c:
+                                c = c.replace("TELEGRAM_ADMIN_CHAT_ID=", f"TELEGRAM_ADMIN_CHAT_ID={chat_id}")
+                                with open(env_file, "w", encoding="utf-8") as f:
+                                    f.write(c)
 
-📸 **كيف تستخدم البوت؟**
+                        welcome = f"""
+👋 مرحباً بك في **غرفة التحكم الذكية لنشر محتوى RoboVAI POS**!
+✅ **تم ربط حسابك بنجاح كمسؤول معتمد للنظام!** (Chat ID: `{chat_id}`)
+
+📸 **كيف تدير صفحاتك من هنا؟**
 1. ارسل أي صورة لشاشات النظام مع تعليق أو فكرة بوست (أو ارسل الفكرة فقط كنص).
-2. سأقوم فوراً باستخدام الذكاء الاصطناعي لصياغة 3 منشورات احترافية (فيسبوك، تويتر، تليجرام).
+2. سأقوم فوراً باستخدام الذكاء الاصطناعي (Groq LPU) بصياغة 3 منشورات احترافية لفيسبوك وتويتر وقناتك.
 3. سأعطيك زراً للموافقة والنشر الفوري في كل المنصات بنقرة واحدة! 🚀
 """
                         send_msg(chat_id, welcome)
