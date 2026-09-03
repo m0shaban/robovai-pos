@@ -1,6 +1,8 @@
-﻿import os
+import os
 
-ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "LandingPage", "assets", "images"))
+local_assets = os.path.abspath(os.path.join(os.path.dirname(__file__), "assets", "images"))
+parent_assets = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "LandingPage", "assets", "images"))
+ASSETS_DIR = local_assets if os.path.exists(local_assets) else parent_assets
 
 SCHEDULED_CAMPAIGNS = [
     {
