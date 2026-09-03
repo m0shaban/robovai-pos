@@ -1,4 +1,4 @@
-﻿# RoboVAI PRO POS v6.0
+# RoboVAI PRO POS v6.0
 
 > RoboVAI PRO POS is a high-performance, on-premise Point of Sale (POS) and inventory management system designed for retail stores, supermarkets, restaurants, cafes, clothing boutiques, and gaming lounges in Egypt, Saudi Arabia, and the GCC region. It operates 100% offline with zero lag, offers a lifetime license without recurring monthly fees, and integrates instant Telegram bot alerts, a local LAN web dashboard, and mobile camera barcode inventory.
 
@@ -24,11 +24,13 @@
    - Price: 0 EGP / 0 SAR.
    - Fully functional trial for 14 days without requiring credit card or payment.
 2. **Annual Pro Subscription**:
-   - Price: 2,750 EGP/year (Egypt) or 449 SAR/year (Saudi Arabia & GCC).
+   - Price: 3,850 EGP/year (Egypt, regular 5,500 EGP) or 649 SAR/year (Saudi Arabia & GCC, regular 999 SAR).
+   - Promo Code: LAUNCH100 for extra launch discounts for the first 100 customers.
    - Includes continuous updates, new features, and technical support via WhatsApp and AnyDesk.
-3. **Lifetime License (LifeTime - Best Seller)**:
-   - Price: 6,499 EGP (Egypt) or 899 SAR (Saudi Arabia & GCC).
-   - One-time payment, lifetime software ownership, zero renewal fees, 1 year of free updates and support, and guaranteed 14-day money-back refund.
+3. **Lifetime License (LifeTime Enterprise - Best Seller ⭐)**:
+   - Price: 11,999 EGP (Egypt, regular 16,500 EGP) or 1,899 SAR (Saudi Arabia & GCC, regular 2,800 SAR).
+   - Promo Code: LAUNCH100.
+   - One-time payment, lifetime software ownership, zero renewal fees, 1 year of free major updates and VIP support, and guaranteed 14-day money-back refund.
 
 ## Technical Specifications
 - **Operating System**: Windows 10, Windows 11, Windows Server (Desktop Client).
