@@ -1,8 +1,8 @@
-<Page x:Class="SmartPOS.WPF.Views.InvoicesPage"
+﻿<Page x:Class="SmartPOS.WPF.Views.InvoicesPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="الفواتير"
+      Title="{DynamicResource Loc_250c74e3}"
       FontFamily="Segoe UI, Tahoma"
       FlowDirection="RightToLeft"
       Loaded="Page_Loaded"
@@ -30,10 +30,10 @@
                                                                  Foreground="#2E7D32"/>
                                 </Border>
                                 <StackPanel VerticalAlignment="Center">
-                                        <TextBlock Text="الفواتير"
+                                        <TextBlock Text="{DynamicResource Loc_250c74e3}"
                                                    Style="{StaticResource AlAtmani.HeaderText}"
                                                    Margin="0"/>
-                                        <TextBlock Text="عرض وطباعة الفواتير"
+                                        <TextBlock Text="{DynamicResource Loc_cbe4c20e}"
                                                    FontSize="13"
                                                    Foreground="#2E7D32"
                                                    Opacity="0.8"/>
@@ -46,7 +46,7 @@
                                      Margin="0,0,0,16"
                                      Style="{StaticResource AlAtmani.GlassCard}">
                         <DockPanel>
-                                <TextBlock Text="الفترة"
+                                <TextBlock Text="{DynamicResource Loc_6079fc6b}"
                                            FontSize="15"
                                            VerticalAlignment="Center"
                                            Margin="0,0,16,0"/>
@@ -56,19 +56,19 @@
                                 <DatePicker SelectedDate="{Binding EndDate}"
                                             Width="160"
                                             Margin="0,0,12,0"/>
-                                <Button Content="بحث"
+                                <Button Content="{DynamicResource Loc_ab79fc14}"
                                         Style="{StaticResource AlAtmani.SoftButton}"
                                         Width="100"
                                         Margin="0,0,8,0"
                                         Command="{Binding FilterCommand}"/>
-                                <Button Content="كشف المشتريات"
+                                <Button Content="{DynamicResource Loc_708a309a}"
                                         Style="{StaticResource AlAtmani.SoftButton}"
                                         Width="150"
                                         Margin="0,0,8,0"
                                         Background="#E91E63"
                                         Foreground="White"
                                         Command="{Binding PrintPurchaseReportCommand}"/>
-                                <Button Content="كشف الإيرادات"
+                                <Button Content="{DynamicResource Loc_ce12f2a2}"
                                         Style="{StaticResource AlAtmani.SoftButton}"
                                         Width="150"
                                         Background="#9C27B0"
@@ -86,29 +86,29 @@
                                   SelectedItem="{Binding SelectedSale}"
                                   ItemsSource="{Binding Sales}">
                                 <DataGrid.Columns>
-                                        <DataGridTextColumn Header="رقم الفاتورة"
+                                        <DataGridTextColumn Header="{DynamicResource Loc_aad5385a}"
                                                             Binding="{Binding InvoiceNumber}"
                                                             Width="*"/>
-                                        <DataGridTextColumn Header="التاريخ"
+                                        <DataGridTextColumn Header="{DynamicResource Loc_8456f22b}"
                                                             Binding="{Binding SaleDate, StringFormat={}{0:yyyy-MM-dd HH:mm}}"
                                                             Width="*"/>
-                                        <DataGridTextColumn Header="الكاشير"
+                                        <DataGridTextColumn Header="{DynamicResource Loc_1567b6bf}"
                                                             Binding="{Binding User.FullName}"
                                                             Width="*"/>
-                                        <DataGridTextColumn Header="العميل"
+                                        <DataGridTextColumn Header="{DynamicResource Loc_bc9b4318}"
                                                             Binding="{Binding Customer.Name}"
                                                             Width="*"/>
-                                        <DataGridTextColumn Header="الإجمالي"
+                                        <DataGridTextColumn Header="{DynamicResource Loc_88fc73eb}"
                                                             Binding="{Binding TotalAmount, StringFormat='{}{0:F2} ج.م'}"
                                                             Width="*"/>
-                                        <DataGridTemplateColumn Header="إجراءات"
+                                        <DataGridTemplateColumn Header="{DynamicResource Loc_901efe9b}"
                                                                 Width="180">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                                 <!-- Print Receipt -->
                                                                 <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                                        ToolTip="طباعة حراري"
+                                                                        ToolTip="{DynamicResource Loc_d1d00152}"
                                                                         Width="34" Height="34" Margin="2,0"
                                                                         Command="{Binding DataContext.PrintInvoiceCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                                         CommandParameter="{Binding}">
@@ -116,7 +116,7 @@
                                                                 </Button>
                                                                 <!-- Export PDF -->
                                                                 <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                                        ToolTip="حفظ الفاتورة كـ PDF"
+                                                                        ToolTip="{DynamicResource Loc_bd239af0}"
                                                                         Width="34" Height="34" Margin="2,0"
                                                                         Command="{Binding DataContext.ExportInvoicePdfCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                                         CommandParameter="{Binding}">
@@ -124,7 +124,7 @@
                                                                 </Button>
                                                                 <!-- Void / Return Sale -->
                                                                 <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                                        ToolTip="إلغاء الفاتورة واسترداد المخزون"
+                                                                        ToolTip="{DynamicResource Loc_755a53c9}"
                                                                         Width="34" Height="34" Margin="2,0"
                                                                         Command="{Binding DataContext.VoidSaleCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                                         CommandParameter="{Binding}">

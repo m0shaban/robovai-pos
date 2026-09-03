@@ -2,7 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="جرد وتسوية المخزون"
+      Title="{DynamicResource Loc_d38833ab}"
       FontFamily="Segoe UI, Tahoma"
       FlowDirection="RightToLeft">
 
@@ -22,14 +22,14 @@
                         <materialDesign:PackIcon Kind="ClipboardCheck" Width="32" Height="32" Foreground="#4F46E5"/>
                     </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="جرد وتسوية المخزون الاحترافي" Style="{StaticResource AlAtmani.HeaderText}"/>
-                        <TextBlock Text="مطابقة رصيد الكميات الفعلية بالمحل مع رصيد النظام واكتشاف الفروقات والزيادات والعجز" FontSize="13" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,2,0,0"/>
+                        <TextBlock Text="{DynamicResource Loc_3e21449f}" Style="{StaticResource AlAtmani.HeaderText}"/>
+                        <TextBlock Text="{DynamicResource Loc_15ca6ac6}" FontSize="13" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
-                    <Button Content="🔄 إعادة ضبط الجرد" Command="{Binding ResetAuditCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Height="45" Margin="0,0,12,0"/>
-                    <Button Content="✔ تطبيق تسوية الجرد وحفظ" Command="{Binding ApplyAdjustmentCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Height="45" Padding="24,0" Background="#10B981" BorderBrush="#10B981" FontSize="15" FontWeight="Bold"/>
+                    <Button Content="{DynamicResource Loc_4d40d599}" Command="{Binding ResetAuditCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Height="45" Margin="0,0,12,0"/>
+                    <Button Content="{DynamicResource Loc_70d8aaea}" Command="{Binding ApplyAdjustmentCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Height="45" Padding="24,0" Background="#10B981" BorderBrush="#10B981" FontSize="15" FontWeight="Bold"/>
                 </StackPanel>
             </DockPanel>
         </materialDesign:Card>
@@ -45,28 +45,28 @@
 
             <materialDesign:Card Grid.Column="0" Style="{StaticResource AlAtmani.GlassCard}" Padding="16" Margin="0,0,8,0">
                 <StackPanel>
-                    <TextBlock Text="إجمالي الأصناف" FontSize="13" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                    <TextBlock Text="{DynamicResource Loc_b35f79b3}" FontSize="13" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
                     <TextBlock Text="{Binding TotalItemsCount}" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,4,0,0"/>
                 </StackPanel>
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Column="1" Style="{StaticResource AlAtmani.GlassCard}" Padding="16" Margin="4,0,4,0">
                 <StackPanel>
-                    <TextBlock Text="أصناف مطابقة ✔" FontSize="13" Foreground="#10B981"/>
+                    <TextBlock Text="{DynamicResource Loc_d5bd1209}" FontSize="13" Foreground="#10B981"/>
                     <TextBlock Text="{Binding MatchedCount}" FontSize="22" FontWeight="Bold" Foreground="#10B981" Margin="0,4,0,0"/>
                 </StackPanel>
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Column="2" Style="{StaticResource AlAtmani.GlassCard}" Padding="16" Margin="4,0,4,0">
                 <StackPanel>
-                    <TextBlock Text="أصناف عجز 🔻" FontSize="13" Foreground="#EF4444"/>
+                    <TextBlock Text="{DynamicResource Loc_9cfa102e}" FontSize="13" Foreground="#EF4444"/>
                     <TextBlock Text="{Binding ShortageCount}" FontSize="22" FontWeight="Bold" Foreground="#EF4444" Margin="0,4,0,0"/>
                 </StackPanel>
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Column="3" Style="{StaticResource AlAtmani.GlassCard}" Padding="16" Margin="8,0,0,0">
                 <StackPanel>
-                    <TextBlock Text="أصناف زيادة 🔺" FontSize="13" Foreground="#3B82F6"/>
+                    <TextBlock Text="{DynamicResource Loc_43d26036}" FontSize="13" Foreground="#3B82F6"/>
                     <TextBlock Text="{Binding SurplusCount}" FontSize="22" FontWeight="Bold" Foreground="#3B82F6" Margin="0,4,0,0"/>
                 </StackPanel>
             </materialDesign:Card>
@@ -81,15 +81,15 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="مسح قارئ الباركود السريع (+1 للكمية)..." Text="{Binding ScannedBarcode, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Height="45" Margin="0,0,16,0">
+                <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_3762e55b}" Text="{Binding ScannedBarcode, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Height="45" Margin="0,0,16,0">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding QuickScanBarcodeCommand}"/>
                     </TextBox.InputBindings>
                 </TextBox>
 
-                <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="بحث باسم الصنف أو الكود..." Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Height="45" Margin="0,0,16,0"/>
+                <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_29ba95ca}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Height="45" Margin="0,0,16,0"/>
 
-                <ComboBox Grid.Column="2" materialDesign:HintAssist.Hint="فلترة بالقسم" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" FontSize="15" Height="45"/>
+                <ComboBox Grid.Column="2" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_57295feb}" ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" FontSize="15" Height="45"/>
             </Grid>
         </materialDesign:Card>
 
@@ -97,14 +97,14 @@
         <materialDesign:Card Grid.Row="3" Style="{StaticResource AlAtmani.GlassCard}" Padding="0">
             <DataGrid ItemsSource="{Binding AuditItems}" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="Horizontal" HeadersVisibility="Column" FontSize="14" Background="Transparent" BorderThickness="0">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="الباركود" Binding="{Binding Barcode}" Width="150" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="اسم الصنف" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="القسم" Binding="{Binding CategoryName}" Width="140" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="سعر البيع" Binding="{Binding UnitPrice, StringFormat={}{0:N2} ج.م}" Width="110" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="الكمية بالنظام" Binding="{Binding SystemQuantity}" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_95520d44}" Binding="{Binding Barcode}" Width="150" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_fa4e1fdc}" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_dd6d2be2}" Binding="{Binding CategoryName}" Width="140" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_13e68467}" Binding="{Binding UnitPrice, StringFormat={}{0:N2} ج.م}" Width="110" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_e483697c}" Binding="{Binding SystemQuantity}" Width="120" IsReadOnly="True"/>
 
                     <!-- Physical Quantity Editable -->
-                    <DataGridTemplateColumn Header="الكمية الفعلية (الجرد)" Width="150">
+                    <DataGridTemplateColumn Header="{DynamicResource Loc_7aff5562}" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding PhysicalQuantity, UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold" TextAlignment="Center" Width="100"/>
@@ -112,8 +112,8 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="الفارق" Binding="{Binding Variance}" Width="100" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="الحالة" Binding="{Binding StatusText}" Width="140" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_3b91ddd8}" Binding="{Binding Variance}" Width="100" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{DynamicResource Loc_1253eb56}" Binding="{Binding StatusText}" Width="140" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
         </materialDesign:Card>

@@ -20,7 +20,14 @@ namespace SmartPOS.WPF.Views
             Closed += LoginWindow_Closed;
         }
 
-        private readonly string[] _tips = new[]
+        private static readonly string[] _tipKeys = new[]
+        {
+            "Loc_Tip_1", "Loc_Tip_2", "Loc_Tip_3", "Loc_Tip_4",
+            "Loc_Tip_5", "Loc_Tip_6", "Loc_Tip_7", "Loc_Tip_8",
+            "Loc_Tip_9", "Loc_Tip_10", "Loc_Tip_11"
+        };
+
+        private static readonly string[] _fallbackTips = new[]
         {
             "قم بإغلاق الوردية يومياً للحفاظ على دقة الحسابات والمبيعات.",
             "يمكنك استخدام الباركود لتسريع عملية البيع في شاشة الكاشير.",
@@ -35,14 +42,49 @@ namespace SmartPOS.WPF.Views
             "تعامل مع بيانات العملاء والمحل بأمانة، فهي أمانة بين يديك ستحاسب عليها."
         };
 
+        private int _currentTipIndex = 0;
+        private SmartPOS.WPF.Services.LocalizationService? _locService;
+
         private void LoginWindow_Loaded(object sender, RoutedEventArgs e)
         {
             txtUsername.Focus();
             Keyboard.Focus(txtUsername);
             txtUsername.SelectAll();
 
+            _locService = (System.Windows.Application.Current as App)?.Host.Services.GetService(typeof(SmartPOS.Core.Interfaces.ILocalizationService)) as SmartPOS.WPF.Services.LocalizationService;
+            if (_locService != null)
+            {
+                _locService.LanguageChanged += LocService_LanguageChanged;
+                // Set initial combo selection
+                if (CmbLoginLanguage != null)
+                {
+                    foreach (ComboBoxItem item in CmbLoginLanguage.Items)
+                    {
+                        if (item.Tag is string code && code.Equals(_locService.CurrentLanguage, StringComparison.OrdinalIgnoreCase))
+                        {
+                            CmbLoginLanguage.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+            }
+
             // Set random tip
             ShowRandomTip();
+        }
+
+        private void LocService_LanguageChanged(object? sender, EventArgs e)
+        {
+            RefreshTipText();
+        }
+
+        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox cb && cb.SelectedItem is ComboBoxItem item && item.Tag is string langCode)
+            {
+                _locService ??= (System.Windows.Application.Current as App)?.Host.Services.GetService(typeof(SmartPOS.Core.Interfaces.ILocalizationService)) as SmartPOS.WPF.Services.LocalizationService;
+                _locService?.SetLanguage(langCode);
+            }
         }
 
         private void ShowRandomTip()
@@ -50,8 +92,18 @@ namespace SmartPOS.WPF.Views
             if (txtRandomTip != null)
             {
                 Random rng = new Random();
-                int index = rng.Next(_tips.Length);
-                txtRandomTip.Text = _tips[index];
+                _currentTipIndex = rng.Next(_tipKeys.Length);
+                RefreshTipText();
+            }
+        }
+
+        private void RefreshTipText()
+        {
+            if (txtRandomTip != null && _currentTipIndex >= 0 && _currentTipIndex < _tipKeys.Length)
+            {
+                var key = _tipKeys[_currentTipIndex];
+                var fallback = _fallbackTips[_currentTipIndex];
+                txtRandomTip.Text = SmartPOS.Core.Localization.Loc.Tr(key, fallback);
             }
         }
 
@@ -62,6 +114,10 @@ namespace SmartPOS.WPF.Views
 
         private void LoginWindow_Closed(object? sender, EventArgs e)
         {
+            if (_locService != null)
+            {
+                _locService.LanguageChanged -= LocService_LanguageChanged;
+            }
             _viewModel.RequestClose -= ViewModel_RequestClose;
             Loaded -= LoginWindow_Loaded;
             Closed -= LoginWindow_Closed;

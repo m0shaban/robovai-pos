@@ -94,9 +94,10 @@ public partial class DashboardViewModel : BaseViewModel
         List<Product> lowStock = new();
         List<AIStockWarning> predictions = new();
 
-        // Block 1: Today's transactions and sales
+        // Single DbContext scope for fast parallel-like execution without multi-connection overhead
         await using (var context = await _contextFactory.CreateDbContextAsync())
         {
+            // Block 1: Today's transactions and sales
             var todaySalesList = await context.Sales
                 .AsNoTracking()
                 .Where(s => s.SaleDate.Date == today
@@ -107,22 +108,16 @@ public partial class DashboardViewModel : BaseViewModel
 
             todayTransactions = todaySalesList.Count;
             todaySales = todaySalesList.Sum(s => s.TotalAmount);
-        }
 
-        // Block 2: Today's profit from sale details
-        await using (var context = await _contextFactory.CreateDbContextAsync())
-        {
+            // Block 2: Today's profit from sale details
             var todayDetailsList = await context.SaleDetails
                 .AsNoTracking()
                 .Where(sd => sd.Sale.SaleDate.Date == today && sd.Sale.Status == SaleStatus.Completed && !sd.Sale.IsDeleted)
                 .ToListAsync();
 
             todayProfit = todayDetailsList.Sum(sd => (sd.UnitPrice - sd.UnitCost) * sd.Quantity - sd.DiscountAmount);
-        }
 
-        // Block 3: Month's sales total
-        await using (var context = await _contextFactory.CreateDbContextAsync())
-        {
+            // Block 3: Month's sales total
             var monthSalesList = await context.Sales
                 .AsNoTracking()
                 .Where(s => s.SaleDate >= startOfMonth
@@ -132,11 +127,8 @@ public partial class DashboardViewModel : BaseViewModel
                 .ToListAsync();
 
             monthSales = monthSalesList.Sum(s => s.TotalAmount);
-        }
 
-        // Block 4: Recent 10 sales
-        await using (var context = await _contextFactory.CreateDbContextAsync())
-        {
+            // Block 4: Recent 10 sales
             recent = await context.Sales
                 .AsNoTracking()
                 .Include(s => s.User)
@@ -144,11 +136,8 @@ public partial class DashboardViewModel : BaseViewModel
                 .OrderByDescending(s => s.SaleDate)
                 .Take(10)
                 .ToListAsync();
-        }
 
-        // Block 5: Low stock products
-        await using (var context = await _contextFactory.CreateDbContextAsync())
-        {
+            // Block 5: Low stock products
             lowStock = await context.Products
                 .AsNoTracking()
                 .Include(p => p.Category)
@@ -158,11 +147,8 @@ public partial class DashboardViewModel : BaseViewModel
                 .ToListAsync();
 
             lowStockCount = lowStock.Count;
-        }
 
-        // Block 6: Counts and current shift
-        await using (var context = await _contextFactory.CreateDbContextAsync())
-        {
+            // Block 6: Counts and current shift
             totalProducts = await context.Products.AsNoTracking().CountAsync(p => !p.IsDeleted);
             totalCustomers = await context.Customers.AsNoTracking().CountAsync(c => !c.IsDeleted);
 

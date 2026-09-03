@@ -39,13 +39,14 @@ public abstract partial class BaseViewModel : ObservableObject
             }
             else if (!string.IsNullOrWhiteSpace(loadingMessage))
             {
-                StatusMessage = "جاهز";
+                StatusMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_Ready", "جاهز");
             }
         }
         catch (Exception ex)
         {
-            StatusMessage = $"❌ خطأ: {ex.Message}";
-            MessageBox.Show(ex.Message, "خطأ", MessageBoxButton.OK, MessageBoxImage.Error);
+            var errTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Error", "خطأ");
+            StatusMessage = $"❌ {errTitle}: {ex.Message}";
+            MessageBox.Show(ex.Message, errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally
         {

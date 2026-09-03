@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="تفعيل البرنامج"
+        Title="{DynamicResource Loc_7cba30d4}"
         SizeToContent="Height"
         Width="520"
         WindowStartupLocation="CenterScreen"
@@ -32,20 +32,20 @@
             <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,18">
                 <materialDesign:PackIcon Kind="KeyVariant" Width="56" Height="56"
                                          Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
-                <TextBlock Text="تفعيل RoboVAI POS"
+                <TextBlock Text="{DynamicResource Loc_643cbea6}"
                            FontSize="22"
                            FontWeight="Bold"
                            Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
                            HorizontalAlignment="Center"
                            Margin="0,10,0,0"/>
-                <TextBlock Text="اختر تجربة مجانية 14 يوم أو أدخل كود التفعيل"
+                <TextBlock Text="{DynamicResource Loc_ae185afe}"
                            FontSize="13"
                            Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
                            HorizontalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0,0,0,12">
-                <TextBlock Text="رقم الجهاز (Device ID)" FontWeight="SemiBold"
+                <TextBlock Text="{DynamicResource Loc_6f526c61}" FontWeight="SemiBold"
                            Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
                 <DockPanel Margin="0,6,0,0">
                     <TextBox x:Name="DeviceIdBox"
@@ -55,7 +55,7 @@
                              FontSize="16"
                              Padding="10"
                              DockPanel.Dock="Right"/>
-                    <Button Content="نسخ"
+                    <Button Content="{DynamicResource Loc_eb32f766}"
                             Style="{StaticResource AlAtmani.SoftButton}"
                             Width="90"
                             Margin="10,0,0,0"
@@ -65,7 +65,7 @@
 
             <TextBox Grid.Row="2"
                      x:Name="CodeBox"
-                     materialDesign:HintAssist.Hint="كود التفعيل"
+                     materialDesign:HintAssist.Hint="{DynamicResource Loc_h_52b83f9b}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      FontSize="14"
                      TextWrapping="Wrap"
@@ -92,7 +92,7 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Row="0"
-                        Content="تفعيل"
+                        Content="{DynamicResource Loc_84033585}"
                         Style="{StaticResource AlAtmani.SoftButton}"
                         Height="45"
                         FontSize="16"
@@ -104,7 +104,7 @@
                         Margin="0,0,0,10"/>
 
                 <Button Grid.Row="1"
-                        Content="تجربة مجانية 14 يوم"
+                        Content="{DynamicResource Loc_d5d2fe5a}"
                         Style="{StaticResource AlAtmani.SoftButton}"
                         Height="45"
                         FontSize="16"
@@ -115,12 +115,12 @@
                            HorizontalAlignment="Center"
                            Margin="0,2,0,12"
                            Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}">
-                        <Run Text="للتفعيل أو التجديد عبر الموقع: "/>
+                        <Run Text="{DynamicResource Loc_4abf150e}"/>
                         <Hyperlink NavigateUri="https://robovai.tech" RequestNavigate="ActivationLink_RequestNavigate">robovai.tech</Hyperlink>
                     </TextBlock>
 
                     <Button Grid.Row="3"
-                        Content="خروج"
+                        Content="{DynamicResource Loc_60806661}"
                         Style="{StaticResource AlAtmani.SoftButton}"
                         Height="45"
                         FontSize="16"

@@ -2,7 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="المشتريات"
+      Title="{DynamicResource Loc_fdebedd8}"
       FontFamily="Segoe UI, Tahoma"
       FlowDirection="RightToLeft">
 
@@ -18,13 +18,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="إدارة المشتريات" FontSize="24" FontWeight="Bold"
+            <TextBlock Text="{DynamicResource Loc_39d4d505}" FontSize="24" FontWeight="Bold"
                        Foreground="{DynamicResource AlAtmani.AccentBrush}" VerticalAlignment="Center"/>
             <Button Grid.Column="1" Command="{Binding RefreshAllCommand}"
                     Style="{StaticResource AlAtmani.SoftButton}" Padding="12,8">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Refresh" Width="18" Height="18" Margin="0,0,6,0"/>
-                    <TextBlock Text="تحديث"/>
+                    <TextBlock Text="{DynamicResource Loc_061401dc}"/>
                 </StackPanel>
             </Button>
         </Grid>
@@ -37,7 +37,7 @@
             <!-- ══════════════════════════════════════════════════════════
                  TAB 1 — NEW ORDER
                  ══════════════════════════════════════════════════════════ -->
-            <TabItem Header="➕ فاتورة جديدة">
+            <TabItem Header="{DynamicResource Loc_02f4d807}">
                 <Grid Margin="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="320"/>
@@ -49,27 +49,27 @@
                                          Margin="0,0,12,0" Padding="16">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
-                                <TextBlock Text="بيانات الفاتورة" FontSize="16" FontWeight="Bold"
+                                <TextBlock Text="{DynamicResource Loc_c13f6fac}" FontSize="16" FontWeight="Bold"
                                            Foreground="{DynamicResource AlAtmani.AccentBrush}" Margin="0,0,0,16"/>
 
-                                <TextBox materialDesign:HintAssist.Hint="رقم الفاتورة"
+                                <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_aad5385a}"
                                          Text="{Binding InvoiceNumber}" IsReadOnly="True"
                                          Margin="0,0,0,12" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
 
-                                <DatePicker materialDesign:HintAssist.Hint="تاريخ الفاتورة"
+                                <DatePicker materialDesign:HintAssist.Hint="{DynamicResource Loc_h_dc693751}"
                                             SelectedDate="{Binding OrderDate}"
                                             Margin="0,0,0,12" Style="{StaticResource MaterialDesignOutlinedDatePicker}"/>
 
-                                <ComboBox materialDesign:HintAssist.Hint="المورد *"
+                                <ComboBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_b706a27d}"
                                           ItemsSource="{Binding Suppliers}"
                                           SelectedItem="{Binding SelectedSupplier}"
                                           DisplayMemberPath="Name"
                                           Margin="0,0,0,20" Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
 
                                 <Separator Margin="0,0,0,16"/>
-                                <TextBlock Text="إضافة صنف" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                <TextBlock Text="{DynamicResource Loc_571aedf0}" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,12"/>
 
-                                <ComboBox materialDesign:HintAssist.Hint="اختر المنتج"
+                                <ComboBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_467d6815}"
                                           ItemsSource="{Binding Products}"
                                           SelectedItem="{Binding SelectedProduct}"
                                           DisplayMemberPath="Name"
@@ -80,15 +80,15 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="الكمية"
+                                    <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_5101659e}"
                                              Text="{Binding Quantity}" Margin="0,0,6,0"
                                              Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                                    <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="سعر الشراء"
+                                    <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_02d15b5a}"
                                              Text="{Binding CostPrice, StringFormat={}{0:0.##}}" Margin="6,0,0,0"
                                              Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                                 </Grid>
 
-                                <Button Content="➕ إضافة للفاتورة" Command="{Binding AddItemCommand}"
+                                <Button Content="{DynamicResource Loc_52599d83}" Command="{Binding AddItemCommand}"
                                         Style="{StaticResource AlAtmani.SoftButton}"
                                         Background="{DynamicResource AlAtmani.AccentBrush}"
                                         Foreground="White" Margin="0,0,0,4"/>
@@ -109,11 +109,11 @@
                                       IsReadOnly="True"
                                       materialDesign:DataGridAssist.CellPadding="10">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="المنتج" Binding="{Binding Product.Name}" Width="2*"/>
-                                    <DataGridTextColumn Header="الكمية" Binding="{Binding Quantity}" Width="*"/>
-                                    <DataGridTextColumn Header="سعر الوحدة" Binding="{Binding UnitCost, StringFormat='{}{0:N2}'}" Width="*"/>
-                                    <DataGridTextColumn Header="الإجمالي" Binding="{Binding TotalCost, StringFormat='{}{0:N2}'}" Width="*"/>
-                                    <DataGridTemplateColumn Header="حذف" Width="60">
+                                    <DataGridTextColumn Header="{DynamicResource Loc_726cc064}" Binding="{Binding Product.Name}" Width="2*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_5101659e}" Binding="{Binding Quantity}" Width="*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_86c52347}" Binding="{Binding UnitCost, StringFormat='{}{0:N2}'}" Width="*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_88fc73eb}" Binding="{Binding TotalCost, StringFormat='{}{0:N2}'}" Width="*"/>
+                                    <DataGridTemplateColumn Header="{DynamicResource Loc_3b9854e1}" Width="60">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Style="{StaticResource MaterialDesignIconButton}"
@@ -138,23 +138,29 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="إجمالي الفاتورة" Foreground="Gray" FontSize="11"/>
+                                    <TextBlock Text="{DynamicResource Loc_9b39b8b9}" Foreground="Gray" FontSize="11"/>
                                     <TextBlock Text="{Binding TotalAmount, StringFormat='{}{0:N2}'}"
                                                FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="12,0">
-                                    <TextBlock Text="المدفوع" Foreground="Gray" FontSize="11"/>
+                                    <TextBlock Text="{DynamicResource Loc_202597ce}" Foreground="Gray" FontSize="11"/>
                                     <TextBox Text="{Binding PaidAmount, StringFormat={}{0:0.##}}"
                                              FontSize="18" FontWeight="Bold"
                                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                              materialDesign:HintAssist.Hint="0.00"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="المتبقي (آجل)" Foreground="Gray" FontSize="11"/>
-                                    <TextBlock Text="{Binding RemainingAmount, StringFormat='{}{0:N2} ج.م'}"
-                                               FontSize="20" FontWeight="Bold" Foreground="#DC2626"/>
+                                    <TextBlock Text="{DynamicResource Loc_02e398bf}" Foreground="Gray" FontSize="11"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding RemainingAmount, StringFormat='{}{0:N2}'}"
+                                                   FontSize="20" FontWeight="Bold" Foreground="#DC2626"/>
+                                        <TextBlock Text=" " />
+                                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                                   FontSize="13" FontWeight="Bold" Foreground="#DC2626"
+                                                   VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                                    </StackPanel>
                                 </StackPanel>
-                                <Button Grid.Column="3" Content="💾 حفظ الفاتورة"
+                                <Button Grid.Column="3" Content="{DynamicResource Loc_efb4fc5a}"
                                         Command="{Binding SaveOrderCommand}"
                                         Style="{StaticResource AlAtmani.SoftButton}"
                                         Background="#059669" Foreground="White"
@@ -168,7 +174,7 @@
             <!-- ══════════════════════════════════════════════════════════
                  TAB 2 — PURCHASE HISTORY
                  ══════════════════════════════════════════════════════════ -->
-            <TabItem Header="📋 سجل الفواتير">
+            <TabItem Header="{DynamicResource Loc_c535b194}">
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -186,21 +192,21 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="من تاريخ"
+                            <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_13e7cfbc}"
                                         SelectedDate="{Binding HistoryStartDate}"
                                         Style="{StaticResource MaterialDesignOutlinedDatePicker}" Margin="0,0,8,0"/>
-                            <DatePicker Grid.Column="1" materialDesign:HintAssist.Hint="إلى تاريخ"
+                            <DatePicker Grid.Column="1" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_a41631e1}"
                                         SelectedDate="{Binding HistoryEndDate}"
                                         Style="{StaticResource MaterialDesignOutlinedDatePicker}" Margin="0,0,8,0"/>
-                            <ComboBox Grid.Column="2" materialDesign:HintAssist.Hint="المورد (الكل)"
+                            <ComboBox Grid.Column="2" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_f2bacbf2}"
                                       ItemsSource="{Binding Suppliers}"
                                       SelectedItem="{Binding HistoryFilterSupplier}"
                                       DisplayMemberPath="Name"
                                       Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="0,0,8,0"/>
-                            <TextBox Grid.Column="3" materialDesign:HintAssist.Hint="🔍 بحث برقم الفاتورة"
+                            <TextBox Grid.Column="3" materialDesign:HintAssist.Hint="{DynamicResource Loc_h_367d0a50}"
                                      Text="{Binding HistorySearchText, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,8,0"/>
-                            <Button Grid.Column="4" Content="بحث" Command="{Binding FilterHistoryCommand}"
+                            <Button Grid.Column="4" Content="{DynamicResource Loc_ab79fc14}" Command="{Binding FilterHistoryCommand}"
                                     Style="{StaticResource AlAtmani.SoftButton}" Padding="16,8"/>
                         </Grid>
                     </materialDesign:Card>
@@ -213,32 +219,32 @@
                                   IsReadOnly="True"
                                   materialDesign:DataGridAssist.CellPadding="10">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="رقم الفاتورة" Binding="{Binding OrderNumber}" Width="*"/>
-                                <DataGridTextColumn Header="التاريخ" Binding="{Binding OrderDate, StringFormat='dd/MM/yyyy'}" Width="*"/>
-                                <DataGridTextColumn Header="المورد" Binding="{Binding Supplier.Name}" Width="*"/>
-                                <DataGridTextColumn Header="الإجمالي" Binding="{Binding TotalAmount, StringFormat='{}{0:N2}'}" Width="*"/>
-                                <DataGridTextColumn Header="المدفوع" Binding="{Binding PaidAmount, StringFormat='{}{0:N2}'}" Width="*"/>
-                                <DataGridTextColumn Header="المتبقي" Binding="{Binding RemainingAmount, StringFormat='{}{0:N2}'}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_aad5385a}" Binding="{Binding OrderNumber}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_8456f22b}" Binding="{Binding OrderDate, StringFormat='dd/MM/yyyy'}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_bba3f285}" Binding="{Binding Supplier.Name}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_88fc73eb}" Binding="{Binding TotalAmount, StringFormat='{}{0:N2}'}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_202597ce}" Binding="{Binding PaidAmount, StringFormat='{}{0:N2}'}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_3b5f3860}" Binding="{Binding RemainingAmount, StringFormat='{}{0:N2}'}" Width="*"/>
                                 <DataGridTemplateColumn Header="PDF" Width="70">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Style="{StaticResource MaterialDesignIconButton}"
                                                     Command="{Binding DataContext.ExportOrderPdfCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                     CommandParameter="{Binding}"
-                                                    ToolTip="تصدير PDF">
+                                                    ToolTip="{DynamicResource Loc_a6d89e37}">
                                                 <materialDesign:PackIcon Kind="FilePdfBox" Foreground="#DC2626" Width="22" Height="22"/>
                                             </Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="استلام / موافقة" Width="120">
+                                <DataGridTemplateColumn Header="{DynamicResource Loc_facd6ee7}" Width="120">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Command="{Binding DataContext.ApproveOrderCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                     CommandParameter="{Binding}"
                                                     Background="#059669" Foreground="White"
                                                     Padding="8,4" FontSize="11"
-                                                    ToolTip="الموافقة على الاستلام وتحديث المخزون">
+                                                    ToolTip="{DynamicResource Loc_2e3fec62}">
                                                 <Button.Style>
                                                     <Style TargetType="Button" BasedOn="{StaticResource AlAtmani.SoftButton}">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -251,7 +257,7 @@
                                                 </Button.Style>
                                                 <StackPanel Orientation="Horizontal">
                                                     <materialDesign:PackIcon Kind="CheckAll" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                    <TextBlock Text="موافقة"/>
+                                                    <TextBlock Text="{DynamicResource Loc_bd78c08e}"/>
                                                 </StackPanel>
                                             </Button>
                                         </DataTemplate>
@@ -266,7 +272,7 @@
             <!-- ══════════════════════════════════════════════════════════
                  TAB 3 — SUPPLIER DEBTS
                  ══════════════════════════════════════════════════════════ -->
-            <TabItem Header="💳 ديون الموردين">
+            <TabItem Header="{DynamicResource Loc_f8f30691}">
                 <Grid Margin="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="350"/>
@@ -282,7 +288,7 @@
 
                         <materialDesign:Card Grid.Row="0" Style="{StaticResource AlAtmani.GlassCard}" Margin="0,0,0,12">
                             <StackPanel>
-                                <TextBlock Text="الموردون المدينون" FontSize="15" FontWeight="Bold"
+                                <TextBlock Text="{DynamicResource Loc_5ef3a75a}" FontSize="15" FontWeight="Bold"
                                            Foreground="{DynamicResource AlAtmani.AccentBrush}" Margin="12,12,12,8"/>
                                 <ListBox ItemsSource="{Binding SuppliersWithDebt}"
                                          SelectedItem="{Binding SelectedDebtSupplier}"
@@ -298,8 +304,13 @@
                                                     <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
                                                     <TextBlock Text="{Binding Phone}" FontSize="11" Foreground="Gray"/>
                                                 </StackPanel>
-                                                <TextBlock Grid.Column="1" Text="{Binding DebtAmount, StringFormat='{}{0:N2} ج.م'}"
-                                                           FontWeight="Bold" Foreground="#DC2626" VerticalAlignment="Center"/>
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding DebtAmount, StringFormat='{}{0:N2}'}"
+                                                               FontWeight="Bold" Foreground="#DC2626"/>
+                                                    <TextBlock Text=" " />
+                                                    <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                                               FontWeight="Bold" Foreground="#DC2626" FontSize="11"/>
+                                                </StackPanel>
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
@@ -310,14 +321,14 @@
                         <!-- Payment form -->
                         <materialDesign:Card Grid.Row="1" Style="{StaticResource AlAtmani.GlassCard}" Padding="16">
                             <StackPanel>
-                                <TextBlock Text="تسجيل سداد" FontSize="14" FontWeight="Bold" Margin="0,0,0,12"/>
-                                <TextBox materialDesign:HintAssist.Hint="المبلغ المسدد *"
+                                <TextBlock Text="{DynamicResource Loc_897f2a0b}" FontSize="14" FontWeight="Bold" Margin="0,0,0,12"/>
+                                <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_4e365e83}"
                                          Text="{Binding PaymentAmount, UpdateSourceTrigger=PropertyChanged}"
                                          Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,10"/>
-                                <TextBox materialDesign:HintAssist.Hint="ملاحظات (اختياري)"
+                                <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_19659ede}"
                                          Text="{Binding PaymentNotes}"
                                          Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,0,12"/>
-                                <Button Content="✅ تسجيل السداد" Command="{Binding PaySupplierDebtCommand}"
+                                <Button Content="{DynamicResource Loc_d3390506}" Command="{Binding PaySupplierDebtCommand}"
                                         Style="{StaticResource AlAtmani.SoftButton}"
                                         Background="#059669" Foreground="White"/>
                             </StackPanel>
@@ -327,17 +338,17 @@
                     <!-- Right: payment history -->
                     <materialDesign:Card Grid.Column="1" Style="{StaticResource AlAtmani.GlassCard}">
                         <StackPanel>
-                            <TextBlock Text="سجل المدفوعات للمورد المحدد" FontSize="15" FontWeight="Bold"
+                            <TextBlock Text="{DynamicResource Loc_8d47083e}" FontSize="15" FontWeight="Bold"
                                        Margin="12,12,12,8" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                             <DataGrid ItemsSource="{Binding SupplierPaymentHistory}"
                                       AutoGenerateColumns="False" CanUserAddRows="False"
                                       IsReadOnly="True" MaxHeight="500"
                                       materialDesign:DataGridAssist.CellPadding="10">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="التاريخ" Binding="{Binding PaymentDate, StringFormat='dd/MM/yyyy HH:mm'}" Width="*"/>
-                                    <DataGridTextColumn Header="المبلغ" Binding="{Binding Amount, StringFormat='{}{0:N2} ج.م'}" Width="*"/>
-                                    <DataGridTextColumn Header="المرجع" Binding="{Binding Reference}" Width="*"/>
-                                    <DataGridTextColumn Header="ملاحظات" Binding="{Binding Notes}" Width="2*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_8456f22b}" Binding="{Binding PaymentDate, StringFormat='dd/MM/yyyy HH:mm'}" Width="*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_faba469e}" Binding="{Binding Amount, StringFormat='{}{0:N2}'}" Width="*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_84a5ffbc}" Binding="{Binding Reference}" Width="*"/>
+                                    <DataGridTextColumn Header="{DynamicResource Loc_3c4208fe}" Binding="{Binding Notes}" Width="2*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -348,7 +359,7 @@
             <!-- ══════════════════════════════════════════════════════════
                  TAB 4 — LOW STOCK ALERT
                  ══════════════════════════════════════════════════════════ -->
-            <TabItem Header="⚠️ تنبيه المخزون">
+            <TabItem Header="{DynamicResource Loc_8be82feb}">
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -362,16 +373,16 @@
                                 <materialDesign:PackIcon Kind="AlertCircle" Width="24" Height="24"
                                                          Foreground="#F59E0B" VerticalAlignment="Center" Margin="0,0,8,0"/>
                                 <TextBlock VerticalAlignment="Center" FontSize="14">
-                                    <Run Text="المنتجات التي وصل مخزونها للحد الأدنى أو أقل — إجمالي: "/>
+                                    <Run Text="{DynamicResource Loc_3dbdeb97}"/>
                                     <Run Text="{Binding LowStockProducts.Count, Mode=OneWay}" FontWeight="Bold" Foreground="#DC2626"/>
-                                    <Run Text=" صنف"/>
+                                    <Run Text="{DynamicResource Loc_dd4339cc}"/>
                                 </TextBlock>
                             </StackPanel>
                             <Button HorizontalAlignment="Left" Command="{Binding RefreshLowStockCommand}"
                                     Style="{StaticResource AlAtmani.SoftButton}" Padding="12,6">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Refresh" Width="16" Height="16" Margin="0,0,4,0"/>
-                                    <TextBlock Text="تحديث"/>
+                                    <TextBlock Text="{DynamicResource Loc_061401dc}"/>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -393,10 +404,10 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="المنتج" Binding="{Binding Name}" Width="2*"/>
-                                <DataGridTextColumn Header="التصنيف" Binding="{Binding Category.Name}" Width="*"/>
-                                <DataGridTextColumn Header="المورد" Binding="{Binding Supplier.Name}" Width="*"/>
-                                <DataGridTemplateColumn Header="المخزون الحالي" Width="*">
+                                <DataGridTextColumn Header="{DynamicResource Loc_726cc064}" Binding="{Binding Name}" Width="2*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_cf143297}" Binding="{Binding Category.Name}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_bba3f285}" Binding="{Binding Supplier.Name}" Width="*"/>
+                                <DataGridTemplateColumn Header="{DynamicResource Loc_c3771b94}" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Stock}" FontWeight="Bold"
@@ -404,9 +415,9 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="الحد الأدنى" Binding="{Binding MinStockLevel}" Width="*"/>
-                                <DataGridTextColumn Header="سعر الشراء" Binding="{Binding PurchasePrice, StringFormat='{}{0:N2}'}" Width="*"/>
-                                <DataGridTemplateColumn Header="طلب سريع" Width="100">
+                                <DataGridTextColumn Header="{DynamicResource Loc_5057855e}" Binding="{Binding MinStockLevel}" Width="*"/>
+                                <DataGridTextColumn Header="{DynamicResource Loc_02d15b5a}" Binding="{Binding PurchasePrice, StringFormat='{}{0:N2}'}" Width="*"/>
+                                <DataGridTemplateColumn Header="{DynamicResource Loc_45bd715a}" Width="100">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Style="{StaticResource AlAtmani.SoftButton}"
@@ -415,7 +426,7 @@
                                                     Padding="8,4" FontSize="11">
                                                 <StackPanel Orientation="Horizontal">
                                                     <materialDesign:PackIcon Kind="ShoppingCart" Width="14" Height="14" Margin="0,0,4,0"/>
-                                                    <TextBlock Text="اطلب"/>
+                                                    <TextBlock Text="{DynamicResource Loc_2131271c}"/>
                                                 </StackPanel>
                                             </Button>
                                         </DataTemplate>

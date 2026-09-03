@@ -2,24 +2,30 @@ using System;
 using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SmartPOS.Infrastructure.Data;
 
 namespace SmartPOS.Infrastructure.Services;
 
 /// <summary>
-/// Automated background service that periodically triggers Large Object Heap (LOH) compaction
-/// and full generational Garbage Collection to eliminate memory fragmentation in long-running desktop sessions.
+/// Automated background service that periodically triggers Large Object Heap (LOH) compaction,
+/// full generational Garbage Collection, and SQLite WAL checkpointing + PRAGMA optimize.
 /// Runs every 15 minutes.
 /// </summary>
 public class GcCompactionService : IHostedService, IDisposable
 {
+    private readonly IDbContextFactory<AppDbContext>? _contextFactory;
     private readonly ILogger<GcCompactionService>? _logger;
     private Timer? _timer;
     private static readonly TimeSpan CompactionInterval = TimeSpan.FromMinutes(15);
 
-    public GcCompactionService(ILogger<GcCompactionService>? logger = null)
+    public GcCompactionService(
+        IDbContextFactory<AppDbContext>? contextFactory = null,
+        ILogger<GcCompactionService>? logger = null)
     {
+        _contextFactory = contextFactory;
         _logger = logger;
     }
 
@@ -57,6 +63,21 @@ public class GcCompactionService : IHostedService, IDisposable
 
             _logger?.LogInformation("LOH Compaction completed. Memory before: {Before:N0} bytes, after: {After:N0} bytes (freed {Freed:N0} bytes).",
                 memoryBefore, memoryAfter, freedBytes);
+
+            // Execute periodic WAL checkpoint and query optimizer to keep DB compact and lightning-fast
+            if (_contextFactory != null)
+            {
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        await using var ctx = await _contextFactory.CreateDbContextAsync();
+                        await ctx.Database.ExecuteSqlRawAsync("PRAGMA wal_checkpoint(PASSIVE);");
+                        await ctx.Database.ExecuteSqlRawAsync("PRAGMA optimize;");
+                    }
+                    catch { /* non-critical background maintenance */ }
+                });
+            }
         }
         catch (Exception ex)
         {

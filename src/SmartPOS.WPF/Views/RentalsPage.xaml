@@ -1,4 +1,4 @@
-﻿<Page x:Class="SmartPOS.WPF.Views.RentalsPage"
+<Page x:Class="SmartPOS.WPF.Views.RentalsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       d:DesignHeight="700"
         d:DesignWidth="1000"
-      Title="إدارة الجلسات"
+      Title="{DynamicResource Loc_95a4ebed}"
       FlowDirection="RightToLeft">
 
     <materialDesign:DialogHost Identifier="RentalsDialogHost">
@@ -42,7 +42,7 @@
                                 Height="32"
                                 Foreground="{DynamicResource PrimaryHueMidBrush}"
                                 Margin="0,0,16,0"/>
-                        <TextBlock Text="إدارة الجلسات"
+                        <TextBlock Text="{DynamicResource Loc_95a4ebed}"
                                 FontSize="24"
                                 FontWeight="Bold"
                                 Foreground="#1E3A8A"
@@ -66,19 +66,19 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Text="إضافة جهاز جديد"
+                                <TextBlock Text="{DynamicResource Loc_25ca13f8}"
                                         FontSize="18"
                                         FontWeight="Bold"
                                         Margin="0,0,0,16"/>
 
                                 <TextBox Grid.Row="1"
-                                        materialDesign:HintAssist.Hint="اسم الجهاز (مثال: جهاز 1)"
+                                        materialDesign:HintAssist.Hint="{DynamicResource Loc_h_39c17b95}"
                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                         Text="{Binding NewDeviceName, UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0,0,0,12"/>
 
                                 <TextBox Grid.Row="2"
-                                        materialDesign:HintAssist.Hint="سعر الساعة"
+                                        materialDesign:HintAssist.Hint="{DynamicResource Loc_h_06b77fb8}"
                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                         Text="{Binding NewDeviceRate, UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0,0,0,12"/>
@@ -89,11 +89,11 @@
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Right"
                                         Margin="0,16,0,0">
-                                    <Button Content="إلغاء"
+                                    <Button Content="{DynamicResource Loc_b9568e86}"
                                             Style="{StaticResource MaterialDesignFlatButton}"
                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                                             Margin="0,0,8,0"/>
-                                    <Button Content="حفظ"
+                                    <Button Content="{DynamicResource Loc_871a087a}"
                                             Command="{Binding AddDeviceCommand}"
                                             CommandParameter="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                                         <b:Interaction.Triggers>
@@ -107,7 +107,7 @@
                         </Button.CommandParameter>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" Margin="0,0,8,0"/>
-                            <TextBlock Text="إضافة جهاز"/>
+                            <TextBlock Text="{DynamicResource Loc_c03c989a}"/>
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -150,7 +150,7 @@
                                         <!-- Delete button (top-left of card) -->
                                         <Button DockPanel.Dock="Left"
                                                 Style="{StaticResource MaterialDesignIconButton}"
-                                                ToolTip="حذف الجهاز"
+                                                ToolTip="{DynamicResource Loc_95f55761}"
                                                 Width="28"
                                                 Height="28"
                                                 Padding="0"
@@ -203,24 +203,34 @@
                                                     Visibility="{Binding IsOccupied, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                                             <DockPanel>
-                                                <TextBlock Text="المبلغ الحالي:"
+                                                <TextBlock Text="{DynamicResource Loc_6b1a412a}"
                                                         Foreground="#D1D5DB"/>
-                                                <TextBlock Text="{Binding CurrentAmount, StringFormat={}{0:N2} ج.م}"
-                                                        FontWeight="Bold"
-                                                        Foreground="#10B981"
-                                                        HorizontalAlignment="Right"/>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <TextBlock Text="{Binding CurrentAmount, StringFormat={}{0:N2}}"
+                                                            FontWeight="Bold"
+                                                            Foreground="#10B981"/>
+                                                    <TextBlock Text=" " />
+                                                    <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                                            FontWeight="Bold"
+                                                            Foreground="#10B981" FontSize="11"/>
+                                                </StackPanel>
                                             </DockPanel>
                                             <DockPanel Margin="0,4,0,0">
-                                                <TextBlock Text="سعر الساعة:"
+                                                <TextBlock Text="{DynamicResource Loc_b4f6febc}"
                                                         Foreground="#D1D5DB"/>
-                                                <TextBlock Text="{Binding Device.HourlyRate, StringFormat={}{0:N2} ج.م}"
-                                                        FontWeight="Bold"
-                                                        Foreground="White"
-                                                        HorizontalAlignment="Right"/>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <TextBlock Text="{Binding Device.HourlyRate, StringFormat={}{0:N2}}"
+                                                            FontWeight="Bold"
+                                                            Foreground="White"/>
+                                                    <TextBlock Text=" " />
+                                                    <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                                            FontWeight="Bold"
+                                                            Foreground="White" FontSize="11"/>
+                                                </StackPanel>
                                             </DockPanel>
                                             <DockPanel Margin="0,4,0,0"
                                                     Visibility="{Binding IsOccupied, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                <TextBlock Text="العميل:"
+                                                <TextBlock Text="{DynamicResource Loc_c93b539b}"
                                                         Foreground="#D1D5DB"/>
                                                 <TextBlock Text="{Binding CurrentSession.CustomerName}"
                                                         FontWeight="Bold"
@@ -232,7 +242,7 @@
 
                                     <!-- Controls (Available) -->
                                     <StackPanel Visibility="{Binding IsAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <TextBox materialDesign:HintAssist.Hint="اسم العميل (اختياري)"
+                                        <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_81d68540}"
                                                 materialDesign:HintAssist.Foreground="LightGray"
                                                 Foreground="White"
                                                 Text="{Binding InputCustomerName}"
@@ -241,20 +251,20 @@
 
                                         <StackPanel Orientation="Horizontal"
                                                 Margin="0,0,0,8">
-                                            <TextBox materialDesign:HintAssist.Hint="المدة (دقيقة)"
+                                            <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_3d513079}"
                                                     materialDesign:HintAssist.Foreground="LightGray"
                                                     Foreground="White"
                                                     Text="{Binding InputDurationMinutes}"
                                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                                     Width="100"
                                                     Margin="0,0,8,0"/>
-                                            <CheckBox Content="وقت مفتوح"
+                                            <CheckBox Content="{DynamicResource Loc_290035ec}"
                                                     Foreground="White"
                                                     IsChecked="{Binding InputIsOpenDuration}"
                                                     VerticalAlignment="Center"/>
                                         </StackPanel>
 
-                                        <Button Content="بدء الجلسة"
+                                        <Button Content="{DynamicResource Loc_7465d316}"
                                                 Command="{Binding DataContext.StartSessionCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}"
                                                 Background="#10B981"
@@ -264,23 +274,23 @@
 
                                     <!-- Controls (Occupied) -->
                                     <StackPanel Visibility="{Binding IsOccupied, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <Button Content="تعيين الوقت وإنهاء (فعلي)"
+                                        <Button Content="{DynamicResource Loc_3c583d32}"
                                                 Command="{Binding DataContext.EndSessionCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}"
                                                 Background="#FF8A65"
                                                 BorderBrush="#FF8A65"
                                                 Foreground="White"
                                                 Margin="0,0,0,8"
-                                                ToolTip="حساب أي وقت إضافي فعلي"/>
-                                        <Button Content="إنهاء (للمدة المتفق عليها)"
+                                                ToolTip="{DynamicResource Loc_c9db2070}"/>
+                                        <Button Content="{DynamicResource Loc_9bb86663}"
                                                 Command="{Binding DataContext.EndSessionReservedCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}"
                                                 Background="#EF4444"
                                                 BorderBrush="#EF4444"
                                                 Foreground="White"
                                                 Margin="0,0,0,8"
-                                                ToolTip="إنهاء الجلسة حسب الوقت المحجوز دون احتساب تأخير الكاشير"/>
-                                        <Button Content="إضافة نصف ساعة"
+                                                ToolTip="{DynamicResource Loc_38040ef8}"/>
+                                        <Button Content="{DynamicResource Loc_f11dd629}"
                                                 Command="{Binding DataContext.AddExtraTimeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}"
                                                 Style="{StaticResource MaterialDesignOutlinedButton}"

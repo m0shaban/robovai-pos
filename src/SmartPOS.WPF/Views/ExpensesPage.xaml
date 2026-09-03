@@ -2,7 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="المصروفات"
+      Title="{DynamicResource Loc_698fe744}"
       FontFamily="Segoe UI, Tahoma"
       FlowDirection="RightToLeft"
       Loaded="Page_Loaded"
@@ -15,26 +15,26 @@
                                  Width="520"
                                  Style="{StaticResource AlAtmani.GlassCard}">
                 <StackPanel>
-                    <TextBlock Text="إضافة مصروف جديد"
+                    <TextBlock Text="{DynamicResource Loc_46ba3ea3}"
                                Style="{StaticResource AlAtmani.HeaderText}"
                                FontSize="22"
                                Margin="0,0,0,24"/>
 
-                    <TextBox materialDesign:HintAssist.Hint="وصف المصروف *"
+                    <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_d9fbe33b}"
                              Text="{Binding NewExpenseDescription}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              FontSize="16"
                              Height="56"
                              Margin="0,0,0,20"/>
 
-                    <TextBox materialDesign:HintAssist.Hint="المبلغ (ج.م) *"
+                    <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_77044519}"
                              Text="{Binding NewExpenseAmount}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              FontSize="16"
                              Height="56"
                              Margin="0,0,0,20"/>
 
-                    <ComboBox materialDesign:HintAssist.Hint="فئة المصروف *"
+                    <ComboBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_3f95e485}"
                               ItemsSource="{Binding Categories}"
                               SelectedIndex="{Binding SelectedCategoryIndex}"
                               Style="{StaticResource MaterialDesignOutlinedComboBox}"
@@ -45,13 +45,13 @@
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,8,0,0">
-                        <Button Content="إلغاء"
+                        <Button Content="{DynamicResource Loc_b9568e86}"
                                 Command="{Binding CloseAddDialogCommand}"
                                 Style="{StaticResource AlAtmani.SoftButton}"
                                 Width="120"
                                 Height="48"
                                 Margin="0,0,12,0"/>
-                        <Button Content="💾 حفظ"
+                        <Button Content="{DynamicResource Loc_2016d41d}"
                                 Command="{Binding AddExpenseCommand}"
                                 Style="{StaticResource AlAtmani.SoftButton}"
                                 Width="120"
@@ -89,9 +89,9 @@
                                                  Foreground="#F44336"/>
                     </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="إدارة المصروفات"
+                        <TextBlock Text="{DynamicResource Loc_685906d7}"
                                    Style="{StaticResource AlAtmani.HeaderText}"/>
-                        <TextBlock Text="تسجيل ومتابعة جميع مصروفات المتجر"
+                        <TextBlock Text="{DynamicResource Loc_6f1f50be}"
                                    FontSize="14"
                                    Opacity="0.7"
                                    Margin="0,4,0,0"/>
@@ -117,15 +117,23 @@
                                                      Height="32"
                                                      Foreground="#F44336"/>
                         </Border>
-                        <TextBlock Text="مصروفات اليوم"
+                        <TextBlock Text="{DynamicResource Loc_7e676cb1}"
                                    FontSize="12"
                                    Opacity="0.7"/>
-                        <TextBlock x:Name="TodayExpensesText"
-                                   Text="{Binding TodayExpenses, StringFormat='{}{0:F2} ج.م'}"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#F44336"
-                                   Margin="0,4,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock x:Name="TodayExpensesText"
+                                       Text="{Binding TodayExpenses, StringFormat='{}{0:F2}'}"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="#F44336"/>
+                            <TextBlock Text=" " />
+                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="#F44336"
+                                       VerticalAlignment="Bottom"
+                                       Margin="0,0,0,2"/>
+                        </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>
 
@@ -143,15 +151,23 @@
                                                      Height="32"
                                                      Foreground="#FF9800"/>
                         </Border>
-                        <TextBlock Text="مصروفات الشهر"
+                        <TextBlock Text="{DynamicResource Loc_26438b26}"
                                    FontSize="12"
                                    Opacity="0.7"/>
-                        <TextBlock x:Name="MonthExpensesText"
-                                   Text="{Binding MonthExpenses, StringFormat='{}{0:F2} ج.م'}"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#FF9800"
-                                   Margin="0,4,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock x:Name="MonthExpensesText"
+                                       Text="{Binding MonthExpenses, StringFormat='{}{0:F2}'}"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="#FF9800"/>
+                            <TextBlock Text=" " />
+                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="#FF9800"
+                                       VerticalAlignment="Bottom"
+                                       Margin="0,0,0,2"/>
+                        </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>
 
@@ -169,15 +185,23 @@
                                                      Height="32"
                                                      Foreground="#009688"/>
                         </Border>
-                        <TextBlock Text="إجمالي المصروفات"
+                        <TextBlock Text="{DynamicResource Loc_66084dfb}"
                                    FontSize="12"
                                    Opacity="0.7"/>
-                        <TextBlock x:Name="TotalExpensesText"
-                                   Text="{Binding TotalExpenses, StringFormat='{}{0:F2} ج.م'}"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#009688"
-                                   Margin="0,4,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock x:Name="TotalExpensesText"
+                                       Text="{Binding TotalExpenses, StringFormat='{}{0:F2}'}"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Foreground="#009688"/>
+                            <TextBlock Text=" " />
+                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="#009688"
+                                       VerticalAlignment="Bottom"
+                                       Margin="0,0,0,2"/>
+                        </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>
             </UniformGrid>
@@ -199,20 +223,20 @@
                     </Grid.ColumnDefinitions>
 
                     <DatePicker Grid.Column="0"
-                                materialDesign:HintAssist.Hint="من تاريخ"
+                                materialDesign:HintAssist.Hint="{DynamicResource Loc_h_13e7cfbc}"
                                 SelectedDate="{Binding FilterStartDate, UpdateSourceTrigger=PropertyChanged}"
                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                 Margin="0,0,12,0" Width="130" Height="44"/>
 
                     <DatePicker Grid.Column="1"
-                                materialDesign:HintAssist.Hint="إلى تاريخ"
+                                materialDesign:HintAssist.Hint="{DynamicResource Loc_h_a41631e1}"
                                 SelectedDate="{Binding FilterEndDate, UpdateSourceTrigger=PropertyChanged}"
                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                 Margin="0,0,16,0" Width="130" Height="44"/>
 
                     <TextBox Grid.Column="2"
                              x:Name="SearchBox"
-                             materialDesign:HintAssist.Hint="ابحث في الوصف..."
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_4d50bea8}"
                              FontSize="16"
                              Margin="0,0,16,0"
                              Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
@@ -221,13 +245,13 @@
 
                     <ComboBox Grid.Column="3"
                               x:Name="CategoryFilterComboBox"
-                              materialDesign:HintAssist.Hint="التصنيف"
+                              materialDesign:HintAssist.Hint="{DynamicResource Loc_h_cf143297}"
                               ItemsSource="{Binding Categories}"
                               SelectedItem="{Binding SelectedCategoryFilter}"
                               Margin="0,0,16,0" Width="160" Height="44"/>
 
                     <Button Grid.Column="4"
-                            Content="مسح"
+                            Content="{DynamicResource Loc_ec2ce8be}"
                             Height="44"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Command="{Binding ClearFilterCommand}"
@@ -238,7 +262,7 @@
                             Margin="0,0,12,0"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Command="{Binding ExportPdfCommand}"
-                            ToolTip="تصدير إلى PDF">
+                            ToolTip="{DynamicResource Loc_863139d2}">
                         <materialDesign:PackIcon Kind="FilePdfBox" Foreground="#DC2626" Width="22" Height="22"/>
                     </Button>
 
@@ -252,7 +276,7 @@
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="إضافة مصروف" VerticalAlignment="Center"/>
+                                <TextBlock Text="{DynamicResource Loc_e7b7c8af}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
@@ -272,7 +296,7 @@
                     <!-- Toolbar -->
                     <DockPanel Grid.Row="0"
                                Margin="0,0,0,16">
-                        <TextBlock Text="قائمة المصروفات"
+                        <TextBlock Text="{DynamicResource Loc_ead22a19}"
                                    FontSize="18"
                                    FontWeight="SemiBold"
                                    DockPanel.Dock="Left"
@@ -284,7 +308,7 @@
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Refresh" Width="20" Height="20" Margin="0,0,8,0"/>
-                                    <TextBlock Text="تحديث"/>
+                                    <TextBlock Text="{DynamicResource Loc_061401dc}"/>
                                 </StackPanel>
                             </Button.Content>
                         </Button>
@@ -303,28 +327,28 @@
                                materialDesign:DataGridAssist.CellPadding="14"
                                ItemsSource="{Binding FilteredExpenses}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="التاريخ"
+                            <DataGridTextColumn Header="{DynamicResource Loc_8456f22b}"
                                                 Binding="{Binding ExpenseDate, StringFormat='{}{0:dd/MM/yyyy}'}"
                                                 Width="120"/>
-                            <DataGridTextColumn Header="الوصف"
+                            <DataGridTextColumn Header="{DynamicResource Loc_f58d38d5}"
                                                 Binding="{Binding Description}"
                                                 Width="*"/>
-                            <DataGridTextColumn Header="التصنيف"
+                            <DataGridTextColumn Header="{DynamicResource Loc_cf143297}"
                                                 Binding="{Binding Category}"
                                                 Width="120"/>
-                            <DataGridTextColumn Header="المبلغ"
+                            <DataGridTextColumn Header="{DynamicResource Loc_faba469e}"
                                                 Binding="{Binding Amount, StringFormat='{}{0:F2} ج.م'}"
                                                 Width="120"/>
-                            <DataGridTextColumn Header="المستخدم"
+                            <DataGridTextColumn Header="{DynamicResource Loc_92ad6414}"
                                                 Binding="{Binding User.FullName}"
                                                 Width="150"/>
 
-                            <DataGridTemplateColumn Header="الإجراءات"
+                            <DataGridTemplateColumn Header="{DynamicResource Loc_6a2b6758}"
                                                     Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                ToolTip="حذف المصروف"
+                                                ToolTip="{DynamicResource Loc_83c65265}"
                                                 Width="34" Height="34" HorizontalAlignment="Center"
                                                 Command="{Binding DataContext.DeleteExpenseCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                 CommandParameter="{Binding}">
@@ -346,7 +370,7 @@
                                                  Height="80"
                                                  Opacity="0.3"
                                                  Margin="0,0,0,16"/>
-                        <TextBlock Text="لا توجد مصروفات"
+                        <TextBlock Text="{DynamicResource Loc_23bdea45}"
                                    FontSize="18"
                                    Opacity="0.6"
                                    HorizontalAlignment="Center"/>

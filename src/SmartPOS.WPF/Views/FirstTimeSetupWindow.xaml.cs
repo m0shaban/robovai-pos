@@ -23,9 +23,35 @@ public partial class FirstTimeSetupWindow : Window
         InitializeComponent();
         _settingsService = settingsService;
 
+        Loaded += FirstTimeSetupWindow_Loaded;
         _ = LoadPrintersAsync();
         ApplyCountryDefaults("SA");
         UpdateStepVisibility();
+    }
+
+    private void FirstTimeSetupWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        var loc = (System.Windows.Application.Current as App)?.Host.Services.GetService(typeof(SmartPOS.Core.Interfaces.ILocalizationService)) as SmartPOS.WPF.Services.LocalizationService;
+        if (loc != null && CmbWizardLanguage != null)
+        {
+            foreach (ComboBoxItem item in CmbWizardLanguage.Items)
+            {
+                if (item.Tag is string code && code.Equals(loc.CurrentLanguage, StringComparison.OrdinalIgnoreCase))
+                {
+                    CmbWizardLanguage.SelectedItem = item;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void WizardLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is ComboBox cb && cb.SelectedItem is ComboBoxItem item && item.Tag is string langCode)
+        {
+            var loc = (System.Windows.Application.Current as App)?.Host.Services.GetService(typeof(SmartPOS.Core.Interfaces.ILocalizationService)) as SmartPOS.WPF.Services.LocalizationService;
+            loc?.SetLanguage(langCode);
+        }
     }
 
     private async System.Threading.Tasks.Task LoadPrintersAsync()

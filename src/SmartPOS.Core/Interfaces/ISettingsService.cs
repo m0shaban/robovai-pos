@@ -71,12 +71,44 @@ public interface ISettingsService
     /// </summary>
     int BarcodeTimeoutMs { get; }
 
-    // ─── Shift Closing ───────────────────────────────────────────────────────
+    // ─── Shift Closing (Z-Report) ────────────────────────────────────────────
     /// <summary>Print the Z-Report on the thermal printer when closing a shift.</summary>
     bool PrintZReportOnClose { get; }
 
     /// <summary>Save a PDF copy of the Z-Report automatically when closing a shift.</summary>
     bool SaveZReportPdfOnClose { get; }
+
+    /// <summary>Send Z-Report shift summary to owner via Telegram automatically.</summary>
+    bool SendZReportToTelegramOnClose { get; }
+
+    /// <summary>Width of thermal paper for Z-Report (58mm or 80mm).</summary>
+    int ZReportWidth { get; }
+
+    /// <summary>Include payment breakdown in Z-Report.</summary>
+    bool ZReportIncludePaymentBreakdown { get; }
+
+    /// <summary>Include category breakdown in Z-Report.</summary>
+    bool ZReportIncludeCategoryBreakdown { get; }
+
+    /// <summary>Include top selling products in Z-Report.</summary>
+    bool ZReportIncludeTopProducts { get; }
+
+    /// <summary>Include expenses and net profit in Z-Report.</summary>
+    bool ZReportIncludeExpenses { get; }
+
+    /// <summary>Include drawer discrepancy (surplus/shortage) in Z-Report.</summary>
+    bool ZReportIncludeDiscrepancy { get; }
+
+    // ─── Export, Import & Advanced Printing ──────────────────────────────────
+    string DefaultExportFolder { get; }
+    bool AutoOpenExportedFile { get; }
+    string DefaultExportFormat { get; }
+    string ImportDuplicateAction { get; }
+    bool ImportAutoCreateCategories { get; }
+    bool ReceiptShowTaxNumber { get; }
+    bool ReceiptShowCashier { get; }
+    bool ReceiptShowBarcode { get; }
+    bool ReceiptAutoCut { get; }
 
     // ─── White-Label ─────────────────────────────────────────────────────────
     string AppTitle { get; }

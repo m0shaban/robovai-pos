@@ -111,10 +111,16 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             {
                 Dispatcher.Invoke(() =>
                 {
-                    FlowDirection = m.Value == "en" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+                    bool isRtl = m.Value == "ar" || m.Value == "ur";
+                    FlowDirection = isRtl ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+
+                    // Clear cached pages so all views and tables are recreated fresh in the new language
+                    _pageCache.Clear();
+
                     if (MenuListBox != null && PageTitle != null)
                     {
                         PageTitle.Text = GetPageTitle(MenuListBox.SelectedIndex);
+                        MainFrame.Navigate(GetOrCreatePage(MenuListBox.SelectedIndex));
                     }
                 });
             });

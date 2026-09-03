@@ -1,4 +1,4 @@
-﻿<Window x:Class="SmartPOS.WPF.Views.LoginWindow"
+<Window x:Class="SmartPOS.WPF.Views.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:converters="clr-namespace:SmartPOS.WPF.Converters"
@@ -13,7 +13,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         FontFamily="Segoe UI, Tahoma"
-        FlowDirection="RightToLeft"
+        FlowDirection="{DynamicResource AppFlowDirection}"
         Loaded="LoginWindow_Loaded"
         Closed="LoginWindow_Closed"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
@@ -376,9 +376,9 @@
                         Background="#020810">
                         <Border.Effect>
                                 <DropShadowEffect Color="#000000"
-                                                  BlurRadius="45"
-                                                  ShadowDepth="2"
-                                                  Opacity="0.95"/>
+                                                  BlurRadius="12"
+                                                  ShadowDepth="1"
+                                                  Opacity="0.6"/>
                         </Border.Effect>
                 </Border>
 
@@ -422,12 +422,39 @@
                                         <!-- ════════════════════════════════════ -->
                                         <Grid Grid.Row="0"
                                               FlowDirection="LeftToRight">
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            Margin="14,0,0,0">
+                                                        <TextBlock Text="🌐" FontSize="13" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                        <ComboBox x:Name="CmbLoginLanguage"
+                                                                  Width="125"
+                                                                  Height="26"
+                                                                  Background="#0F2035"
+                                                                  Foreground="#00D4FF"
+                                                                  BorderBrush="#3000D4FF"
+                                                                  BorderThickness="1"
+                                                                  FontSize="11.5"
+                                                                  FontWeight="SemiBold"
+                                                                  Padding="6,2"
+                                                                  Cursor="Hand"
+                                                                  SelectionChanged="LanguageComboBox_SelectionChanged">
+                                                                <ComboBoxItem Content="العربية (AR)" Tag="ar"/>
+                                                                <ComboBoxItem Content="English (EN)" Tag="en"/>
+                                                                <ComboBoxItem Content="Français (FR)" Tag="fr"/>
+                                                                <ComboBoxItem Content="Español (ES)" Tag="es"/>
+                                                                <ComboBoxItem Content="Türkçe (TR)" Tag="tr"/>
+                                                                <ComboBoxItem Content="اردو (UR)" Tag="ur"/>
+                                                        </ComboBox>
+                                                </StackPanel>
+
                                                 <TextBlock Text="RoboVAI PRO POS"
-                                                           Foreground="#1C3A55"
-                                                           FontSize="11"
+                                                           Foreground="#2A4A6A"
+                                                           FontSize="11.5"
                                                            FontWeight="SemiBold"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"/>
+
                                                 <Button Style="{StaticResource WinCloseButtonStyle}"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Center"
@@ -518,12 +545,12 @@
                                                                                            FontSize="36"
                                                                                            FontWeight="Black"
                                                                                            LineHeight="40">
-                                            <Run Text="نقاط البيع"/>
+                                            <Run Text="{DynamicResource Loc_7baff855}"/>
                                                                                 </TextBlock>
                                                                                 <TextBlock FontSize="36"
                                                                                            FontWeight="Black"
                                                                                            LineHeight="42">
-                                            <Run Text="الذكية المتقدمة"
+                                            <Run Text="{DynamicResource Loc_8341b080}"
                                                                                         Foreground="#00D4FF"/>
                                                                                         <TextBlock.Effect>
                                                                                                 <DropShadowEffect Color="#00D4FF"
@@ -556,7 +583,7 @@
                                                                 </Rectangle>
 
                                                                 <!-- Arabic marketing tagline -->
-                                                                <TextBlock Text="منصة إدارة متجرك بثقة واحترافية — بدون إنترنت، بدون خوادم خارجية، بياناتك آمنة تحت سيطرتك الكاملة."
+                                                                <TextBlock Text="{DynamicResource Loc_36a072c7}"
                                                                            Foreground="#6B8CA8"
                                                                            FontSize="15"
                                                                            LineHeight="26"
@@ -586,11 +613,11 @@
                                                                                                    FontSize="20"
                                                                                                    Foreground="#00D4FF"
                                                                                                    Margin="0,0,0,10"/>
-                                                                                        <TextBlock Text="سرعة فائقة"
+                                                                                        <TextBlock Text="{DynamicResource Loc_f9c7b3c7}"
                                                                                                    Foreground="#C8D8E8"
                                                                                                    FontWeight="Bold"
                                                                                                    FontSize="13"/>
-                                                                                        <TextBlock Text="استجابة فورية لكل عملية"
+                                                                                        <TextBlock Text="{DynamicResource Loc_34aa37af}"
                                                                                                    Foreground="#2E4A5E"
                                                                                                    FontSize="11"
                                                                                                    TextWrapping="Wrap"
@@ -616,11 +643,11 @@
                                                                                                    FontSize="20"
                                                                                                    Foreground="#A78BFA"
                                                                                                    Margin="0,0,0,10"/>
-                                                                                        <TextBlock Text="حماية كاملة"
+                                                                                        <TextBlock Text="{DynamicResource Loc_9eb0a905}"
                                                                                                    Foreground="#C8D8E8"
                                                                                                    FontWeight="Bold"
                                                                                                    FontSize="13"/>
-                                                                                        <TextBlock Text="بيانات مشفرة محلياً 100%"
+                                                                                        <TextBlock Text="{DynamicResource Loc_ecf9bdfe}"
                                                                                                    Foreground="#2E4A5E"
                                                                                                    FontSize="11"
                                                                                                    TextWrapping="Wrap"
@@ -645,11 +672,11 @@
                                                                                                    FontSize="20"
                                                                                                    Foreground="#F59E0B"
                                                                                                    Margin="0,0,0,10"/>
-                                                                                        <TextBlock Text="تقارير ذكية"
+                                                                                        <TextBlock Text="{DynamicResource Loc_7e024d99}"
                                                                                                    Foreground="#C8D8E8"
                                                                                                    FontWeight="Bold"
                                                                                                    FontSize="13"/>
-                                                                                        <TextBlock Text="تحليلات فورية وتفصيلية"
+                                                                                        <TextBlock Text="{DynamicResource Loc_85fd4f60}"
                                                                                                    Foreground="#2E4A5E"
                                                                                                    FontSize="11"
                                                                                                    TextWrapping="Wrap"
@@ -695,7 +722,7 @@
 
                                                                                 <StackPanel Grid.Column="1"
                                                                                             VerticalAlignment="Center">
-                                                                                        <TextBlock Text="نصيحة اليوم"
+                                                                                        <TextBlock Text="{DynamicResource Loc_206ba7a8}"
                                                                                                    Foreground="#00D4FF"
                                                                                                    FontSize="14"
                                                                                                    FontWeight="Bold"
@@ -713,12 +740,12 @@
                                                                                                    TextWrapping="Wrap"
                                                                                                    MaxWidth="400"
                                                                                                    LineHeight="22">
-                                                                                                <Run Text="تأكد من إغلاق الوردية يومياً للحفاظ على دقة الحسابات."/>
+                                                                                                <Run Text="{DynamicResource Loc_900baf65}"/>
                                                                                         </TextBlock>
                                                                                 </StackPanel>
 
                                                                                 <Button Grid.Column="2"
-                                                                                        Content="التالي &#187;"
+                                                                                        Content="{DynamicResource Loc_b8ce55fd}"
                                                                                         VerticalAlignment="Bottom"
                                                                                         Margin="12,0,0,0"
                                                                                         Style="{StaticResource SecondaryLoginButtonStyle}"
@@ -763,7 +790,7 @@
 
                                                         <!-- Header -->
                                                         <StackPanel HorizontalAlignment="Center">
-                                                                <TextBlock Text="تسجيل الدخول"
+                                                                <TextBlock Text="{DynamicResource Loc_b5dcde74}"
                                                                            Foreground="#E0EFFF"
                                                                            FontSize="30"
                                                                            FontWeight="Black"
@@ -791,7 +818,7 @@
                                                                                 </LinearGradientBrush>
                                                                         </Rectangle.Fill>
                                                                 </Rectangle>
-                                                                <TextBlock Text="أدخل بياناتك للوصول إلى لوحة التحكم"
+                                                                <TextBlock Text="{DynamicResource Loc_99c336ca}"
                                                                            Foreground="#2A4260"
                                                                            FontSize="13"
                                                                            HorizontalAlignment="Center"
@@ -816,7 +843,7 @@
                                                                 <StackPanel>
 
                                                                         <!-- Username -->
-                                                                        <TextBlock Text="اسم المستخدم"
+                                                                        <TextBlock Text="{DynamicResource Loc_f089c393}"
                                                                                    Style="{StaticResource LoginFieldLabelStyle}"/>
                                                                         <TextBox x:Name="txtUsername"
                                                                                  Style="{StaticResource LoginTextBoxStyle}"
@@ -824,7 +851,7 @@
                                                                                  IsEnabled="{Binding IsBusy, Converter={StaticResource BoolNegationConverter}}"/>
 
                                                                         <!-- Password -->
-                                                                        <TextBlock Text="كلمة المرور"
+                                                                        <TextBlock Text="{DynamicResource Loc_bcb75ee3}"
                                                                                    Style="{StaticResource LoginFieldLabelStyle}"
                                                                                    Margin="2,18,0,7"/>
                                                                         <PasswordBox x:Name="PasswordBox"
@@ -874,14 +901,14 @@
                                                                                              Foreground="#00D4FF"
                                                                                              Background="#0F1F30"
                                                                                              BorderBrush="Transparent"/>
-                                                                                <TextBlock Text="جاري التحقق..."
+                                                                                <TextBlock Text="{DynamicResource Loc_dab541ae}"
                                                                                            Foreground="#2A4260"
                                                                                            FontSize="12"
                                                                                            VerticalAlignment="Center"/>
                                                                         </StackPanel>
 
                                                                         <!-- Login Button -->
-                                                                        <Button Content="دخول إلى النظام"
+                                                                        <Button Content="{DynamicResource Loc_a4fda41b}"
                                                                                 Style="{StaticResource PrimaryLoginButtonStyle}"
                                                                                 Command="{Binding LoginCommand}"
                                                                                 IsDefault="True"
@@ -889,7 +916,7 @@
                                                                                 IsEnabled="{Binding IsBusy, Converter={StaticResource BoolNegationConverter}}"/>
 
                                                                         <!-- Exit Button -->
-                                                                        <Button Content="إغلاق البرنامج"
+                                                                        <Button Content="{DynamicResource Loc_cafe2204}"
                                                                                 Style="{StaticResource SecondaryLoginButtonStyle}"
                                                                                 Command="{Binding ExitCommand}"
                                                                                 IsCancel="True"
@@ -931,7 +958,7 @@
                                                         <TextBlock Text="  ·  "
                                                                    Foreground="#122840"
                                                                    FontSize="11"/>
-                                                        <TextBlock Text="© 2026 جميع الحقوق محفوظة"
+                                                        <TextBlock Text="{DynamicResource Loc_4b18e82d}"
                                                                    Foreground="#122840"
                                                                    FontSize="11"/>
                                                 </StackPanel>

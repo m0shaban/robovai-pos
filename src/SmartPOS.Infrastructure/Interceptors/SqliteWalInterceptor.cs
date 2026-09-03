@@ -73,6 +73,10 @@ public class SqliteWalInterceptor : DbConnectionInterceptor
             // Enable foreign key enforcement (disabled by default in SQLite)
             cmd.CommandText = "PRAGMA foreign_keys=ON;";
             cmd.ExecuteNonQuery();
+
+            // Store temporary tables and indices in memory
+            cmd.CommandText = "PRAGMA temp_store=MEMORY;";
+            cmd.ExecuteNonQuery();
         }
         catch
         {

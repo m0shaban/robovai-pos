@@ -72,6 +72,28 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
     // ── Shift / Z-Report ─────────────────────────────────────────────────────
     [ObservableProperty] private bool _printZReportOnClose = true;
     [ObservableProperty] private bool _saveZReportPdfOnClose = true;
+    [ObservableProperty] private bool _sendZReportToTelegramOnClose = true;
+    [ObservableProperty] private int _zReportWidth = 80;
+    [ObservableProperty] private bool _zReportIncludePaymentBreakdown = true;
+    [ObservableProperty] private bool _zReportIncludeCategoryBreakdown = true;
+    [ObservableProperty] private bool _zReportIncludeTopProducts = true;
+    [ObservableProperty] private bool _zReportIncludeExpenses = true;
+    [ObservableProperty] private bool _zReportIncludeDiscrepancy = true;
+
+    // ── Export, Import & Advanced Printing Customization ──────────────────────
+    [ObservableProperty] private string _defaultExportFolder = string.Empty;
+    [ObservableProperty] private bool _autoOpenExportedFile = true;
+    [ObservableProperty] private string _defaultExportFormat = "Excel";
+    [ObservableProperty] private string _importDuplicateAction = "UpdateStock";
+    [ObservableProperty] private bool _importAutoCreateCategories = true;
+    [ObservableProperty] private bool _receiptShowTaxNumber = true;
+    [ObservableProperty] private bool _receiptShowCashier = true;
+    [ObservableProperty] private bool _receiptShowBarcode = true;
+    [ObservableProperty] private bool _receiptAutoCut = true;
+
+    public List<int> ZReportWidthOptions => new() { 80, 58 };
+    public List<string> ExportFormatOptions => new() { "Excel", "CSV", "PDF" };
+    public List<string> ImportDuplicateOptions => new() { "UpdateStock", "Skip", "Overwrite" };
 
     // ── White-Label ───────────────────────────────────────────────────────────
     [ObservableProperty] private string _appTitle = string.Empty;
@@ -255,9 +277,27 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
         BarcodeBaudRate = _settingsService.BarcodeBaudRate;
         BarcodeTimeoutMs = _settingsService.BarcodeTimeoutMs;
 
-        // Shift
+        // Shift / Z-Report
         PrintZReportOnClose = _settingsService.PrintZReportOnClose;
         SaveZReportPdfOnClose = _settingsService.SaveZReportPdfOnClose;
+        SendZReportToTelegramOnClose = _settingsService.SendZReportToTelegramOnClose;
+        ZReportWidth = _settingsService.ZReportWidth;
+        ZReportIncludePaymentBreakdown = _settingsService.ZReportIncludePaymentBreakdown;
+        ZReportIncludeCategoryBreakdown = _settingsService.ZReportIncludeCategoryBreakdown;
+        ZReportIncludeTopProducts = _settingsService.ZReportIncludeTopProducts;
+        ZReportIncludeExpenses = _settingsService.ZReportIncludeExpenses;
+        ZReportIncludeDiscrepancy = _settingsService.ZReportIncludeDiscrepancy;
+
+        // Export, Import & Advanced Printing Customization
+        DefaultExportFolder = _settingsService.DefaultExportFolder;
+        AutoOpenExportedFile = _settingsService.AutoOpenExportedFile;
+        DefaultExportFormat = _settingsService.DefaultExportFormat;
+        ImportDuplicateAction = _settingsService.ImportDuplicateAction;
+        ImportAutoCreateCategories = _settingsService.ImportAutoCreateCategories;
+        ReceiptShowTaxNumber = _settingsService.ReceiptShowTaxNumber;
+        ReceiptShowCashier = _settingsService.ReceiptShowCashier;
+        ReceiptShowBarcode = _settingsService.ReceiptShowBarcode;
+        ReceiptAutoCut = _settingsService.ReceiptAutoCut;
 
         // Telegram
         var savedToken = _settingsService.GetSetting("TelegramBotToken");
@@ -303,7 +343,15 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
 
         // App Interface Language
         AppLanguage = _settingsService.AppLanguage;
-        SelectedLanguageIndex = AppLanguage == "en" ? 1 : 0;
+        SelectedLanguageIndex = AppLanguage switch
+        {
+            "en" => 1,
+            "fr" => 2,
+            "es" => 3,
+            "tr" => 4,
+            "ur" => 5,
+            _ => 0
+        };
 
         // Regional Market & Currency
         SelectedCountryCode = _settingsService.CountryCode;
@@ -494,9 +542,20 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
     private async Task SelectLanguageAsync(string lang)
     {
         if (string.IsNullOrWhiteSpace(lang)) return;
-        var cleanLang = lang.Trim().ToLowerInvariant() == "en" ? "en" : "ar";
+        var cleanLang = lang.Trim().ToLowerInvariant();
+        string[] supported = { "ar", "en", "fr", "es", "tr", "ur" };
+        if (!System.Linq.Enumerable.Contains(supported, cleanLang)) cleanLang = "ar";
+
         AppLanguage = cleanLang;
-        SelectedLanguageIndex = cleanLang == "en" ? 1 : 0;
+        SelectedLanguageIndex = cleanLang switch
+        {
+            "en" => 1,
+            "fr" => 2,
+            "es" => 3,
+            "tr" => 4,
+            "ur" => 5,
+            _ => 0
+        };
         await _settingsService.SaveSettingAsync("AppLanguage", cleanLang);
         _localizationService?.SetLanguage(cleanLang);
     }
@@ -561,9 +620,27 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
                 await _settingsService.SaveSettingAsync("BarcodeBaudRate", BarcodeBaudRate.ToString());
                 await _settingsService.SaveSettingAsync("BarcodeTimeoutMs", BarcodeTimeoutMs.ToString());
 
-                // Shift
+                // Shift / Z-Report
                 await _settingsService.SaveSettingAsync("PrintZReportOnClose", PrintZReportOnClose.ToString().ToLower());
                 await _settingsService.SaveSettingAsync("SaveZReportPdfOnClose", SaveZReportPdfOnClose.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("SendZReportToTelegramOnClose", SendZReportToTelegramOnClose.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ZReportWidth", ZReportWidth.ToString());
+                await _settingsService.SaveSettingAsync("ZReportIncludePaymentBreakdown", ZReportIncludePaymentBreakdown.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ZReportIncludeCategoryBreakdown", ZReportIncludeCategoryBreakdown.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ZReportIncludeTopProducts", ZReportIncludeTopProducts.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ZReportIncludeExpenses", ZReportIncludeExpenses.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ZReportIncludeDiscrepancy", ZReportIncludeDiscrepancy.ToString().ToLower());
+
+                // Export, Import & Advanced Printing Customization
+                await _settingsService.SaveSettingAsync("DefaultExportFolder", DefaultExportFolder);
+                await _settingsService.SaveSettingAsync("AutoOpenExportedFile", AutoOpenExportedFile.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("DefaultExportFormat", DefaultExportFormat);
+                await _settingsService.SaveSettingAsync("ImportDuplicateAction", ImportDuplicateAction);
+                await _settingsService.SaveSettingAsync("ImportAutoCreateCategories", ImportAutoCreateCategories.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ReceiptShowTaxNumber", ReceiptShowTaxNumber.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ReceiptShowCashier", ReceiptShowCashier.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ReceiptShowBarcode", ReceiptShowBarcode.ToString().ToLower());
+                await _settingsService.SaveSettingAsync("ReceiptAutoCut", ReceiptAutoCut.ToString().ToLower());
 
                 // Telegram
                 await _settingsService.SaveSettingAsync("TelegramBotToken", TelegramBotToken);
@@ -679,6 +756,60 @@ public partial class SettingsViewModel : BaseViewModel, IDisposable, CommunityTo
             Title = "اختر شعار الفاتورة (يفضل أبيض وأسود)"
         };
         if (dlg.ShowDialog() == true) StoreLogoPath = dlg.FileName;
+    }
+
+    [RelayCommand]
+    private void SelectExportFolder()
+    {
+        var dlg = new Microsoft.Win32.OpenFolderDialog
+        {
+            Title = "اختر المجلد الافتراضي لحفظ ملفات التصدير"
+        };
+        if (dlg.ShowDialog() == true)
+        {
+            DefaultExportFolder = dlg.FolderName;
+        }
+    }
+
+    [RelayCommand]
+    private async Task TestTelegramAsync()
+    {
+        if (string.IsNullOrWhiteSpace(TelegramBotToken) || string.IsNullOrWhiteSpace(TelegramChatId))
+        {
+            MessageBox.Show("يرجى إدخال توكن البوت (Bot Token) ومعرف المحادثة (Chat ID) أولاً.", "تنبيه", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        await ExecuteBusyAsync(async () =>
+        {
+            try
+            {
+                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+                var url = $"https://api.telegram.org/bot{TelegramBotToken.Trim()}/sendMessage";
+                var payload = new
+                {
+                    chat_id = TelegramChatId.Trim(),
+                    text = $"🎉 <b>تجربة اتصال RobovAI POS بالتليجرام ناجحة!</b>\n\n🏪 <b>المتجر:</b> {StoreName}\n⏰ <b>الوقت:</b> {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n✅ منظومة التنبيهات الفورية للبوت جاهزة للعمل.",
+                    parse_mode = "HTML"
+                };
+                var json = System.Text.Json.JsonSerializer.Serialize(payload);
+                using var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                var res = await http.PostAsync(url, content);
+                if (res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("✅ تم إرسال رسالة تجريبية بنجاح إلى تليجرام!", "نجاح الاتصال", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    var err = await res.Content.ReadAsStringAsync();
+                    MessageBox.Show($"❌ فشل الاتصال بتليجرام (رمز الخطأ: {res.StatusCode}):\n{err}", "خطأ في التوكن أو المحادثة", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"❌ تعذر الاتصال بخوادم تليجرام:\n{ex.Message}", "خطأ في الشبكة", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }, "جاري اختبار الاتصال بالتليجرام...");
     }
 
     // ── Backup / Restore / Factory Reset ──────────────────────────────────────

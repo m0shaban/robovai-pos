@@ -215,18 +215,33 @@ public partial class InvoicesViewModel : BaseViewModel, IDisposable, CommunityTo
 
             var pdf = ((ReportService)_reportService).GeneratePosReceiptPdf(model);
 
+            var defaultFolder = _settingsService?.DefaultExportFolder;
+            if (!string.IsNullOrWhiteSpace(defaultFolder) && !System.IO.Directory.Exists(defaultFolder))
+            {
+                try { System.IO.Directory.CreateDirectory(defaultFolder); } catch { }
+            }
+
             var dlg = new SaveFileDialog
             {
                 Title = "حفظ الفاتورة كـ PDF",
                 FileName = $"فاتورة-{saleWithDetails.InvoiceNumber}.pdf",
+                InitialDirectory = !string.IsNullOrWhiteSpace(defaultFolder) && System.IO.Directory.Exists(defaultFolder)
+                    ? defaultFolder
+                    : Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = ".pdf",
-                Filter = "PDF Files|*.pdf"
+                Filter = "PDF Files (*.pdf)|*.pdf"
             };
 
             if (dlg.ShowDialog() == true)
             {
                 await File.WriteAllBytesAsync(dlg.FileName, pdf);
-                MessageBox.Show($"تم حفظ الفاتورة:\n{dlg.FileName}", "تم الحفظ", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                if (_settingsService?.AutoOpenExportedFile == true)
+                {
+                    try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dlg.FileName) { UseShellExecute = true }); } catch { }
+                }
+
+                MessageBox.Show($"✅ تم حفظ الفاتورة بنجاح:\n{dlg.FileName}", "تم الحفظ", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         catch (Exception ex)
@@ -243,7 +258,9 @@ public partial class InvoicesViewModel : BaseViewModel, IDisposable, CommunityTo
         bool authorized = await _authService.RequestAdminOverrideAsync("إلغاء فاتورة / Void Invoice");
         if (!authorized) return;
 
-        if (MessageBox.Show($"هل تريد إلغاء الفاتورة {sale.InvoiceNumber}؟\nسيتم استعادة المخزون تلقائياً.", "تأكيد الإلغاء", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+        var confirmMsg = string.Format(SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_VoidConfirm", "هل تريد إلغاء الفاتورة {0}؟\nسيتم استعادة المخزون تلقائياً."), sale.InvoiceNumber);
+        var confirmTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_VoidTitle", "تأكيد الإلغاء");
+        if (MessageBox.Show(confirmMsg, confirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
 
         await ExecuteBusyAsync(async () =>
         {
@@ -260,7 +277,9 @@ public partial class InvoicesViewModel : BaseViewModel, IDisposable, CommunityTo
                 var shift = await ctx.Shifts.FindAsync(entity.ShiftId.Value);
                 if (shift != null && shift.Status == ShiftStatus.Closed)
                 {
-                    MessageBox.Show("لا يمكن إلغاء (Void) فاتورة تابعة لوردية مغلقة لأن ذلك سيؤدي إلى تدمير التقارير التاريخية.\n\nيرجى استخدام شاشة 'المرتجعات' لعمل مرتجع لهذه الفاتورة وتسوية حساباتها في الوردية الحالية.", "خطأ محاسبي", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var closedShiftErr = SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_ClosedShiftError", "لا يمكن إلغاء (Void) فاتورة تابعة لوردية مغلقة لأن ذلك سيؤدي إلى تدمير التقارير التاريخية.\n\nيرجى استخدام شاشة 'المرتجعات' لعمل مرتجع لهذه الفاتورة وتسوية حساباتها في الوردية الحالية.");
+                    var errHeader = SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_AccountingError", "خطأ محاسبي");
+                    MessageBox.Show(closedShiftErr, errHeader, MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
@@ -301,8 +320,10 @@ public partial class InvoicesViewModel : BaseViewModel, IDisposable, CommunityTo
 
             await ctx.SaveChangesAsync();
             await LoadSalesCoreAsync();
-            MessageBox.Show("تم إلغاء الفاتورة واستعادة المخزون بنجاح.", "تم الإلغاء", MessageBoxButton.OK, MessageBoxImage.Information);
-        }, "جاري إلغاء الفاتورة...");
+            var voidSuccessMsg = SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_VoidSuccess", "تم إلغاء الفاتورة واستعادة المخزون بنجاح.");
+            var voidDoneTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_VoidDoneTitle", "تم الإلغاء");
+            MessageBox.Show(voidSuccessMsg, voidDoneTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+        }, SmartPOS.Core.Localization.Loc.Tr("Loc_Inv_VoidingBusy", "جاري إلغاء الفاتورة..."));
     }
 
     // Reports that are also found in ReportsViewModel

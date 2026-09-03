@@ -32,9 +32,9 @@
                                              Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                 </Border>
                 <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
-                    <TextBlock Text="نظام المرتجعات"
+                    <TextBlock Text="{DynamicResource Loc_22c00814}"
                                Style="{StaticResource AlAtmani.HeaderText}"/>
-                    <TextBlock Text="إدارة مرتجعات المنتجات والاستردادات"
+                    <TextBlock Text="{DynamicResource Loc_701b2a2a}"
                                FontSize="14"
                                Opacity="0.85"
                                Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
@@ -45,7 +45,7 @@
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Left">
                     <Button Command="{Binding LoadCommand}"
                             Style="{StaticResource MaterialDesignIconButton}"
-                            ToolTip="تحديث البيانات"
+                            ToolTip="{DynamicResource Loc_fd4458ee}"
                             Foreground="{DynamicResource AlAtmani.AccentBrush}">
                         <materialDesign:PackIcon Kind="Refresh" Width="24" Height="24"/>
                     </Button>
@@ -79,13 +79,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="إجمالي المرتجعات"
+                    <TextBlock Text="{DynamicResource Loc_b230751c}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding TotalReturnsCount, FallbackValue='0 مرتجع'}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding TotalReturnsCount, FallbackValue=0}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_ReturnsCountSuffix}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -105,13 +113,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="قيد الانتظار"
+                    <TextBlock Text="{DynamicResource Loc_e722ee31}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding PendingReturnsCount, FallbackValue='0 مرتجع'}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding PendingReturnsCount, FallbackValue=0}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_ReturnsCountSuffix}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -131,13 +147,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="تم القبول"
+                    <TextBlock Text="{DynamicResource Loc_86532625}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding ApprovedReturnsCount, FallbackValue='0 مرتجع'}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding ApprovedReturnsCount, FallbackValue=0}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_ReturnsCountSuffix}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -157,13 +181,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="قيمة المرتجعات"
+                    <TextBlock Text="{DynamicResource Loc_ffb75c1f}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding TotalReturnsAmount, StringFormat={}{0:N2} ج.م, FallbackValue='0.00 ج.م'}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding TotalReturnsAmount, StringFormat={}{0:N2}, FallbackValue=0.00}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
         </Grid>
@@ -185,14 +217,14 @@
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal"
                             Margin="0,0,0,15">
-                    <TextBlock Text="قائمة المرتجعات"
+                    <TextBlock Text="{DynamicResource Loc_f2490359}"
                                Style="{StaticResource AlAtmani.SubHeaderText}"
                                Margin="0"/>
 
                     <Button Style="{StaticResource AlAtmani.SoftButton}"
                             Height="45"
                             Padding="20,0"
-                            Content="مرتجع جديد"
+                            Content="{DynamicResource Loc_73660945}"
                             Margin="20,0,0,0"/>
                 </StackPanel>
 
@@ -211,23 +243,23 @@
                               DisplayMemberPath="InvoiceNumber"
                               SelectedItem="{Binding SelectedSale}"
                               Margin="0,0,10,0"
-                              materialDesign:HintAssist.Hint="اختر الفاتورة"/>
+                              materialDesign:HintAssist.Hint="{DynamicResource Loc_h_297e861e}"/>
 
                     <ComboBox Grid.Column="1"
                               ItemsSource="{Binding Reasons}"
                               SelectedItem="{Binding SelectedReason}"
                               Margin="0,0,10,0"
-                              materialDesign:HintAssist.Hint="سبب المرتجع"/>
+                              materialDesign:HintAssist.Hint="{DynamicResource Loc_h_a620c435}"/>
 
                     <TextBox Grid.Column="2"
                              Text="{Binding NotesInput, UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,0,10,0"
-                             materialDesign:HintAssist.Hint="ملاحظات"/>
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_3c4208fe}"/>
 
                     <Button Grid.Column="3"
                             Style="{StaticResource AlAtmani.SoftButton}"
                             Height="45"
-                            Content="إنشاء مرتجع"
+                            Content="{DynamicResource Loc_c6a764fd}"
                             Command="{Binding CreateReturnCommand}"/>
                 </Grid>
 
@@ -235,32 +267,32 @@
                 <StackPanel Grid.Row="2"
                             Orientation="Horizontal"
                             Margin="0,0,0,15">
-                    <Button Content="الكل"
+                    <Button Content="{DynamicResource Loc_6d08f196}"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Height="44"
                             Padding="20,10"
                             Margin="0,0,10,0"
                             Command="{Binding FilterAllCommand}"/>
-                    <Button Content="قيد الانتظار"
+                    <Button Content="{DynamicResource Loc_e722ee31}"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Height="44"
                             Padding="20,10"
                             Margin="0,0,10,0"
                             Command="{Binding FilterPendingCommand}"/>
-                    <Button Content="تم القبول"
+                    <Button Content="{DynamicResource Loc_86532625}"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Height="44"
                             Padding="20,10"
                             Margin="0,0,10,0"
                             Command="{Binding FilterApprovedCommand}"/>
-                    <Button Content="مرفوض"
+                    <Button Content="{DynamicResource Loc_20a971a3}"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             Height="44"
                             Padding="20,10"
                             Margin="0,0,10,0"
                             Command="{Binding FilterRejectedCommand}"/>
                     
-                    <TextBox materialDesign:HintAssist.Hint="بحث برقم المرتجع أو الفاتورة أو العميل..."
+                    <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_fd836ba8}"
                              Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Padding="8,6"
@@ -280,25 +312,25 @@
                           FontSize="14"
                           ItemsSource="{Binding Returns}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="رقم المرتجع"
+                        <DataGridTextColumn Header="{DynamicResource Loc_8dfd4eec}"
                                             Binding="{Binding ReturnNumber}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="رقم الفاتورة"
+                        <DataGridTextColumn Header="{DynamicResource Loc_aad5385a}"
                                             Binding="{Binding Sale.InvoiceNumber}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="اسم العميل"
+                        <DataGridTextColumn Header="{DynamicResource Loc_2b9848ef}"
                                             Binding="{Binding Customer.Name}"
                                             Width="2*"/>
-                        <DataGridTextColumn Header="تاريخ المرتجع"
+                        <DataGridTextColumn Header="{DynamicResource Loc_151d530a}"
                                             Binding="{Binding ReturnDate, StringFormat={}{0:yyyy-MM-dd}}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="السبب"
+                        <DataGridTextColumn Header="{DynamicResource Loc_1f02fd5e}"
                                             Binding="{Binding Reason}"
                                             Width="*"/>
-                        <DataGridTextColumn Header="المبلغ"
+                        <DataGridTextColumn Header="{DynamicResource Loc_faba469e}"
                                             Binding="{Binding TotalAmount, StringFormat={}{0:N2} ج.م}"
                                             Width="*"/>
-                        <DataGridTemplateColumn Header="الحالة" Width="*">
+                        <DataGridTemplateColumn Header="{DynamicResource Loc_1253eb56}" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border Padding="12,4" CornerRadius="12" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -344,13 +376,13 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="إجراءات"
+                        <DataGridTemplateColumn Header="{DynamicResource Loc_901efe9b}"
                                                 Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                  <DataTemplate>
                                      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                          <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                 ToolTip="قبول المرتجع"
+                                                 ToolTip="{DynamicResource Loc_6f239548}"
                                                  Width="34" Height="34" Margin="2,0">
                                              <materialDesign:PackIcon Kind="Check" Width="20" Height="20" Foreground="#10B981"/>
                                              <Button.Command>
@@ -362,7 +394,7 @@
                                              </Button.CommandParameter>
                                          </Button>
                                          <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                 ToolTip="رفض المرتجع"
+                                                 ToolTip="{DynamicResource Loc_483649d1}"
                                                  Width="34" Height="34" Margin="2,0">
                                              <materialDesign:PackIcon Kind="Close" Width="20" Height="20" Foreground="#FB7185"/>
                                              <Button.Command>

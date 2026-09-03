@@ -496,9 +496,11 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
 
             if (product == null)
             {
-                StatusMessage = "المنتج غير مسجل!";
+                StatusMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_ProdNotRegistered", "المنتج غير مسجل!");
                 _soundService?.PlayWarningAlert();
-                var result = MessageBox.Show($"المنتج صاحب الباركود '{scannedCode}' غير مسجل في قائمة المنتجات.\nهل ترغب في حفظ الباركود لإضافته؟", "منتج غير مسجل", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var prompt = string.Format(SmartPOS.Core.Localization.Loc.Tr("Loc_POS_BarcodeNotFoundPrompt", "المنتج صاحب الباركود '{0}' غير مسجل في قائمة المنتجات.\nهل ترغب في حفظ الباركود لإضافته؟"), scannedCode);
+                var title = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_UnregisteredProduct", "منتج غير مسجل");
+                var result = MessageBox.Show(prompt, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     BarcodeInput = scannedCode;
@@ -508,9 +510,11 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
 
             if (product.Stock <= 0)
             {
-                StatusMessage = "نفذت الكمية!";
+                StatusMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_OutOfStock", "نفذت الكمية!");
                 _soundService?.PlayWarningAlert();
-                MessageBox.Show($"المنتج '{product.Name}' نفذت كميته من المخزن (الرصيد: 0).", "نفذت الكمية", MessageBoxButton.OK, MessageBoxImage.Warning);
+                var msg = string.Format(SmartPOS.Core.Localization.Loc.Tr("Loc_POS_OutOfStockMsg", "المنتج '{0}' نفذت كميته من المخزن (الرصيد: 0)."), product.Name);
+                var title = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_OutOfStockTitle", "نفذت الكمية");
+                MessageBox.Show(msg, title, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -520,8 +524,9 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
         }
         catch (Exception ex)
         {
-            StatusMessage = "خطأ في إضافة المنتج";
-            MessageBox.Show($"خطأ: {ex.Message}", "خطأ", MessageBoxButton.OK, MessageBoxImage.Error);
+            StatusMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_AddError", "خطأ في إضافة المنتج");
+            var errTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Error", "خطأ");
+            MessageBox.Show($"{errTitle}: {ex.Message}", errTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally
         {
@@ -542,7 +547,9 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
             }
             else
             {
-                MessageBox.Show($"لا يمكن إضافة المزيد. الكمية المتاحة في المخزن: {product.Stock}", "تجاوز المخزون", MessageBoxButton.OK, MessageBoxImage.Warning);
+                var msg = string.Format(SmartPOS.Core.Localization.Loc.Tr("Loc_POS_StockLimitMsg", "لا يمكن إضافة المزيد. الكمية المتاحة في المخزن: {0}"), product.Stock);
+                var title = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_StockLimitTitle", "تجاوز المخزون");
+                MessageBox.Show(msg, title, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
         }
@@ -688,21 +695,23 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
 
     private void CalculateTotals()
     {
-        Subtotal = CartItems.Sum(i => i.Subtotal);
+        Subtotal = Math.Round(CartItems.Sum(i => i.Subtotal), 2, MidpointRounding.AwayFromZero);
 
         if (DiscountPercentage > 0 && DiscountPercentage <= 100)
-            DiscountAmount = Subtotal * (DiscountPercentage / 100);
+            DiscountAmount = Math.Round(Subtotal * (DiscountPercentage / 100m), 2, MidpointRounding.AwayFromZero);
 
-        var afterDiscount = Subtotal - DiscountAmount;
+        var afterDiscount = Math.Max(0, Subtotal - DiscountAmount);
 
         if (TaxPercentage > 0)
-            TaxAmount = afterDiscount * (TaxPercentage / 100);
+            TaxAmount = Math.Round(afterDiscount * (TaxPercentage / 100m), 2, MidpointRounding.AwayFromZero);
+        else
+            TaxAmount = 0;
 
         TotalAmount = Math.Max(0, afterDiscount + TaxAmount);
 
         if (AmountPaid >= TotalAmount)
         {
-            ChangeAmount = AmountPaid - TotalAmount;
+            ChangeAmount = Math.Round(AmountPaid - TotalAmount, 2, MidpointRounding.AwayFromZero);
             ChangeDue = ChangeAmount;
         }
         else
@@ -1076,7 +1085,9 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
             if (!authorized) return;
         }
 
-        MessageBox.Show("تم تعليق الفاتورة بنجاح!", "تعليق", MessageBoxButton.OK, MessageBoxImage.Information);
+        var holdMsg = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_HoldSuccess", "تم تعليق الفاتورة بنجاح!");
+        var holdTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_HoldTitle", "تعليق");
+        MessageBox.Show(holdMsg, holdTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     [RelayCommand]
@@ -1096,13 +1107,14 @@ public partial class MainPOSViewModel : BaseViewModel, IDisposable, CommunityToo
         if (!string.IsNullOrWhiteSpace(drawerPrinter))
         {
             _printingService.OpenCashDrawer(drawerPrinter, _settingsService.DrawerPin);
-            StatusMessage = "تم فتح درج النقدية";
+            StatusMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_DrawerOpened", "تم فتح درج النقدية");
             await _authService.LogAuditAsync("ManualDrawerOpen", "تم فتح الدرج يدوياً عن طريق الزر");
         }
         else
         {
-            MessageBox.Show("لا توجد طابعة متصلة لفتح درج النقدية.\nيرجى ضبط الطابعة في الإعدادات.",
-                "تنبيه", MessageBoxButton.OK, MessageBoxImage.Warning);
+            var noPrinterMsg = SmartPOS.Core.Localization.Loc.Tr("Loc_POS_NoPrinterForDrawer", "لا توجد طابعة متصلة لفتح درج النقدية.\nيرجى ضبط الطابعة في الإعدادات.");
+            var alertTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Alert", "تنبيه");
+            MessageBox.Show(noPrinterMsg, alertTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 

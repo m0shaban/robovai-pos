@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="تفويض إداري" Height="400" Width="500"
+        Title="{DynamicResource Loc_38ec043b}" Height="400" Width="500"
         WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Background="{DynamicResource AlAtmani.BackgroundBrush}"
         TextElement.Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"
@@ -18,23 +18,23 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,24">
             <materialDesign:PackIcon Kind="ShieldLockOutline" Width="48" Height="48" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
-            <TextBlock Text="إذن مدير مطلوب" FontSize="28" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{DynamicResource Loc_bd2bac72}" FontSize="28" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <TextBlock x:Name="DescriptionText" Grid.Row="1" Text="هذا الإجراء يتطلب صلاحيات إدارية." TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,32" FontSize="18" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+        <TextBlock x:Name="DescriptionText" Grid.Row="1" Text="{DynamicResource Loc_e7af7a70}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,0,0,32" FontSize="18" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
 
         <PasswordBox x:Name="PinPasswordBox" Grid.Row="2" 
-                     materialDesign:HintAssist.Hint="أدخل الرقم السري (PIN)"
+                     materialDesign:HintAssist.Hint="{DynamicResource Loc_h_615bb638}"
                      Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                      FontSize="36" HorizontalContentAlignment="Center"
                      Height="80"
                      MaxLength="10" KeyDown="PinPasswordBox_KeyDown"/>
 
-        <TextBlock x:Name="ErrorText" Grid.Row="2" Text="الرمز السري غير صحيح" Foreground="Red" FontSize="16" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,-24"/>
+        <TextBlock x:Name="ErrorText" Grid.Row="2" Text="{DynamicResource Loc_a4e67d0b}" Foreground="Red" FontSize="16" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,-24"/>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,36,0,0">
-            <Button Content="إلغاء" Style="{StaticResource MaterialDesignOutlinedButton}" Width="120" Height="50" FontSize="18" Margin="0,0,16,0" Click="CancelButton_Click"/>
-            <Button Content="تأكيد" Style="{StaticResource AlAtmani.SoftButton}" Width="120" Height="50" FontSize="18" Background="{DynamicResource AlAtmani.AccentBrush}" Foreground="White" Click="ConfirmButton_Click"/>
+            <Button Content="{DynamicResource Loc_b9568e86}" Style="{StaticResource MaterialDesignOutlinedButton}" Width="120" Height="50" FontSize="18" Margin="0,0,16,0" Click="CancelButton_Click"/>
+            <Button Content="{DynamicResource Loc_a334a729}" Style="{StaticResource AlAtmani.SoftButton}" Width="120" Height="50" FontSize="18" Background="{DynamicResource AlAtmani.AccentBrush}" Foreground="White" Click="ConfirmButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

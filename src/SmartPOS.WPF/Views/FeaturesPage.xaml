@@ -1,8 +1,8 @@
-<Page x:Class="SmartPOS.WPF.Views.FeaturesPage"
+﻿<Page x:Class="SmartPOS.WPF.Views.FeaturesPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="مميزات وإمكانيات البرنامج"
+      Title="{DynamicResource Loc_a88e7354}"
       FontFamily="Segoe UI Variable, Segoe UI, Tahoma"
       FlowDirection="RightToLeft">
 
@@ -28,10 +28,10 @@
                                                      Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                         </Border>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="مميزات وإمكانيات المنظومة الذكية – RoboVAI PRO POS v6.0"
+                            <TextBlock Text="{DynamicResource Loc_e4567969}"
                                        FontSize="24" FontWeight="Bold"
                                        Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="نظام نقاط بيع ومخازن سحابي ومحلي متكامل مصمم بأحدث معايير الأمان والسرعة الفائقة"
+                            <TextBlock Text="{DynamicResource Loc_18c717be}"
                                        FontSize="14" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
                                        Margin="0,4,0,0"/>
                         </StackPanel>
@@ -51,8 +51,8 @@
                             <Border Background="#1500D4FF" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="CashRegister" Width="32" Height="32" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                             </Border>
-                            <TextBlock Text="نقطة البيع الذكية فائقة السرعة" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="واجهة بيع انسيابية تدعم مسح الباركود اللحظي، الاختصارات السريعة (F1-F12)، تعليق الطلبات، وحساب الضرائب والخصومات تلقائياً." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_ab5fe0cf}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_618734c0}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -63,10 +63,10 @@
                                 <materialDesign:PackIcon Kind="CalculatorVariant" Width="32" Height="32" Foreground="#10B981"/>
                             </Border>
                             <TextBlock FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}">
-                                <Run Text="لوحة الأرقام اللمسية العائمة"/>
+                                <Run Text="{DynamicResource Loc_50eec113}"/>
                                 <Run Text=" 🆕" Foreground="#10B981" FontSize="13"/>
                             </TextBlock>
-                            <TextBlock Text="نافذة كيبورد رقمي عائمة وقابلة للتكبير والتصغير وتغيير المقاس بالسحب لتناسب الشاشات اللمسية وتعديل الكميات والأسعار بلمسة واحدة." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_42f218bd}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -76,8 +76,8 @@
                             <Border Background="#158B5CF6" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="GamepadVariant" Width="32" Height="32" Foreground="#8B5CF6"/>
                             </Border>
-                            <TextBlock Text="صالة الألعاب والكانتين (Rentals)" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="إدارة أجهزة البلايستيشن والبلياردو، دعم الجلسات المفتوحة والمسبقة الدفع، طباعة تذاكر الوقت، ودمج طلبات الكانتين مع الحساب." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_ba2a5bb9}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_6258a6cf}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -88,10 +88,10 @@
                                 <materialDesign:PackIcon Kind="ClipboardCheckOutline" Width="32" Height="32" Foreground="#F59E0B"/>
                             </Border>
                             <TextBlock FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}">
-                                <Run Text="جرد المخزون الذكي والباركود"/>
+                                <Run Text="{DynamicResource Loc_2ebe91af}"/>
                                 <Run Text=" 🆕" Foreground="#F59E0B" FontSize="13"/>
                             </TextBlock>
-                            <TextBlock Text="جلسات جرد تفاعلية بالباركود، حساب العجز والزيادة تلقائياً، تسوية الفروقات المخزنية، وتوليد وطباعة ملصقات الباركود بمختلف المقاسات." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_2807516f}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -102,10 +102,10 @@
                                 <materialDesign:PackIcon Kind="LanConnect" Width="32" Height="32" Foreground="#06B6D4"/>
                             </Border>
                             <TextBlock FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}">
-                                <Run Text="ربط ومزامنة الكاشيرات الفرعية (LAN)"/>
+                                <Run Text="{DynamicResource Loc_306efd03}"/>
                                 <Run Text=" 🆕" Foreground="#06B6D4" FontSize="13"/>
                             </TextBlock>
-                            <TextBlock Text="سيرفر محلي مدمج فائق السرعة على بورت 7890 لمزامنة الكاشيرات الفرعية مع السيرفر الرئيسي لحظياً وتلقائياً دون الحاجة للإنترنت." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_defda1c1}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -116,10 +116,10 @@
                                 <materialDesign:PackIcon Kind="CellphoneLink" Width="32" Height="32" Foreground="#10B981"/>
                             </Border>
                             <TextBlock FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}">
-                                <Run Text="تطبيق المخازن الذكي (WMS PWA)"/>
+                                <Run Text="{DynamicResource Loc_26a3c6ff}"/>
                                 <Run Text=" 🆕" Foreground="#10B981" FontSize="13"/>
                             </TextBlock>
-                            <TextBlock Text="تطبيق ويب تقدمي (PWA) يعمل على الهواتف والأجهزة اللوحية لجرد المخزون، استلام البضائع، ومسح الباركود بكاميرا الموبايل عبر جسر QR." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_4d5ef5b2}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -129,8 +129,8 @@
                             <Border Background="#153B82F6" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="ClockTimeEightOutline" Width="32" Height="32" Foreground="#3B82F6"/>
                             </Border>
-                            <TextBlock Text="الورديات وتقارير الخزينة (Z/X Report)" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="إدارة ورديات الكاشيرات، عهد البداية، تسجيل المصروفات، وحساب العجز والزيادة مع طباعة إيصال إغلاق الوردية الشامل فورياً." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_92a3af0c}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_8b75f5da}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -140,8 +140,8 @@
                             <Border Background="#15EC4899" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="StarShooting" Width="32" Height="32" Foreground="#EC4899"/>
                             </Border>
-                            <TextBlock Text="برنامج ولاء ومكافآت العملاء" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="احتساب نقاط الولاء تلقائياً مع كل عملية شراء، تصنيف العملاء إلى مستويات (Silver, Gold, Platinum)، واستبدال النقاط بخصومات فورية." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_53bc7a84}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_b5e76142}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -151,8 +151,8 @@
                             <Border Background="#15EF4444" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="TruckDeliveryOutline" Width="32" Height="32" Foreground="#EF4444"/>
                             </Border>
-                            <TextBlock Text="المشتريات وإدارة الموردين والآجل" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="تسجيل أوامر الشراء، متابعة دفعات ومديونيات الموردين، زيادة المخزون تلقائياً، وتحديث متوسط تكلفة الشراء." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_a6cc947c}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_9dd3e44d}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -162,8 +162,8 @@
                             <Border Background="#156366F1" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="KeyboardReturn" Width="32" Height="32" Foreground="#6366F1"/>
                             </Border>
-                            <TextBlock Text="إرجاع الفواتير الجزئي والكامل" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="إدارة مرتجعات المبيعات برقم الفاتورة، استرداد المبالغ والضرائب بدقة، وإعادة المنتجات السليمة إلى المخزون تلقائياً." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_576d8a05}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_a50c8970}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -173,8 +173,8 @@
                             <Border Background="#1514B8A6" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="ShieldLockOutline" Width="32" Height="32" Foreground="#14B8A6"/>
                             </Border>
-                            <TextBlock Text="الأمان وسجل التدقيق والرقابة (Audit Log)" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="تسجيل دقيق لكل حركة وحذف وتعديل في النظام مع اسم المستخدم والتوقيت لمنع التلاعب وحماية أموال ومخزون المتجر." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_c1d9cdc1}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_73ce4e3b}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -184,8 +184,8 @@
                             <Border Background="#150284C7" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="MonitorMultiple" Width="32" Height="32" Foreground="#0284C7"/>
                             </Border>
-                            <TextBlock Text="شاشة العميل التفاعلية الثانية (Customer Display)" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="شاشة عرض ترحيبية للعميل تعرض تفاصيل الفاتورة والمجموع وطرق الدفع والباركود في الوقت الفعلي أثناء قيام الكاشير بالمسح." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_8d0e04e0}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_e041fe8d}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -195,8 +195,8 @@
                             <Border Background="#15F97316" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="FoodForkDrink" Width="32" Height="32" Foreground="#F97316"/>
                             </Border>
-                            <TextBlock Text="وجبات الموظفين والضيافة (Staff Meals)" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="تسجيل وجبات ومشروبات العاملين بالمتجر مع تحديد حد يومي لكل موظف وخصمها من المخزون دون إدراجها كمبيعات نقدية." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_c2f61c9c}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_ba51dcba}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -206,8 +206,8 @@
                             <Border Background="#150EA5E9" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="Send" Width="32" Height="32" Foreground="#0EA5E9"/>
                             </Border>
-                            <TextBlock Text="تنبيهات تيليجرام اللحظية للمدير" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="إرسال إشعارات فورية إلى هاتف المالك عند إغلاق وردية، أو حدوث نقص حاد في المخزون، أو تصفير النظام." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_5f3fd567}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_e085c443}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -217,8 +217,8 @@
                             <Border Background="#1510B981" CornerRadius="10" Padding="10" HorizontalAlignment="Left" Margin="0,0,0,12">
                                 <materialDesign:PackIcon Kind="BackupRestore" Width="32" Height="32" Foreground="#10B981"/>
                             </Border>
-                            <TextBlock Text="النسخ الاحتياطي السحابي والتصفير الآمن" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                            <TextBlock Text="أخذ نسخ احتياطية مضغوطة ومشفرة لقاعدة البيانات تلقائياً، واستعادة البيانات بضغطة زر، مع ميزة التصفير الآمن بدون تعارض العلاقات." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_3838e58e}" FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Loc_e8289fc1}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
 
@@ -229,10 +229,10 @@
                                 <materialDesign:PackIcon Kind="Earth" Width="32" Height="32" Foreground="#6366F1"/>
                             </Border>
                             <TextBlock FontSize="17" FontWeight="Bold" Margin="0,0,0,6" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}">
-                                <Run Text="معالج التهيئة الدولي الذكي"/>
+                                <Run Text="{DynamicResource Loc_debe1ced}"/>
                                 <Run Text=" 🆕" Foreground="#6366F1" FontSize="13"/>
                             </TextBlock>
-                            <TextBlock Text="معالج تهيئة أوتوماتيكي يدعم 8 دول عربية (السعودية، مصر، الإمارات، الكويت، قطر، البحرين، عُمان) لضبط العملات والضرائب وطرق الدفع تلقائياً." TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
+                            <TextBlock Text="{DynamicResource Loc_cff2f020}" TextWrapping="Wrap" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13" LineHeight="18"/>
                         </StackPanel>
                     </materialDesign:Card>
                 </UniformGrid>
@@ -240,7 +240,7 @@
                 <!-- Technical Architecture Card -->
                 <materialDesign:Card Padding="24" Margin="0,0,0,28" Style="{StaticResource AlAtmani.GlassCard}">
                     <StackPanel>
-                        <TextBlock Text="🏗️ البنية الهندسية والتقنية للمنظومة" FontSize="20" FontWeight="Bold" Margin="0,0,0,16" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                        <TextBlock Text="{DynamicResource Loc_f0df6179}" FontSize="20" FontWeight="Bold" Margin="0,0,0,16" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -249,19 +249,19 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0" Margin="0,0,16,0">
-                                <TextBlock Text="• معمارية نظيفة (Clean Architecture + DDD)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                                <TextBlock Text="• نمط الواجهات الحديث (MVVM + CommunityToolkit)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                                <TextBlock Text="• محرك قواعد البيانات المتعدد (EF Core + SQLite WAL)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                                <TextBlock Text="• إدارة الاتصالات المتزامنة (IDbContextFactory Pattern)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
-                                <TextBlock Text="• واجهة مستخدم حديثة وتكيفية (Material Design + Fluent Glass)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_a1754f6c}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_64f9e26b}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_eb2c16ed}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_ed247d33}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_e704670f}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="• سيرفر شبكي محلي مدمج (Embedded Kestrel LAN Server)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
-                                <TextBlock Text="• دعم كامل للطابعات الحرارية والباركود (ESC/POS &amp; OPOS)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                                <TextBlock Text="• تطبيق المستودعات التقدمي (WMS PWA - Offline First)" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                                <TextBlock Text="• حماية وتشفير البيانات محلياً بنسبة 100%" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
-                                <TextBlock Text="• توافقية كاملة مع شاشات اللمس وأجهزة الكاشير الشاملة" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_85981058}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_91f9faea}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_5801ab06}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_d4815783}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_6a1cfbe6}" Margin="0,5" FontSize="13.5" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -272,7 +272,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                             <materialDesign:PackIcon Kind="BookOpenPageVariant" Width="28" Height="28" Foreground="{DynamicResource AlAtmani.AccentBrush}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <TextBlock Text="دليل الاستخدام السريع والاختصارات الاحترافية" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Loc_46115950}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <!-- Shortcuts Grid -->
@@ -295,49 +295,49 @@
                                 <Border Background="{DynamicResource AlAtmani.AccentBrush}" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="0" Grid.Column="0">
                                     <TextBlock Text="F1" FontWeight="Bold" Foreground="White"/>
                                 </Border>
-                                <TextBlock Text="التركيز على مربع الباركود والبحث السريع" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
+                                <TextBlock Text="{DynamicResource Loc_96d924a7}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
 
                                 <!-- Shortcut 2 -->
                                 <Border Background="{DynamicResource AlAtmani.AccentBrush}" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="0" Grid.Column="2">
                                     <TextBlock Text="F2" FontWeight="Bold" Foreground="White"/>
                                 </Border>
-                                <TextBlock Text="إتمام الدفع الفوري (Checkout)" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_ab2b7e65}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
 
                                 <!-- Shortcut 3 -->
                                 <Border Background="{DynamicResource AlAtmani.SurfaceBrush}" BorderBrush="{DynamicResource AlAtmani.BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="1" Grid.Column="0">
                                     <TextBlock Text="F7" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 </Border>
-                                <TextBlock Text="تعليق الطلب الحالي (Hold Sale)" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
+                                <TextBlock Text="{DynamicResource Loc_69d72a8c}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
 
                                 <!-- Shortcut 4 -->
                                 <Border Background="{DynamicResource AlAtmani.SurfaceBrush}" BorderBrush="{DynamicResource AlAtmani.BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="1" Grid.Column="2">
                                     <TextBlock Text="F8" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 </Border>
-                                <TextBlock Text="فتح درج النقدية يدوياً بدون عملية بيع" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_5d22541f}" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
 
                                 <!-- Shortcut 5 -->
                                 <Border Background="{DynamicResource AlAtmani.SurfaceBrush}" BorderBrush="{DynamicResource AlAtmani.BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="2" Grid.Column="0">
                                     <TextBlock Text="+" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 </Border>
-                                <TextBlock Text="زيادة كمية الصنف المحدد في السلة" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
+                                <TextBlock Text="{DynamicResource Loc_236e1a3d}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
 
                                 <!-- Shortcut 6 -->
                                 <Border Background="{DynamicResource AlAtmani.SurfaceBrush}" BorderBrush="{DynamicResource AlAtmani.BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="2" Grid.Column="2">
                                     <TextBlock Text="-" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 </Border>
-                                <TextBlock Text="إنقاص كمية الصنف المحدد في السلة" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_21e4f0a5}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
 
                                 <!-- Shortcut 7 -->
                                 <Border Background="#EF4444" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="3" Grid.Column="0">
                                     <TextBlock Text="Del" FontWeight="Bold" Foreground="White"/>
                                 </Border>
-                                <TextBlock Text="حذف الصنف المحدد من السلة" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
+                                <TextBlock Text="{DynamicResource Loc_ef7dc4f2}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" Margin="0,0,16,0"/>
 
                                 <!-- Shortcut 8 -->
                                 <Border Background="{DynamicResource AlAtmani.SurfaceBrush}" BorderBrush="{DynamicResource AlAtmani.BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,3" Margin="0,4,12,4" Grid.Row="3" Grid.Column="2">
                                     <TextBlock Text="Enter" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 </Border>
-                                <TextBlock Text="إدراج الصنف أو البحث الفوري بالباركود" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Loc_ba60c45d}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                             </Grid>
                         </Border>
                     </StackPanel>

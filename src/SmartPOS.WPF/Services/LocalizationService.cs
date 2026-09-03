@@ -14,7 +14,7 @@ public class LocalizationService : ILocalizationService
     private const string EnglishUri = "Resources/Strings.en.xaml";
 
     public string CurrentLanguage { get; private set; } = "ar";
-    public bool IsRtl => CurrentLanguage == "ar";
+    public bool IsRtl => CurrentLanguage == "ar" || CurrentLanguage == "ur";
 
     public event EventHandler? LanguageChanged;
 
@@ -38,7 +38,8 @@ public class LocalizationService : ILocalizationService
         if (string.IsNullOrWhiteSpace(languageCode)) return;
 
         var clean = languageCode.Trim().ToLowerInvariant();
-        if (clean != "ar" && clean != "en")
+        string[] supported = { "ar", "en", "fr", "es", "tr", "ur" };
+        if (!supported.Contains(clean))
         {
             clean = "ar";
         }
@@ -52,7 +53,7 @@ public class LocalizationService : ILocalizationService
     {
         CurrentLanguage = languageCode;
 
-        var targetDictUri = languageCode == "en" ? EnglishUri : ArabicUri;
+        var targetDictUri = $"Resources/Strings.{languageCode}.xaml";
 
         try
         {
@@ -66,7 +67,7 @@ public class LocalizationService : ILocalizationService
 
                 // Find and replace existing string dictionary or add new
                 var existingDict = app.Resources.MergedDictionaries
-                    .FirstOrDefault(d => d.Source != null && (d.Source.OriginalString.Contains("Strings.ar.xaml") || d.Source.OriginalString.Contains("Strings.en.xaml")));
+                    .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Strings."));
 
                 if (existingDict != null)
                 {
@@ -78,10 +79,17 @@ public class LocalizationService : ILocalizationService
                     app.Resources.MergedDictionaries.Add(newDict);
                 }
 
-                // Update MainWindow FlowDirection
-                if (app.MainWindow != null)
+                // Update all open windows FlowDirection dynamically
+                var targetFlow = IsRtl ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                app.Resources["AppFlowDirection"] = targetFlow;
+
+                foreach (Window win in app.Windows)
                 {
-                    app.MainWindow.FlowDirection = IsRtl ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                    try
+                    {
+                        win.FlowDirection = targetFlow;
+                    }
+                    catch { }
                 }
             }
         }

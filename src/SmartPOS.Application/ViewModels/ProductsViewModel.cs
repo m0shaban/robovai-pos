@@ -54,11 +54,18 @@ public partial class ProductsViewModel : BaseViewModel, IDisposable, CommunityTo
     public bool IsAdmin =>
         _currentUser.Role is UserRole.Admin or UserRole.Manager or UserRole.SuperAdmin;
 
-    public ProductsViewModel(IDbContextFactory<AppDbContext> contextFactory, User currentUser, IAuthorizationService authService)
+    private readonly ISettingsService? _settingsService;
+
+    public ProductsViewModel(
+        IDbContextFactory<AppDbContext> contextFactory,
+        User currentUser,
+        IAuthorizationService authService,
+        ISettingsService? settingsService = null)
     {
         _contextFactory = contextFactory;
         _currentUser = currentUser;
         _authService = authService;
+        _settingsService = settingsService;
 
         CommunityToolkit.Mvvm.Messaging.WeakReferenceMessenger.Default.RegisterAll(this);
     }
@@ -276,12 +283,21 @@ public partial class ProductsViewModel : BaseViewModel, IDisposable, CommunityTo
             return;
         }
 
+        var defaultFolder = _settingsService?.DefaultExportFolder;
+        if (!string.IsNullOrWhiteSpace(defaultFolder) && !Directory.Exists(defaultFolder))
+        {
+            try { Directory.CreateDirectory(defaultFolder); } catch { }
+        }
+
         var dlg = new SaveFileDialog
         {
             Title = "حفظ قائمة المنتجات في إكسيل",
-            FileName = $"المنتجات-{DateTime.Now:yyyyMMdd}.xlsx",
+            FileName = $"المنتجات-{DateTime.Now:yyyyMMdd_HHmm}.xlsx",
+            InitialDirectory = !string.IsNullOrWhiteSpace(defaultFolder) && Directory.Exists(defaultFolder)
+                ? defaultFolder
+                : Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             DefaultExt = ".xlsx",
-            Filter = "Excel Files|*.xlsx"
+            Filter = "Excel Files (*.xlsx)|*.xlsx"
         };
 
         if (dlg.ShowDialog() == true)
@@ -302,13 +318,16 @@ public partial class ProductsViewModel : BaseViewModel, IDisposable, CommunityTo
                     ws.Cell(1, 5).Value = "المخزون";
                     ws.Cell(1, 6).Value = "الحد الأدنى";
                     ws.Cell(1, 7).Value = "الوحدة";
-                    ws.Cell(1, 8).Value = "وصف";
+                    ws.Cell(1, 8).Value = "القسم";
+                    ws.Cell(1, 9).Value = "الوصف";
 
                     var headerRow = ws.Row(1);
+                    headerRow.Height = 28;
                     headerRow.Style.Font.Bold = true;
                     headerRow.Style.Fill.BackgroundColor = XLColor.FromHtml("#1E3A5F");
                     headerRow.Style.Font.FontColor = XLColor.White;
                     headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    headerRow.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
                     int row = 2;
                     foreach (var p in FilteredProducts)
@@ -316,16 +335,47 @@ public partial class ProductsViewModel : BaseViewModel, IDisposable, CommunityTo
                         ws.Cell(row, 1).Value = p.Barcode;
                         ws.Cell(row, 2).Value = p.Name;
                         ws.Cell(row, 3).Value = p.PurchasePrice;
+                        ws.Cell(row, 3).Style.NumberFormat.Format = "#,##0.00";
                         ws.Cell(row, 4).Value = p.SellingPrice;
+                        ws.Cell(row, 4).Style.NumberFormat.Format = "#,##0.00";
                         ws.Cell(row, 5).Value = p.Stock;
+                        ws.Cell(row, 5).Style.NumberFormat.Format = "#,##0";
                         ws.Cell(row, 6).Value = p.MinStockLevel;
+                        ws.Cell(row, 6).Style.NumberFormat.Format = "#,##0";
                         ws.Cell(row, 7).Value = p.Unit.ToString();
-                        ws.Cell(row, 8).Value = p.Description;
+                        ws.Cell(row, 8).Value = p.Category?.Name ?? "عام";
+                        ws.Cell(row, 9).Value = p.Description ?? "";
+
+                        // Zebra striping
+                        if (row % 2 == 0)
+                        {
+                            ws.Row(row).Style.Fill.BackgroundColor = XLColor.FromHtml("#F8FAFC");
+                        }
+
                         row++;
                     }
 
-                    ws.Columns().AdjustToContents();
+                    // Total summary footer row
+                    var footerRow = ws.Row(row);
+                    footerRow.Height = 24;
+                    footerRow.Style.Font.Bold = true;
+                    footerRow.Style.Fill.BackgroundColor = XLColor.FromHtml("#E2E8F0");
+                    ws.Cell(row, 2).Value = $"الإجمالي ({FilteredProducts.Count} منتج)";
+                    ws.Cell(row, 5).FormulaA1 = $"SUM(E2:E{row - 1})";
+                    ws.Cell(row, 5).Style.NumberFormat.Format = "#,##0";
+
+                    ws.Columns().AdjustToContents(12, 50);
                     wb.SaveAs(dlg.FileName);
+
+                    // Auto open file if configured in Settings
+                    if (_settingsService?.AutoOpenExportedFile == true)
+                    {
+                        try
+                        {
+                            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dlg.FileName) { UseShellExecute = true });
+                        }
+                        catch { }
+                    }
                 });
             }, "جاري التصدير...", $"✅ تم التصدير بنجاح:\n{dlg.FileName}");
         }
@@ -334,150 +384,353 @@ public partial class ProductsViewModel : BaseViewModel, IDisposable, CommunityTo
     [RelayCommand]
     private async Task ImportExcelAsync()
     {
+        var defaultFolder = _settingsService?.DefaultExportFolder;
         var dlg = new OpenFileDialog
         {
-            Title = "استيراد منتجات من إكسيل",
-            Filter = "Excel Files|*.xlsx"
+            Title = "استيراد منتجات من ملف إكسيل أو CSV",
+            Filter = "Excel & CSV Files (*.xlsx;*.csv)|*.xlsx;*.csv|Excel Files (*.xlsx)|*.xlsx|CSV Files (*.csv)|*.csv",
+            InitialDirectory = !string.IsNullOrWhiteSpace(defaultFolder) && Directory.Exists(defaultFolder)
+                ? defaultFolder
+                : Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
         };
 
         if (dlg.ShowDialog() != true) return;
 
-        bool authorized = await _authService.RequestAdminOverrideAsync("استيراد قائمة منتجات من ملف إكسيل");
+        bool authorized = await _authService.RequestAdminOverrideAsync("استيراد قائمة منتجات من ملف خارجي");
         if (!authorized) return;
 
         await ExecuteBusyAsync(async () =>
         {
-            int added = 0;
-            int updated = 0;
-            int skipped = 0;
-            var errorLog = new System.Text.StringBuilder();
-
             try
             {
-                await Task.Run(async () =>
+                var result = await Task.Run(async () => await ImportFromFileAsync(dlg.FileName));
+                if (result.skipped > 0 && !string.IsNullOrWhiteSpace(result.errorLog))
                 {
-                    await using var ctx = await _contextFactory.CreateDbContextAsync();
-                    using var wb = new XLWorkbook(dlg.FileName);
-                    if (wb.Worksheets.Count == 0)
+                    var msg = result.summary + "\n\nهل ترغب في استعراض تقرير الملاحظات؟";
+                    if (MessageBox.Show(msg, "نتيجة الاستيراد", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                     {
-                        throw new InvalidOperationException("ملف الإكسيل فارغ ولا يحتوي على أي أوراق عمل.");
-                    }
-
-                    var ws = wb.Worksheet(1); // Read first sheet
-                    var rangeUsed = ws.RangeUsed();
-                    if (rangeUsed == null)
-                    {
-                        throw new InvalidOperationException("ورقة العمل فارغة.");
-                    }
-
-                    var rows = rangeUsed.RowsUsed().Skip(1); // Skip header
-
-                    var defaultCat = await ctx.Categories.FirstOrDefaultAsync();
-                    if (defaultCat == null)
-                    {
-                        throw new InvalidOperationException("النظام لا يحتوي على أي أقسام. يرجى إضافة قسم واحد على الأقل قبل استيراد المنتجات.");
-                    }
-
-                    foreach (var row in rows)
-                    {
-                        try
-                        {
-                            var barcodeCell = row.Cell(1);
-                            var nameCell = row.Cell(2);
-                            
-                            var barcode = barcodeCell?.Value.ToString()?.Trim();
-                            var name = nameCell?.Value.ToString()?.Trim();
-
-                            if (string.IsNullOrEmpty(barcode) || string.IsNullOrEmpty(name))
-                            {
-                                skipped++;
-                                errorLog.AppendLine($"- الصف {row.RowNumber()}: تم التخطي لعدم وجود باركود أو اسم.");
-                                continue;
-                            }
-
-                            decimal.TryParse(row.Cell(3)?.Value.ToString(), out var buyPrice);
-                            decimal.TryParse(row.Cell(4)?.Value.ToString(), out var sellPrice);
-                            int.TryParse(row.Cell(5)?.Value.ToString(), out var stock);
-                            int.TryParse(row.Cell(6)?.Value.ToString(), out var minStock);
-                            
-                            var unitStr = row.Cell(7)?.Value.ToString()?.Trim();
-                            if (!Enum.TryParse<UnitType>(unitStr, out var unitType)) 
-                                unitType = UnitType.Piece;
-                                
-                            var desc = row.Cell(8)?.Value.ToString()?.Trim();
-
-                            var existing = await ctx.Products.FirstOrDefaultAsync(p => p.Barcode == barcode && !p.IsDeleted);
-
-                            if (existing != null)
-                            {
-                                // Update
-                                existing.Name = name;
-                                existing.PurchasePrice = buyPrice;
-                                existing.SellingPrice = sellPrice;
-                                existing.Stock = stock;
-                                existing.MinStockLevel = minStock;
-                                existing.Unit = unitType;
-                                existing.Description = desc;
-                                existing.UpdatedAt = DateTime.Now;
-                                updated++;
-                            }
-                            else
-                            {
-                                // Add
-                                ctx.Products.Add(new Product
-                                {
-                                    Barcode = barcode,
-                                    Name = name,
-                                    PurchasePrice = buyPrice,
-                                    SellingPrice = sellPrice,
-                                    Stock = stock,
-                                    MinStockLevel = minStock,
-                                    Unit = unitType,
-                                    Description = desc,
-                                    CategoryId = defaultCat.Id,
-                                    IsActive = true,
-                                    CreatedAt = DateTime.Now
-                                });
-                                added++;
-                            }
-                        }
-                        catch (Exception rowEx)
-                        {
-                            skipped++;
-                            errorLog.AppendLine($"- الصف {row.RowNumber()}: خطأ في قراءة البيانات ({rowEx.Message}).");
-                        }
-                    }
-
-                    await ctx.SaveChangesAsync();
-                });
-
-                // Reload UI
-                await System.Windows.Application.Current.Dispatcher.InvokeAsync(LoadProducts);
-
-                var msg = $"تم الانتهاء من الاستيراد بنجاح.\n\nالمنتجات الجديدة: {added}\nالمنتجات المُحدّثة: {updated}\nالمنتجات المتخطاة: {skipped}";
-                if (skipped > 0)
-                {
-                    msg += "\n\nهل تريد رؤية تفاصيل التخطي والأخطاء؟";
-                    if (MessageBox.Show(msg, "نجاح مع وجود ملاحظات", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                    {
-                        MessageBox.Show(errorLog.ToString(), "تفاصيل التخطي", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(result.errorLog, "تقرير الاستيراد التفصيلي", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 else
                 {
-                    MessageBox.Show(msg, "نجاح", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(result.summary, "نجاح الاستيراد", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }
-            catch (IOException ioEx)
-            {
-                MessageBox.Show($"لا يمكن قراءة الملف. يرجى التأكد من إغلاق الملف في برنامج Excel والمحاولة مرة أخرى.\nالتفاصيل: {ioEx.Message}", "الملف قيد الاستخدام", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"حدث خطأ غير متوقع أثناء الاستيراد:\n{ex.Message}", "خطأ", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"❌ تعذر إتمام عملية الاستيراد:\n{ex.Message}", "خطأ في الاستيراد", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }, "جاري قراءة واستيراد البيانات وفحص الأعمدة...");
+    }
+
+    public async Task<(int added, int updated, int skipped, string summary, string errorLog)> ImportFromFileAsync(string filePath)
+    {
+        int added = 0;
+        int updated = 0;
+        int skipped = 0;
+        var errorLog = new System.Text.StringBuilder();
+
+        await using var ctx = await _contextFactory.CreateDbContextAsync();
+
+        // Load existing categories or ensure at least one default exists
+        var existingCategories = await ctx.Categories.ToListAsync();
+        if (existingCategories.Count == 0)
+        {
+            var defCat = new Category { Name = "عام", Description = "قسم افتراضي للنظام", IsActive = true, CreatedAt = DateTime.Now };
+            ctx.Categories.Add(defCat);
+            await ctx.SaveChangesAsync();
+            existingCategories.Add(defCat);
+        }
+
+        var ext = Path.GetExtension(filePath).ToLowerInvariant();
+        var duplicateAction = _settingsService?.ImportDuplicateAction ?? "UpdateStock";
+        var autoCreateCategories = _settingsService?.ImportAutoCreateCategories ?? true;
+
+        List<string[]> dataRows = new();
+        string[]? headerColumns = null;
+
+        if (ext == ".csv")
+        {
+            var csvLines = await File.ReadAllLinesAsync(filePath, System.Text.Encoding.UTF8);
+            if (csvLines.Length == 0) throw new InvalidOperationException("ملف CSV فارغ ولا يحتوي على بيانات.");
+
+            static string[] SplitCsv(string line)
+            {
+                if (string.IsNullOrWhiteSpace(line)) return Array.Empty<string>();
+                var result = new List<string>();
+                bool inQuotes = false;
+                var cur = new System.Text.StringBuilder();
+                for (int i = 0; i < line.Length; i++)
+                {
+                    char c = line[i];
+                    if (c == '"')
+                    {
+                        if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
+                        {
+                            cur.Append('"');
+                            i++;
+                        }
+                        else
+                        {
+                            inQuotes = !inQuotes;
+                        }
+                    }
+                    else if (c == ',' && !inQuotes)
+                    {
+                        result.Add(cur.ToString().Trim().Trim('"', '\'', ' '));
+                        cur.Clear();
+                    }
+                    else
+                    {
+                        cur.Append(c);
+                    }
+                }
+                result.Add(cur.ToString().Trim().Trim('"', '\'', ' '));
+                return result.ToArray();
             }
 
-        }, "جاري قراءة واستيراد الملف...");
+            headerColumns = SplitCsv(csvLines[0]);
+            for (int i = 1; i < csvLines.Length; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(csvLines[i]))
+                    dataRows.Add(SplitCsv(csvLines[i]));
+            }
+        }
+        else
+        {
+            using var wb = new XLWorkbook(filePath);
+            if (wb.Worksheets.Count == 0)
+                throw new InvalidOperationException("ملف الإكسيل فارغ ولا يحتوي على أي أوراق عمل.");
+
+            var ws = wb.Worksheet(1);
+            var rangeUsed = ws.RangeUsed();
+            if (rangeUsed == null) throw new InvalidOperationException("ورقة العمل فارغة.");
+
+            var firstRow = rangeUsed.Row(1);
+            int lastCol = rangeUsed.ColumnCount();
+            headerColumns = new string[lastCol];
+            for (int c = 1; c <= lastCol; c++)
+            {
+                headerColumns[c - 1] = firstRow.Cell(c).Value.ToString().Trim();
+            }
+
+            var rows = rangeUsed.RowsUsed().Skip(1);
+            foreach (var r in rows)
+            {
+                var rowArr = new string[lastCol];
+                for (int c = 1; c <= lastCol; c++)
+                {
+                    rowArr[c - 1] = r.Cell(c).Value.ToString().Trim();
+                }
+                dataRows.Add(rowArr);
+            }
+        }
+
+        // Smart Header Column Mapping ("تلقط منه")
+        int barcodeIdx = -1, nameIdx = -1, purchaseIdx = -1, sellIdx = -1;
+        int stockIdx = -1, minStockIdx = -1, categoryIdx = -1, unitIdx = -1, descIdx = -1;
+
+        if (headerColumns != null)
+        {
+            for (int i = 0; i < headerColumns.Length; i++)
+            {
+                var h = headerColumns[i].ToLowerInvariant();
+                if (barcodeIdx == -1 && (h.Contains("باركود") || h.Contains("كود") || h.Contains("barcode") || h.Contains("code") || h.Contains("upc") || h.Contains("ean") || h.Contains("sku")))
+                    barcodeIdx = i;
+                else if (nameIdx == -1 && (h.Contains("اسم") || h.Contains("صنف") || h.Contains("منتج") || h.Contains("name") || h.Contains("item") || h.Contains("product") || h.Contains("title")))
+                    nameIdx = i;
+                else if (purchaseIdx == -1 && (h.Contains("شراء") || h.Contains("تكلفة") || h.Contains("cost") || h.Contains("buy") || h.Contains("purchase")))
+                    purchaseIdx = i;
+                else if (sellIdx == -1 && (h.Contains("بيع") || h.Contains("سعر") || h.Contains("price") || h.Contains("sell") || h.Contains("retail")))
+                    sellIdx = i;
+                else if (stockIdx == -1 && (h.Contains("مخزون") || h.Contains("كمية") || h.Contains("رصيد") || h.Contains("stock") || h.Contains("qty") || h.Contains("quantity") || h.Contains("balance")))
+                    stockIdx = i;
+                else if (minStockIdx == -1 && (h.Contains("أدنى") || h.Contains("ادنى") || h.Contains("طلب") || h.Contains("min") || h.Contains("reorder")))
+                    minStockIdx = i;
+                else if (categoryIdx == -1 && (h.Contains("قسم") || h.Contains("تصنيف") || h.Contains("مجموعة") || h.Contains("فئة") || h.Contains("category") || h.Contains("dept") || h.Contains("group")))
+                    categoryIdx = i;
+                else if (unitIdx == -1 && (h.Contains("وحدة") || h.Contains("unit")))
+                    unitIdx = i;
+                else if (descIdx == -1 && (h.Contains("وصف") || h.Contains("ملاحظ") || h.Contains("desc") || h.Contains("note") || h.Contains("notes")))
+                    descIdx = i;
+            }
+        }
+
+        // Fallback to standard indices if not detected by header text
+        if (barcodeIdx == -1) barcodeIdx = 0;
+        if (nameIdx == -1) nameIdx = 1;
+        if (purchaseIdx == -1) purchaseIdx = 2;
+        if (sellIdx == -1) sellIdx = 3;
+        if (stockIdx == -1) stockIdx = 4;
+        if (minStockIdx == -1) minStockIdx = 5;
+        if (categoryIdx == -1) categoryIdx = 6;
+        if (unitIdx == -1) unitIdx = 7;
+        if (descIdx == -1) descIdx = 8;
+
+        static string GetCol(string[] r, int idx) => (idx >= 0 && idx < r.Length) ? r[idx].Trim() : "";
+
+        static decimal CleanDecimal(string val, decimal def = 0)
+        {
+            if (string.IsNullOrWhiteSpace(val)) return def;
+            var match = System.Text.RegularExpressions.Regex.Match(val, @"(\d[\d,]*(?:\.\d+)?)");
+            if (match.Success)
+            {
+                var clean = match.Value.Replace(",", "");
+                if (decimal.TryParse(clean, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var d))
+                    return d;
+            }
+            return def;
+        }
+
+        static int CleanInt(string val, int def = 0)
+        {
+            if (string.IsNullOrWhiteSpace(val)) return def;
+            var match = System.Text.RegularExpressions.Regex.Match(val, @"\d+");
+            if (match.Success && int.TryParse(match.Value, out var i))
+                return i;
+            return def;
+        }
+
+        static UnitType ParseUnit(string? u)
+        {
+            if (string.IsNullOrWhiteSpace(u)) return UnitType.Piece;
+            var s = u.Trim().ToLowerInvariant();
+            if (s.Contains("box") || s.Contains("علبة") || s.Contains("علبه") || s.Contains("باكت")) return UnitType.Box;
+            if (s.Contains("carton") || s.Contains("كرتون") || s.Contains("كرتونة")) return UnitType.Carton;
+            if (s.Contains("kg") || s.Contains("كيلو") || s.Contains("كجم")) return UnitType.Kilogram;
+            if (s.Contains("liter") || s.Contains("لتر")) return UnitType.Liter;
+            return UnitType.Piece;
+        }
+
+        int rowNum = 1;
+        foreach (var r in dataRows)
+        {
+            rowNum++;
+            try
+            {
+                var barcode = GetCol(r, barcodeIdx);
+                var name = GetCol(r, nameIdx);
+
+                if (string.IsNullOrWhiteSpace(barcode) && string.IsNullOrWhiteSpace(name))
+                    continue; // skip completely empty rows
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    skipped++;
+                    errorLog.AppendLine($"- الصف {rowNum}: اسم المنتج فارغ (الباركود: {barcode}).");
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(barcode))
+                {
+                    barcode = $"AUTO-{DateTime.Now:yyMMddHHmmss}-{rowNum}";
+                }
+
+                var purchasePrice = CleanDecimal(GetCol(r, purchaseIdx), 0);
+                var sellingPrice = CleanDecimal(GetCol(r, sellIdx), purchasePrice > 0 ? purchasePrice * 1.2m : 0);
+                var stock = CleanInt(GetCol(r, stockIdx), 0);
+                var minStock = CleanInt(GetCol(r, minStockIdx), 5);
+                var categoryName = GetCol(r, categoryIdx);
+                var unitStr = GetCol(r, unitIdx);
+                var unitType = ParseUnit(unitStr);
+                var desc = GetCol(r, descIdx);
+
+                // Category Resolution
+                int categoryId = existingCategories[0].Id;
+                if (!string.IsNullOrWhiteSpace(categoryName))
+                {
+                    var matched = existingCategories.FirstOrDefault(c => c.Name.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+                    if (matched != null)
+                    {
+                        categoryId = matched.Id;
+                    }
+                    else if (autoCreateCategories)
+                    {
+                        var newCat = new Category { Name = categoryName, Description = "قسم مُنشأ تلقائياً عند الاستيراد", IsActive = true, CreatedAt = DateTime.Now };
+                        ctx.Categories.Add(newCat);
+                        await ctx.SaveChangesAsync();
+                        existingCategories.Add(newCat);
+                        categoryId = newCat.Id;
+                    }
+                }
+
+                // Check for existing product by barcode
+                var existingProd = await ctx.Products.FirstOrDefaultAsync(p => p.Barcode == barcode);
+                if (existingProd != null)
+                {
+                    if (duplicateAction == "Skip")
+                    {
+                        skipped++;
+                        continue;
+                    }
+                    else if (duplicateAction == "UpdateStock")
+                    {
+                        existingProd.Stock += stock;
+                        if (sellingPrice > 0) existingProd.SellingPrice = sellingPrice;
+                        if (purchasePrice > 0) existingProd.PurchasePrice = purchasePrice;
+                        existingProd.UpdatedAt = DateTime.Now;
+                        ctx.Products.Update(existingProd);
+                        updated++;
+                    }
+                    else // Overwrite
+                    {
+                        existingProd.Name = name;
+                        existingProd.PurchasePrice = purchasePrice;
+                        existingProd.SellingPrice = sellingPrice;
+                        existingProd.Stock = stock;
+                        existingProd.MinStockLevel = minStock;
+                        existingProd.CategoryId = categoryId;
+                        if (!string.IsNullOrWhiteSpace(unitStr)) existingProd.Unit = unitType;
+                        if (!string.IsNullOrWhiteSpace(desc)) existingProd.Description = desc;
+                        existingProd.UpdatedAt = DateTime.Now;
+                        ctx.Products.Update(existingProd);
+                        updated++;
+                    }
+                }
+                else
+                {
+                    ctx.Products.Add(new Product
+                    {
+                        Barcode = barcode,
+                        Name = name,
+                        PurchasePrice = purchasePrice,
+                        SellingPrice = sellingPrice,
+                        Stock = stock,
+                        MinStockLevel = minStock,
+                        Unit = unitType,
+                        Description = desc,
+                        CategoryId = categoryId,
+                        IsActive = true,
+                        CreatedAt = DateTime.Now
+                    });
+                    added++;
+                }
+            }
+            catch (Exception rowEx)
+            {
+                skipped++;
+                errorLog.AppendLine($"- الصف {rowNum}: خطأ أثناء المعالجة ({rowEx.Message}).");
+            }
+        }
+
+        await ctx.SaveChangesAsync();
+
+        if (System.Windows.Application.Current?.Dispatcher != null)
+        {
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(LoadProducts);
+        }
+        else
+        {
+            await LoadProducts();
+        }
+
+        var summary = $"🎉 اكتمل الاستيراد بنجاح تام!\n\n" +
+                      $"➕ منتجات جديدة أُضيفت: {added}\n" +
+                      $"🔄 منتجات تم تحديثها: {updated}\n" +
+                      $"⏭️ أسطر تم تخطيها: {skipped}";
+
+        return (added, updated, skipped, summary, errorLog.ToString());
     }
 
     // ════════════════════════════════════════════════════════════════════

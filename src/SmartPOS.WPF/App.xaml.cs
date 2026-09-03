@@ -155,6 +155,15 @@ public partial class App : System.Windows.Application
             var settingsService = _host.Services.GetRequiredService<ISettingsService>();
             await settingsService.LoadSettingsAsync();
 
+            // Initialize Theme & UI Scaling
+            var themeService = _host.Services.GetRequiredService<SmartPOS.WPF.Services.IThemeService>();
+            themeService.Initialize();
+
+            // Initialize Localization & Language (RTL/LTR)
+            var locService = _host.Services.GetRequiredService<SmartPOS.WPF.Services.LocalizationService>();
+            locService.Initialize();
+            SmartPOS.Core.Localization.Loc.Initialize(locService);
+
             // 3. First-Time Setup Wizard if fresh installation / not yet configured
             if (!settingsService.IsFirstRunCompleted)
             {
@@ -163,14 +172,6 @@ public partial class App : System.Windows.Application
                 // Reload settings after wizard completion
                 await settingsService.LoadSettingsAsync();
             }
-
-            // Initialize Theme & UI Scaling
-            var themeService = _host.Services.GetRequiredService<SmartPOS.WPF.Services.IThemeService>();
-            themeService.Initialize();
-
-            // Initialize Localization & Language (RTL/LTR)
-            var locService = _host.Services.GetRequiredService<SmartPOS.WPF.Services.LocalizationService>();
-            locService.Initialize();
 
             // Smart Auto-Backup: use settings-configured folder and count
             if (settingsService.AutoBackupEnabled)

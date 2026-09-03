@@ -39,7 +39,7 @@ public partial class LoginViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
         {
-            ErrorMessage = "الرجاء إدخال اسم المستخدم وكلمة المرور";
+            ErrorMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_Login_Required", "الرجاء إدخال اسم المستخدم وكلمة المرور");
             return;
         }
 
@@ -57,13 +57,13 @@ public partial class LoginViewModel : ObservableObject
 
             if (user == null)
             {
-                ErrorMessage = "اسم المستخدم غير موجود";
+                ErrorMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_Login_UserNotFound", "اسم المستخدم غير موجود");
                 return;
             }
 
             if (!user.IsActive)
             {
-                ErrorMessage = "هذا المستخدم غير نشط. تواصل مع المدير.";
+                ErrorMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_Login_UserInactive", "هذا المستخدم غير نشط. تواصل مع المدير.");
                 return;
             }
 
@@ -71,7 +71,7 @@ public partial class LoginViewModel : ObservableObject
             // For production: replace with BCrypt.Verify(normalizedPassword, user.PasswordHash)
             if (user.PasswordHash != normalizedPassword)
             {
-                ErrorMessage = "كلمة المرور غير صحيحة";
+                ErrorMessage = SmartPOS.Core.Localization.Loc.Tr("Loc_Login_InvalidPassword", "كلمة المرور غير صحيحة");
                 return;
             }
 
@@ -80,7 +80,8 @@ public partial class LoginViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"خطأ في تسجيل الدخول: {ex.Message}";
+            var prefix = SmartPOS.Core.Localization.Loc.Tr("Loc_Login_Error", "خطأ في تسجيل الدخول");
+            ErrorMessage = $"{prefix}: {ex.Message}";
         }
         finally
         {

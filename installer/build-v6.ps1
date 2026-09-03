@@ -58,7 +58,7 @@ if (-not $SkipPublish) {
     Write-OK "Removed $pdbCount PDB files"
 
     # Cleanup Language DLLs
-    $keepLangs = @('ar', 'en', 'ar-SA', 'en-US')
+    $keepLangs = @('ar', 'en', 'ar-SA', 'en-US', 'fr', 'es', 'tr', 'ur')
     Get-ChildItem $publishDir -Directory | Where-Object { $_.Name.Length -le 7 -and $_.Name -notin $keepLangs -and $_.Name -match '^[a-z]{2}(-[A-Z]{2})?$' } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
     Write-OK "Removed unused language packs"
 
@@ -116,18 +116,8 @@ if (-not $SkipInstaller) {
 
     $editions = @(
         @{ 
-            Name="Kaf5"; 
-            BaseFilename="RobovAI-PRO-POS-Setup-v6.0-Kaf5_Final"; 
-            SmallImage="wizard_small_kaf5.bmp"
-        },
-        @{ 
-            Name="Platinum"; 
-            BaseFilename="RobovAI-PRO-POS-Platinum-Setup-v6.0_Final"; 
-            SmallImage="wizard_small.bmp"
-        },
-        @{ 
-            Name="Standard"; 
-            BaseFilename="RobovAI-PRO-POS-Standard-Setup-v6.0"; 
+            Name="Complete Edition"; 
+            BaseFilename="RobovAI-PRO-POS-Setup-v6.0_Final"; 
             SmallImage="wizard_small.bmp"
         }
     )
@@ -144,14 +134,14 @@ if (-not $SkipInstaller) {
         Write-OK "Built: $($ed.BaseFilename).exe"
     }
 
-    # Copy Standard commercial installer to dist folder
-    $stdSource = Join-Path $outputDir "RobovAI-PRO-POS-Standard-Setup-v6.0.exe"
-    $stdDest = Join-Path $repoRoot "dist\RobovAI_POS_v6.0_Standard_Setup.exe"
-    $stdDestV5 = Join-Path $repoRoot "dist\RobovAI_POS_v5.1_Setup.exe"
-    if (Test-Path $stdSource) {
-        Copy-Item -Path $stdSource -Destination $stdDest -Force
-        Copy-Item -Path $stdSource -Destination $stdDestV5 -Force
-        Write-OK "Copied Commercial Standard installer to: $stdDest & $stdDestV5"
+    # Copy Complete Final installer to dist folder
+    $distDir = Join-Path $repoRoot "dist"
+    if (-not (Test-Path $distDir)) { New-Item -ItemType Directory -Path $distDir -Force | Out-Null }
+    $finalSource = Join-Path $outputDir "RobovAI-PRO-POS-Setup-v6.0_Final.exe"
+    $finalDest = Join-Path $distDir "RobovAI-PRO-POS-Setup-v6.0_Final.exe"
+    if (Test-Path $finalSource) {
+        Copy-Item -Path $finalSource -Destination $finalDest -Force
+        Write-OK "Copied Final Complete installer to: $finalDest"
     }
 
     # Changelog

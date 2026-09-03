@@ -96,7 +96,9 @@ public partial class CustomersViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(Name))
         {
-            MessageBox.Show("أدخل اسم العميل", "تنبيه", MessageBoxButton.OK, MessageBoxImage.Warning);
+            var reqMsg = SmartPOS.Core.Localization.Loc.Tr("Loc_Cust_NameRequired", "أدخل اسم العميل");
+            var alertTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Alert", "تنبيه");
+            MessageBox.Show(reqMsg, alertTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
 
@@ -131,7 +133,7 @@ public partial class CustomersViewModel : BaseViewModel
 
             await LoadCustomersCoreAsync();
             ClearForm();
-        }, "جاري حفظ بيانات العميل...", "تم حفظ بيانات العميل بنجاح");
+        }, SmartPOS.Core.Localization.Loc.Tr("Loc_Cust_Saving", "جاري حفظ بيانات العميل..."), SmartPOS.Core.Localization.Loc.Tr("Loc_Cust_SavedSuccess", "تم حفظ بيانات العميل بنجاح"));
     }
 
     [RelayCommand]
@@ -142,13 +144,15 @@ public partial class CustomersViewModel : BaseViewModel
         bool authorized = await _authService.RequestAdminOverrideAsync("حذف عميل من النظام");
         if (!authorized) return;
 
-        if (MessageBox.Show($"هل أنت متأكد من حذف العميل \"{customer.Name}\"؟", "تأكيد", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        var confirmMsg = string.Format(SmartPOS.Core.Localization.Loc.Tr("Loc_Cust_DeleteConfirm", "هل أنت متأكد من حذف العميل \"{0}\"؟"), customer.Name);
+        var confirmTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Confirm", "تأكيد");
+        if (MessageBox.Show(confirmMsg, confirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
         {
             await ExecuteBusyAsync(async () =>
             {
                 await _customerRepository.DeleteAsync(customer.Id);
                 await LoadCustomersCoreAsync();
-            }, "جاري حذف العميل...", "تم حذف العميل بنجاح");
+            }, SmartPOS.Core.Localization.Loc.Tr("Loc_Cust_Deleting", "جاري حذف العميل..."), SmartPOS.Core.Localization.Loc.Tr("Loc_Cust_DeletedSuccess", "تم حذف العميل بنجاح"));
         }
     }
 

@@ -181,21 +181,32 @@ public class LanHttpServerService : IHostedService, IDisposable
         await Task.CompletedTask;
     }
 
+    private static bool IsAdministrator()
+    {
+        try
+        {
+            var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+            var principal = new System.Security.Principal.WindowsPrincipal(identity);
+            return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+        }
+        catch { return false; }
+    }
+
     private bool TryRegisterUrlAcl(int port)
     {
+        if (!IsAdministrator()) return false;
         try
         {
             var psi = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "netsh",
                 Arguments = $"http add urlacl url=http://+:{port}/ user=Everyone",
-                Verb = "runas",
-                UseShellExecute = true,
+                UseShellExecute = false,
                 CreateNoWindow = true,
                 WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
             };
             var p = System.Diagnostics.Process.Start(psi);
-            p?.WaitForExit(5000);
+            p?.WaitForExit(2000);
             return p?.ExitCode == 0;
         }
         catch { return false; }
@@ -203,14 +214,14 @@ public class LanHttpServerService : IHostedService, IDisposable
 
     private void TryAddFirewallRule(int port)
     {
+        if (!IsAdministrator()) return;
         try
         {
             var psi = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "netsh",
                 Arguments = $"advfirewall firewall add rule name=\"RoboVAI POS LAN Server ({port})\" dir=in action=allow protocol=TCP localport={port}",
-                Verb = "runas",
-                UseShellExecute = true,
+                UseShellExecute = false,
                 CreateNoWindow = true,
                 WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
             };

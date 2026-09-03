@@ -51,8 +51,8 @@ public static class DatabasePathHelper
             Mode = SqliteOpenMode.ReadWriteCreate,
             DefaultTimeout = 30, // 30 seconds Busy Timeout (30000 ms)
             Pooling = true,
-            // Cache 50MB in memory for frequently accessed pages
-            Cache = SqliteCacheMode.Shared,
+            Cache = SqliteCacheMode.Private,
+            ForeignKeys = true
         };
         return csb.ToString();
     }

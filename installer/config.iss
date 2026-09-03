@@ -1,3 +1,3 @@
-#define MyOutputBaseFilename "RobovAI-PRO-POS-Standard-Setup-v6.0"
+#define MyOutputBaseFilename "RobovAI-PRO-POS-Setup-v6.0_Final"
 #define MySmallImageFile "wizard_small.bmp"
-#define EditionName "Standard"
+#define EditionName "Complete Edition"

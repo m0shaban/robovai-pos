@@ -111,7 +111,7 @@
                                                  Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
                         <TextBox x:Name="BarcodeTextBox"
                                  Grid.Column="1"
-                                 materialDesign:HintAssist.Hint="امسح الباركود أو ابحث بالاسم أو الكود... (F1)"
+                                 materialDesign:HintAssist.Hint="{DynamicResource Loc_h_957e9ea9}"
                                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                  BorderThickness="0"
                                  FontSize="15"
@@ -134,7 +134,7 @@
                             BorderBrush="{DynamicResource AlAtmani.AccentBrush}"
                             Command="{Binding AddProductByBarcodeCommand}"
                             Margin="0,0,8,0"
-                            ToolTip="بحث بالباركود / F1">
+                            ToolTip="{DynamicResource Loc_70d99541}">
                         <materialDesign:PackIcon Kind="BarcodeScan" Width="22" Height="22" Foreground="White"/>
                     </Button>
 
@@ -142,7 +142,7 @@
                     <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
                             Command="{Binding ToggleCompactListViewCommand}"
                             Margin="0,0,8,0"
-                            ToolTip="تبديل العرض (شبكة بالصور / جدول مدمج بالباركود)">
+                            ToolTip="{DynamicResource Loc_40fd020d}">
                         <materialDesign:PackIcon Kind="ViewList" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Button>
 
@@ -150,7 +150,7 @@
                     <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
                             Command="{Binding ParkCurrentOrderCommand}"
                             Margin="0,0,8,0"
-                            ToolTip="تعليق الفاتورة الحالية (Park / F6)">
+                            ToolTip="{DynamicResource Loc_7c9fc13a}">
                         <materialDesign:PackIcon Kind="PauseCircleOutline" Width="22" Height="22" Foreground="#F59E0B"/>
                     </Button>
 
@@ -159,10 +159,15 @@
                             Width="Auto" Padding="14,0"
                             Command="{Binding ToggleParkedOrdersPopupCommand}"
                             Margin="0,0,8,0"
-                            ToolTip="الفواتير المعلقة (F7)">
+                            ToolTip="{DynamicResource Loc_8ee7be3d}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="ClockOutline" Width="20" Height="20" Foreground="#F59E0B" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                            <TextBlock Text="{Binding ParkedOrdersCount, StringFormat='{}معلق ({0})'}" FontWeight="Bold" FontSize="13" Foreground="#F59E0B" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="{DynamicResource Loc_ParkedCountPrefix}" FontWeight="Bold" FontSize="13" Foreground="#F59E0B" VerticalAlignment="Center"/>
+                                <TextBlock Text=" (" FontWeight="Bold" FontSize="13" Foreground="#F59E0B" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding ParkedOrdersCount}" FontWeight="Bold" FontSize="13" Foreground="#F59E0B" VerticalAlignment="Center"/>
+                                <TextBlock Text=")" FontWeight="Bold" FontSize="13" Foreground="#F59E0B" VerticalAlignment="Center"/>
+                            </StackPanel>
                         </StackPanel>
                     </Button>
 
@@ -170,14 +175,14 @@
                     <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
                             Command="{Binding ToggleTouchNumpadCommand}"
                             Margin="0,0,8,0"
-                            ToolTip="لوحة الأرقام اللمسية (F9)">
+                            ToolTip="{DynamicResource Loc_36c7075a}">
                         <materialDesign:PackIcon Kind="Calculator" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Button>
 
                     <!-- Cash Drawer Button -->
                     <Button Focusable="False" Style="{StaticResource AlAtmani.ToolButton}"
                             Command="{Binding OpenCashDrawerCommand}"
-                            ToolTip="فتح الدرج يدوياً / F3">
+                            ToolTip="{DynamicResource Loc_3c9f94a6}">
                         <materialDesign:PackIcon Kind="CashRegister" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Button>
                 </StackPanel>
@@ -239,11 +244,11 @@
                                         Padding="0">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <materialDesign:Card UniformCornerRadius="20"
+                                            <materialDesign:Card UniformCornerRadius="16"
                                                                  BorderBrush="{DynamicResource AlAtmani.BorderBrush}"
                                                                  BorderThickness="1"
                                                                  Background="{DynamicResource AlAtmani.SurfaceBrush}"
-                                                                 materialDesign:ElevationAssist.Elevation="Dp2"
+                                                                 materialDesign:ElevationAssist.Elevation="Dp0"
                                                                  Cursor="Hand">
                                                 <Grid>
                                                     <Grid.RowDefinitions>
@@ -294,7 +299,7 @@
                                                                        FontSize="17"
                                                                        FontWeight="Bold"
                                                                        Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
-                                                            <TextBlock Text=" ج.م"
+                                                            <TextBlock Text="{DynamicResource Loc_3c111129}"
                                                                        FontSize="11"
                                                                        VerticalAlignment="Bottom"
                                                                        Margin="4,0,0,2"
@@ -345,7 +350,11 @@
                                     <TextBlock Grid.Column="0" Text="{Binding Barcode}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Name}" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Column="2" Text="{Binding Category.Name}" FontSize="12" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="{Binding SellingPrice, StringFormat='{}{0:N0} ج.م'}" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource AlAtmani.AccentBrush}" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding SellingPrice, StringFormat='{}{0:N2}'}" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                        <TextBlock Text=" " />
+                                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                    </StackPanel>
                                     <Button Grid.Column="4" Style="{StaticResource MaterialDesignRaisedButton}"
                                             Height="32" Padding="8,0"
                                             Background="{DynamicResource AlAtmani.AccentBrush}"
@@ -382,7 +391,7 @@
                     <Grid Margin="16,12,16,8">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="CartOutline" Width="22" Height="22" Foreground="{DynamicResource AlAtmani.AccentBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                            <TextBlock Text="الطلب الحالي"
+                            <TextBlock Text="{DynamicResource Loc_1b4a2ebe}"
                                        FontSize="17"
                                        FontWeight="Bold"
                                        VerticalAlignment="Center"
@@ -392,7 +401,7 @@
                         <Button Focusable="False" Style="{StaticResource MaterialDesignIconForegroundButton}"
                                 Command="{Binding ClearCartCommand}"
                                 HorizontalAlignment="Right"
-                                ToolTip="مسح السلة بالكامل (F4)">
+                                ToolTip="{DynamicResource Loc_2c1a4bcd}">
                             <materialDesign:PackIcon Kind="DeleteSweepOutline"
                                                      Width="22"
                                                      Height="22"
@@ -415,7 +424,7 @@
                                                      Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
                             
                             <ComboBox Grid.Column="1"
-                                      materialDesign:HintAssist.Hint="ابحث عن العميل (بالاسم أو الهاتف)..."
+                                      materialDesign:HintAssist.Hint="{DynamicResource Loc_h_0bb605e1}"
                                       materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                       ItemsSource="{Binding Customers}"
                                       DisplayMemberPath="Name"
@@ -432,17 +441,21 @@
                                         Command="{Binding RedeemLoyaltyPointsCommand}"
                                         Padding="6,2" Height="28" Margin="4,0,0,0"
                                         Background="#10B981" Foreground="White"
-                                        ToolTip="استبدال نقاط الولاء بخصم مباشر">
+                                        ToolTip="{DynamicResource Loc_d70851e7}">
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="StarCircle" Width="14" Height="14" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                        <TextBlock Text="{Binding CustomerLoyaltyPoints, StringFormat='{}{0:N0} نقطة'}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding CustomerLoyaltyPoints, StringFormat='{}{0:N0}'}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <TextBlock Text=" " />
+                                            <TextBlock Text="{DynamicResource Loc_PointsSuffix}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </Button>
                                 
                                 <Button Style="{StaticResource MaterialDesignIconButton}"
                                         Command="{Binding ClearSelectedCustomerCommand}"
                                         Width="24" Height="24" Margin="2,0,0,0"
-                                        ToolTip="إلغاء اختيار العميل">
+                                        ToolTip="{DynamicResource Loc_8754f264}">
                                     <materialDesign:PackIcon Kind="CloseCircle" Width="16" Height="16" Foreground="#FB7185"/>
                                 </Button>
                             </StackPanel>
@@ -579,7 +592,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="خصم سريع:" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,0,6,0"/>
+                            <TextBlock Text="{DynamicResource Loc_32bdafff}" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="0,0,6,0"/>
                             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
                                         Background="{DynamicResource AlAtmani.Surface2Brush}" Command="{Binding ApplyQuickPercentDiscountCommand}" CommandParameter="5" Content="5%"/>
@@ -591,9 +604,9 @@
                                         Background="{DynamicResource AlAtmani.Surface2Brush}" Command="{Binding ApplyQuickPercentDiscountCommand}" CommandParameter="20" Content="20%"/>
                                 <Button Focusable="False" Style="{StaticResource MaterialDesignRaisedButton}" Height="26" Padding="8,0" Margin="2,0"
                                         Background="{DynamicResource AlAtmani.AccentBrush}" Foreground="White"
-                                        Command="{Binding ToggleCustomDiscountPopupCommand}" Content="مخصص..."/>
+                                        Command="{Binding ToggleCustomDiscountPopupCommand}" Content="{DynamicResource Loc_530cb236}"/>
                                 <Button Focusable="False" Style="{StaticResource MaterialDesignFlatButton}" Height="26" Padding="6,0" Margin="2,0"
-                                        Background="#FFE4E6" Foreground="#BE123C" Command="{Binding ClearDiscountCommand}" Content="مسح"/>
+                                        Background="#FFE4E6" Foreground="#BE123C" Command="{Binding ClearDiscountCommand}" Content="{DynamicResource Loc_ec2ce8be}"/>
                             </StackPanel>
                         </Grid>
 
@@ -616,7 +629,7 @@
                                          Height="30" FontSize="13" FontWeight="Bold" Background="{DynamicResource AlAtmani.SurfaceBrush}" Padding="6,2" VerticalContentAlignment="Center"/>
                                 <Button Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}"
                                         Background="{DynamicResource AlAtmani.AccentBrush}" Height="30" Padding="8,0" Margin="4,0,0,0"
-                                        Command="{Binding ApplyCustomDiscountSubmitCommand}" Content="تطبيق"/>
+                                        Command="{Binding ApplyCustomDiscountSubmitCommand}" Content="{DynamicResource Loc_abe3151c}"/>
                                 <Button Grid.Column="3" Style="{StaticResource MaterialDesignIconButton}" Width="26" Height="26" Margin="2,0,0,0"
                                         Command="{Binding ToggleCustomDiscountPopupCommand}">
                                     <materialDesign:PackIcon Kind="Close" Width="14" Height="14"/>
@@ -626,21 +639,21 @@
 
                         <!-- Summary Rows -->
                         <Grid Margin="0,0,0,3">
-                            <TextBlock Text="الإجمالي الفرعي" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12"/>
+                            <TextBlock Text="{DynamicResource Loc_162e4005}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <TextBlock Text="{Binding Subtotal, StringFormat='{}{0:N2}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="3,0,0,0"/>
                             </StackPanel>
                         </Grid>
                         <Grid Margin="0,0,0,3" Visibility="{Binding DiscountAmount, Converter={StaticResource NullToVisibilityConverter}}">
-                            <TextBlock Text="قيمة الخصم" Foreground="#10B981" FontSize="12"/>
+                            <TextBlock Text="{DynamicResource Loc_1cdbe6a3}" Foreground="#10B981" FontSize="12"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <TextBlock Text="{Binding DiscountAmount, StringFormat='{}-{0:N2}'}" FontWeight="Bold" Foreground="#10B981"/>
                                 <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="Bold" Foreground="#10B981" Margin="3,0,0,0"/>
                             </StackPanel>
                         </Grid>
                         <Grid Margin="0,0,0,4">
-                            <TextBlock Text="الضريبة" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12"/>
+                            <TextBlock Text="{DynamicResource Loc_ad68a9a8}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <TextBlock Text="{Binding TaxAmount, StringFormat='{}{0:N2}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
                                 <TextBlock Text="{Binding CurrencySymbol, StringFormat='{} {0}'}" FontWeight="SemiBold" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" Margin="3,0,0,0"/>
@@ -651,7 +664,7 @@
 
                         <!-- MASSIVE TOTAL -->
                         <Grid Margin="0,2,0,8">
-                            <TextBlock Text="الإجمالي الكلي" FontSize="15" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Loc_59995d2d}" FontSize="15" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" VerticalAlignment="Center"/>
                             <Viewbox HorizontalAlignment="Right" Height="32">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding TotalAmount, StringFormat='{}{0:N2}'}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.TextPrimaryBrush}"/>
@@ -693,7 +706,7 @@
                                     <Button Style="{StaticResource MaterialDesignFlatButton}"
                                             Height="28" Padding="8,0" Margin="2,0"
                                             Background="{DynamicResource AlAtmani.AccentBrush}" Foreground="White"
-                                            Command="{Binding SetExactCashTenderCommand}" Content="المبلغ بالظبط"/>
+                                            Command="{Binding SetExactCashTenderCommand}" Content="{DynamicResource Loc_98ff4f4b}"/>
                                     <ItemsControl ItemsSource="{Binding QuickTenderAmounts}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -721,7 +734,7 @@
                                     </Grid.ColumnDefinitions>
                                     <!-- Amount Paid Input -->
                                     <StackPanel Grid.Column="0" Margin="0,0,4,0">
-                                        <TextBlock Text="المبلغ المدفوع" FontSize="11" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
+                                        <TextBlock Text="{DynamicResource Loc_4056c063}" FontSize="11" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"/>
                                         <TextBox Text="{Binding AmountPaid, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:N0}'}"
                                                  FontSize="16" FontWeight="Bold" Height="36" VerticalContentAlignment="Center"
                                                  Background="{DynamicResource AlAtmani.SurfaceBrush}"
@@ -731,7 +744,7 @@
                                     <!-- Change Due (Huge Emerald Green Box) -->
                                     <Border Grid.Column="1" Background="#064E3B" CornerRadius="10" Padding="8,4" Margin="4,0,0,0">
                                         <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="الباقي للعميل" Foreground="#6EE7B7" FontSize="10" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{DynamicResource Loc_41d6ce54}" Foreground="#6EE7B7" FontSize="10" FontWeight="SemiBold"/>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding ChangeDue, StringFormat='{}{0:N2}'}" 
                                                            Foreground="#34D399" FontSize="17" FontWeight="Bold"/>
@@ -751,7 +764,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <CheckBox Content="🖨️ طباعة" 
+                            <CheckBox Content="{DynamicResource Loc_3a014e47}" 
                                       IsChecked="{Binding ShouldPrintReceipt}" 
                                       Margin="0,0,8,0" 
                                       Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" 
@@ -766,7 +779,7 @@
                                     Height="48" Padding="0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <materialDesign:PackIcon Kind="CashRegister" Width="24" Height="24" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="إتمام البيع (F2 / Ctrl+Enter)" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource Loc_dec164d5}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -794,7 +807,12 @@
                     <Grid Grid.Row="0" Margin="0,0,0,16">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <materialDesign:PackIcon Kind="ClockOutline" Width="22" Height="22" Foreground="#F59E0B" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                            <TextBlock Text="{Binding ParkedOrdersCount, StringFormat='{}الفواتير المعلقة ({0})'}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="{DynamicResource Loc_ParkedInvoicesTitle}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock Text=" (" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding ParkedOrdersCount}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock Text=")" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
                         </StackPanel>
                         <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right"
                                 Command="{Binding ToggleParkedOrdersPopupCommand}" Width="32" Height="32">
@@ -818,15 +836,20 @@
                                                 <TextBlock Text="{Binding TimeFormatted, StringFormat='{} ({0})'}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="12" Margin="6,0,0,0" VerticalAlignment="Center"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                                <TextBlock Text="{Binding ItemCount, StringFormat='{}عدد الأصناف: {0} | '}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13"/>
-                                                <TextBlock Text="{Binding TotalAmount, StringFormat='{}الإجمالي: {0:N0} ج.م'}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" FontSize="13"/>
+                                                <TextBlock Text="{DynamicResource Loc_ItemsCountPrefix}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13"/>
+                                                <TextBlock Text="{Binding ItemCount}" Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13"/>
+                                                <TextBlock Text=" | " Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}" FontSize="13"/>
+                                                <TextBlock Text="{DynamicResource Loc_TotalPrefix}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" FontSize="13"/>
+                                                <TextBlock Text="{Binding TotalAmount, StringFormat='{}{0:N2}'}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" FontSize="13"/>
+                                                <TextBlock Text=" " />
+                                                <TextBlock Text="{DynamicResource Loc_CurrencySymbol}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" FontSize="13"/>
                                             </StackPanel>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                             <Button Style="{StaticResource MaterialDesignRaisedButton}"
                                                     Background="#10B981" Height="36" Padding="12,0" Margin="0,0,6,0"
                                                     Command="{Binding DataContext.RecallParkedOrderCommand, ElementName=RootGrid}"
-                                                    CommandParameter="{Binding}" Content="استرجاع"/>
+                                                    CommandParameter="{Binding}" Content="{DynamicResource Loc_14c4cb02}"/>
                                             <Button Style="{StaticResource MaterialDesignIconButton}"
                                                     Foreground="#FB7185" Width="36" Height="36"
                                                     Command="{Binding DataContext.DeleteParkedOrderCommand, ElementName=RootGrid}"

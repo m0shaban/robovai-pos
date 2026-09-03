@@ -503,6 +503,53 @@ public static class DbInitializer
                 // Column already exists or table not ready, safely continue
             }
         }
+
+        // Apply high-performance composite and covering indexes for enterprise workload
+        await EnsureHighPerformanceIndexesAsync(context);
+    }
+
+    /// <summary>
+    /// Ensures all high-performance composite and covering indexes exist for massive workloads.
+    /// Eliminates table scans on heavy inventory and sales queries.
+    /// </summary>
+    public static async Task EnsureHighPerformanceIndexesAsync(AppDbContext context)
+    {
+        var indexes = new[]
+        {
+            // Sales & POS Covering Indexes
+            @"CREATE INDEX IF NOT EXISTS ""IX_Sales_Covering"" ON ""Sales"" (""SaleDate"", ""Status"", ""IsDeleted"", ""TotalAmount"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_Sales_Shift_Covering"" ON ""Sales"" (""ShiftId"", ""Status"", ""IsDeleted"", ""TotalAmount"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_Sales_Customer_Date"" ON ""Sales"" (""CustomerId"", ""SaleDate"", ""IsDeleted"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_Sales_InvoiceNumber"" ON ""Sales"" (""InvoiceNumber"");",
+
+            // Sale Details lookup
+            @"CREATE INDEX IF NOT EXISTS ""IX_SaleDetails_Sale_Product"" ON ""SaleDetails"" (""SaleId"", ""ProductId"");",
+
+            // Product Inventory & Fast Scanning
+            @"CREATE INDEX IF NOT EXISTS ""IX_Products_LowStock"" ON ""Products"" (""IsActive"", ""IsDeleted"", ""Stock"", ""MinStockLevel"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_Products_Category_Active"" ON ""Products"" (""CategoryId"", ""IsActive"", ""IsDeleted"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_Products_Barcode_Active"" ON ""Products"" (""Barcode"", ""IsActive"", ""IsDeleted"");",
+
+            // Customers fast lookup
+            @"CREATE INDEX IF NOT EXISTS ""IX_Customers_Phone_Deleted"" ON ""Customers"" (""Phone"", ""IsDeleted"");",
+
+            // Expenses & Shifts
+            @"CREATE INDEX IF NOT EXISTS ""IX_Expenses_Date_User_Deleted"" ON ""Expenses"" (""ExpenseDate"", ""UserId"", ""IsDeleted"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_Shifts_Status_UserId"" ON ""Shifts"" (""Status"", ""UserId"");",
+            @"CREATE INDEX IF NOT EXISTS ""IX_StockMovements_Lookup"" ON ""StockMovements"" (""ProductId"", ""MovementDate"");"
+        };
+
+        foreach (var sql in indexes)
+        {
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync(sql);
+            }
+            catch
+            {
+                // Index creation is idempotent, safely continue
+            }
+        }
     }
 
     // ──────────────────────────── Users ────────────────────────────

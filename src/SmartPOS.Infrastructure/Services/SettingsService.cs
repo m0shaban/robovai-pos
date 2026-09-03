@@ -127,9 +127,27 @@ public class SettingsService : ISettingsService
     public int    BarcodeBaudRate  => int.TryParse(GetSetting("BarcodeBaudRate", "9600"), out var b) ? b : 9600;
     public int    BarcodeTimeoutMs => int.TryParse(GetSetting("BarcodeTimeoutMs", "100"), out var t) ? t : 100;
 
-    // ─── Shift Closing ───────────────────────────────────────────────────────
+    // ─── Shift Closing (Z-Report) ────────────────────────────────────────────
     public bool PrintZReportOnClose   => GetSetting("PrintZReportOnClose",   "true").Equals("true",  StringComparison.OrdinalIgnoreCase);
     public bool SaveZReportPdfOnClose => GetSetting("SaveZReportPdfOnClose", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool SendZReportToTelegramOnClose => GetSetting("SendZReportToTelegramOnClose", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public int  ZReportWidth => int.TryParse(GetSetting("ZReportWidth", "80"), out var zw) ? zw : 80;
+    public bool ZReportIncludePaymentBreakdown => GetSetting("ZReportIncludePaymentBreakdown", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool ZReportIncludeCategoryBreakdown => GetSetting("ZReportIncludeCategoryBreakdown", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool ZReportIncludeTopProducts => GetSetting("ZReportIncludeTopProducts", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool ZReportIncludeExpenses => GetSetting("ZReportIncludeExpenses", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool ZReportIncludeDiscrepancy => GetSetting("ZReportIncludeDiscrepancy", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+
+    // ─── Export, Import & Advanced Printing ──────────────────────────────────
+    public string DefaultExportFolder => GetSetting("DefaultExportFolder", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "SmartPOS_Exports"));
+    public bool   AutoOpenExportedFile => GetSetting("AutoOpenExportedFile", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public string DefaultExportFormat => GetSetting("DefaultExportFormat", "Excel");
+    public string ImportDuplicateAction => GetSetting("ImportDuplicateAction", "UpdateStock");
+    public bool   ImportAutoCreateCategories => GetSetting("ImportAutoCreateCategories", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool   ReceiptShowTaxNumber => GetSetting("ReceiptShowTaxNumber", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool   ReceiptShowCashier   => GetSetting("ReceiptShowCashier", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool   ReceiptShowBarcode   => GetSetting("ReceiptShowBarcode", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
+    public bool   ReceiptAutoCut       => GetSetting("ReceiptAutoCut", "true").Equals("true", StringComparison.OrdinalIgnoreCase);
 
     // ─── White-Label ─────────────────────────────────────────────────────────
     public string AppTitle    => GetSetting("AppTitle",    "RobovAI PRO POS");

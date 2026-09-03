@@ -112,11 +112,14 @@ public partial class PurchaseOrdersViewModel : BaseViewModel, IDisposable, Commu
     public bool IsAdmin => _currentUser.Role == UserRole.Admin || _currentUser.Role == UserRole.Manager || _currentUser.Role == UserRole.SuperAdmin;
 
     // ─── Constructor ──────────────────────────────────────────────────────────
-    public PurchaseOrdersViewModel(IDbContextFactory<AppDbContext> contextFactory, User currentUser, SmartPOS.Core.Interfaces.IAuthorizationService authService)
+    private readonly SmartPOS.Core.Interfaces.ISettingsService? _settingsService;
+
+    public PurchaseOrdersViewModel(IDbContextFactory<AppDbContext> contextFactory, User currentUser, SmartPOS.Core.Interfaces.IAuthorizationService authService, SmartPOS.Core.Interfaces.ISettingsService? settingsService = null)
     {
         _contextFactory = contextFactory;
         _currentUser = currentUser;
         _authService = authService;
+        _settingsService = settingsService;
 
         CommunityToolkit.Mvvm.Messaging.WeakReferenceMessenger.Default.RegisterAll(this);
 
@@ -582,18 +585,33 @@ public partial class PurchaseOrdersViewModel : BaseViewModel, IDisposable, Commu
                 });
             }).GeneratePdf();
 
+            var defaultFolder = _settingsService?.DefaultExportFolder;
+            if (!string.IsNullOrWhiteSpace(defaultFolder) && !System.IO.Directory.Exists(defaultFolder))
+            {
+                try { System.IO.Directory.CreateDirectory(defaultFolder); } catch { }
+            }
+
             var dlg = new SaveFileDialog
             {
-                Title = "حفظ فاتورة المشتريات",
+                Title = "حفظ فاتورة المشتريات كـ PDF",
                 FileName = $"فاتورة-مشتريات-{orderWithDetails.OrderNumber}.pdf",
+                InitialDirectory = !string.IsNullOrWhiteSpace(defaultFolder) && System.IO.Directory.Exists(defaultFolder)
+                    ? defaultFolder
+                    : Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = ".pdf",
-                Filter = "PDF Files|*.pdf"
+                Filter = "PDF Files (*.pdf)|*.pdf"
             };
 
             if (dlg.ShowDialog() == true)
             {
                 await File.WriteAllBytesAsync(dlg.FileName, pdfBytes);
-                MessageBox.Show($"✅ تم حفظ الفاتورة:\n{dlg.FileName}", "تم", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                if (_settingsService?.AutoOpenExportedFile == true)
+                {
+                    try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dlg.FileName) { UseShellExecute = true }); } catch { }
+                }
+
+                MessageBox.Show($"✅ تم حفظ الفاتورة بنجاح:\n{dlg.FileName}", "تم", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         catch (Exception ex)

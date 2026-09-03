@@ -686,24 +686,46 @@ public partial class ReportsViewModel : BaseViewModel
                 .OrderByDescending(s => s.SaleDate)
                 .ToListAsync();
 
+            var defaultFolder = _settingsService?.DefaultExportFolder;
+            if (!string.IsNullOrWhiteSpace(defaultFolder) && !System.IO.Directory.Exists(defaultFolder))
+            {
+                try { System.IO.Directory.CreateDirectory(defaultFolder); } catch { }
+            }
+
             var dlg = new Microsoft.Win32.SaveFileDialog
             {
-                Title = "تصدير المبيعات",
+                Title = "تصدير المبيعات إلى CSV",
                 FileName = $"مبيعات_{start:yyyy-MM-dd}_{end:yyyy-MM-dd}.csv",
+                InitialDirectory = !string.IsNullOrWhiteSpace(defaultFolder) && System.IO.Directory.Exists(defaultFolder)
+                    ? defaultFolder
+                    : Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = ".csv",
-                Filter = "CSV Files|*.csv"
+                Filter = "CSV Files (*.csv)|*.csv"
             };
             if (dlg.ShowDialog() != true) return;
+
+            static string Escape(object? val)
+            {
+                var s = val?.ToString() ?? "";
+                return $"\"{s.Replace("\"", "\"\"")}\"";
+            }
 
             var lines = new System.Text.StringBuilder();
             lines.AppendLine("رقم الفاتورة,التاريخ,الكاشير,العميل,المجموع,المدفوع,طريقة الدفع,الحالة");
             foreach (var s in sales)
             {
                 var custName = s.Customer?.Name ?? "-";
-                lines.AppendLine($"{s.InvoiceNumber},{s.SaleDate:dd/MM/yyyy HH:mm},{s.User?.FullName},{custName},{s.TotalAmount},{s.AmountPaid},{s.PaymentMethod},{s.Status}");
+                lines.AppendLine($"{Escape(s.InvoiceNumber)},{Escape(s.SaleDate.ToString("dd/MM/yyyy HH:mm"))},{Escape(s.User?.FullName)},{Escape(custName)},{s.TotalAmount:F2},{s.AmountPaid:F2},{Escape(s.PaymentMethod)},{Escape(s.Status)}");
             }
 
-            await System.IO.File.WriteAllTextAsync(dlg.FileName, lines.ToString(), System.Text.Encoding.UTF8);
+            // UTF8 with BOM ensures Excel opens Arabic correctly
+            await System.IO.File.WriteAllTextAsync(dlg.FileName, lines.ToString(), new System.Text.UTF8Encoding(true));
+
+            if (_settingsService?.AutoOpenExportedFile == true)
+            {
+                try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dlg.FileName) { UseShellExecute = true }); } catch { }
+            }
+
             MessageBox.Show($"✅ تم تصدير {sales.Count} فاتورة بنجاح\n{dlg.FileName}", "تم التصدير", MessageBoxButton.OK, MessageBoxImage.Information);
         }, "جاري تصدير البيانات...");
     }
@@ -716,22 +738,46 @@ public partial class ReportsViewModel : BaseViewModel
             MessageBox.Show("يرجى تحميل تقرير الأرباح أولاً", "تنبيه", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
+
+        var defaultFolder = _settingsService?.DefaultExportFolder;
+        if (!string.IsNullOrWhiteSpace(defaultFolder) && !System.IO.Directory.Exists(defaultFolder))
+        {
+            try { System.IO.Directory.CreateDirectory(defaultFolder); } catch { }
+        }
+
         var dlg = new Microsoft.Win32.SaveFileDialog
         {
-            Title = "تصدير تقرير الأرباح",
+            Title = "تصدير تقرير الأرباح إلى CSV",
             FileName = $"أرباح_{ProfitStartDate:yyyy-MM-dd}_{ProfitEndDate:yyyy-MM-dd}.csv",
+            InitialDirectory = !string.IsNullOrWhiteSpace(defaultFolder) && System.IO.Directory.Exists(defaultFolder)
+                ? defaultFolder
+                : Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             DefaultExt = ".csv",
-            Filter = "CSV Files|*.csv"
+            Filter = "CSV Files (*.csv)|*.csv"
         };
         if (dlg.ShowDialog() != true) return;
+
+        static string Escape(object? val)
+        {
+            var s = val?.ToString() ?? "";
+            return $"\"{s.Replace("\"", "\"\"")}\"";
+        }
 
         var lines = new System.Text.StringBuilder();
         lines.AppendLine("المنتج,الكمية المباعة,الإيراد الإجمالي,التكلفة الإجمالية,الربح الإجمالي");
         foreach (var p in ProfitItems)
-            lines.AppendLine($"{p.ProductName},{p.TotalQuantity},{p.TotalRevenue:N2},{p.TotalCost:N2},{p.GrossProfit:N2}");
+        {
+            lines.AppendLine($"{Escape(p.ProductName)},{p.TotalQuantity},{p.TotalRevenue:F2},{p.TotalCost:F2},{p.GrossProfit:F2}");
+        }
 
-        await System.IO.File.WriteAllTextAsync(dlg.FileName, lines.ToString(), System.Text.Encoding.UTF8);
-        MessageBox.Show($"\u2705 \u062a\u0645 \u0627\u0644\u062a\u0635\u062f\u064a\u0631: {dlg.FileName}", "\u062a\u0645", MessageBoxButton.OK, MessageBoxImage.Information);
+        await System.IO.File.WriteAllTextAsync(dlg.FileName, lines.ToString(), new System.Text.UTF8Encoding(true));
+
+        if (_settingsService?.AutoOpenExportedFile == true)
+        {
+            try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(dlg.FileName) { UseShellExecute = true }); } catch { }
+        }
+
+        MessageBox.Show($"✅ تم تصدير تقرير الأرباح بنجاح:\n{dlg.FileName}", "تم التصدير", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // \u2500\u2500\u2500 Charts \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500

@@ -91,7 +91,9 @@ public partial class CategoriesViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(FormName))
         {
-            MessageBox.Show("أدخل اسم القسم", "تنبيه", MessageBoxButton.OK, MessageBoxImage.Warning);
+            var reqMsg = SmartPOS.Core.Localization.Loc.Tr("Loc_Cat_NameRequired", "أدخل اسم القسم");
+            var alertTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Alert", "تنبيه");
+            MessageBox.Show(reqMsg, alertTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
 
@@ -121,7 +123,7 @@ public partial class CategoriesViewModel : BaseViewModel
             await LoadCategoriesCoreAsync();
             CancelForm();
 
-        }, "جاري حفظ القسم...", "✅ تم الحفظ بنجاح");
+        }, SmartPOS.Core.Localization.Loc.Tr("Loc_Cat_Saving", "جاري حفظ القسم..."), SmartPOS.Core.Localization.Loc.Tr("Loc_Saved_Success", "✅ تم الحفظ بنجاح"));
     }
 
     [RelayCommand]
@@ -132,13 +134,15 @@ public partial class CategoriesViewModel : BaseViewModel
         bool authorized = await _authService.RequestAdminOverrideAsync("حذف قسم من النظام");
         if (!authorized) return;
 
-        if (MessageBox.Show($"هل أنت متأكد من حذف القسم \"{category.Name}\"؟", "تأكيد", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        var confirmMsg = string.Format(SmartPOS.Core.Localization.Loc.Tr("Loc_Cat_DeleteConfirm", "هل أنت متأكد من حذف القسم \"{0}\"؟"), category.Name);
+        var confirmTitle = SmartPOS.Core.Localization.Loc.Tr("Loc_Confirm", "تأكيد");
+        if (MessageBox.Show(confirmMsg, confirmTitle, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
         {
             await ExecuteBusyAsync(async () =>
             {
                 await _categoryRepository.DeleteAsync(category.Id);
                 await LoadCategoriesCoreAsync();
-            }, "جاري الحذف...", "✅ تم حذف القسم بنجاح");
+            }, SmartPOS.Core.Localization.Loc.Tr("Loc_Deleting", "جاري الحذف..."), SmartPOS.Core.Localization.Loc.Tr("Loc_Cat_DeletedSuccess", "✅ تم حذف القسم بنجاح"));
         }
     }
 

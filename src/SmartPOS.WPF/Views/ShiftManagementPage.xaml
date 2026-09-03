@@ -1,4 +1,4 @@
-﻿<Page x:Class="SmartPOS.WPF.Views.ShiftManagementPage"
+<Page x:Class="SmartPOS.WPF.Views.ShiftManagementPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -33,9 +33,9 @@
                                              Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                 </Border>
                 <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
-                    <TextBlock Text="إدارة الورديات"
+                    <TextBlock Text="{DynamicResource Loc_6b9077f1}"
                                Style="{StaticResource AlAtmani.HeaderText}"/>
-                    <TextBlock Text="إدارة ومراقبة ورديات العمل والمبيعات"
+                    <TextBlock Text="{DynamicResource Loc_31794d17}"
                                FontSize="14"
                                Opacity="0.85"
                                Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
@@ -46,7 +46,7 @@
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" HorizontalAlignment="Left">
                     <Button Command="{Binding LoadShiftsCommand}"
                             Style="{StaticResource MaterialDesignIconButton}"
-                            ToolTip="تحديث البيانات"
+                            ToolTip="{DynamicResource Loc_fd4458ee}"
                             Foreground="{DynamicResource AlAtmani.AccentBrush}">
                         <materialDesign:PackIcon Kind="Refresh" Width="24" Height="24"/>
                     </Button>
@@ -66,7 +66,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="الوردية الحالية"
+                    <TextBlock Text="{DynamicResource Loc_3a2f23e7}"
                                Style="{StaticResource AlAtmani.SubHeaderText}"
                                Margin="0,0,0,16"/>
 
@@ -77,7 +77,10 @@
                                                  Height="20"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"
                                                  Margin="0,0,10,0"/>
-                        <TextBlock Text="{Binding CurrentShift.User.FullName, StringFormat=الكاشير: {0}}"
+                        <TextBlock Text="{DynamicResource Loc_CashierPrefix}"
+                                   FontSize="16"
+                                   Opacity="0.85"/>
+                        <TextBlock Text="{Binding CurrentShift.User.FullName}"
                                    FontSize="16"
                                    Opacity="0.85"/>
                     </StackPanel>
@@ -89,7 +92,10 @@
                                                  Height="20"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"
                                                  Margin="0,0,10,0"/>
-                        <TextBlock Text="{Binding CurrentShift.StartTime, StringFormat=وقت البدء: {0:hh:mm tt}}"
+                        <TextBlock Text="{DynamicResource Loc_StartTimePrefix}"
+                                   FontSize="16"
+                                   Opacity="0.85"/>
+                        <TextBlock Text="{Binding CurrentShift.StartTime, StringFormat='{}{0:hh:mm tt}'}"
                                    FontSize="16"
                                    Opacity="0.85"/>
                     </StackPanel>
@@ -101,9 +107,18 @@
                                                  Height="20"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"
                                                  Margin="0,0,10,0"/>
-                        <TextBlock Text="{Binding CurrentShift.OpeningBalance, StringFormat=رصيد الافتتاح: {0:F2} ج.م}"
+                        <TextBlock Text="{DynamicResource Loc_OpeningBalancePrefix}"
                                    FontSize="16"
                                    Opacity="0.85"/>
+                        <TextBlock Text="{Binding CurrentShift.OpeningBalance, StringFormat='{}{0:F2}'}"
+                                   FontSize="16"
+                                   Opacity="0.85"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="13"
+                                   Opacity="0.85"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,2"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal"
@@ -111,20 +126,20 @@
                         <TextBox Width="150"
                                  Margin="0,0,10,0"
                                  Text="{Binding OpeningBalanceInput, UpdateSourceTrigger=PropertyChanged}"
-                                 materialDesign:HintAssist.Hint="رصيد الافتتاح"/>
+                                 materialDesign:HintAssist.Hint="{DynamicResource Loc_h_8ce4f39a}"/>
                         <TextBox Width="160"
                                  Margin="0,0,10,0"
                                  Text="{Binding ClosingBalanceInput, UpdateSourceTrigger=PropertyChanged}"
-                                 materialDesign:HintAssist.Hint="النقدية في الدرج"/>
+                                 materialDesign:HintAssist.Hint="{DynamicResource Loc_h_2cbb9025}"/>
                         <TextBox Width="200"
                                  Text="{Binding NotesInput, UpdateSourceTrigger=PropertyChanged}"
-                                 materialDesign:HintAssist.Hint="ملاحظات (سبب العجز/الزيادة)"/>
+                                 materialDesign:HintAssist.Hint="{DynamicResource Loc_h_c81514f7}"/>
                         <Button Style="{StaticResource MaterialDesignOutlinedButton}"
                                 Height="40"
                                 Margin="10,0,0,0"
-                                Content="تحديث"
+                                Content="{DynamicResource Loc_061401dc}"
                                 Command="{Binding LoadShiftsCommand}"
-                                ToolTip="تحديث بيانات الوردية الحالية"/>
+                                ToolTip="{DynamicResource Loc_002a8399}"/>
                     </StackPanel>
 
                     <!-- Expected Balance: ONLY visible to Admin/SuperAdmin (Blind Z-Report) -->
@@ -142,8 +157,13 @@
                         </Border.Style>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ShieldLockOutline" Width="20" Height="20" Foreground="#EF4444" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding ExpectedBalance, StringFormat=الرصيد المتوقع (للإدارة فقط): {0:N2} ج.م}"
+                            <TextBlock Text="{DynamicResource Loc_ExpectedBalancePrefix}"
                                        FontSize="14" FontWeight="SemiBold" Foreground="#EF4444" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding ExpectedBalance, StringFormat='{}{0:N2}'}"
+                                       FontSize="14" FontWeight="SemiBold" Foreground="#EF4444" VerticalAlignment="Center"/>
+                            <TextBlock Text=" " VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                       FontSize="12" FontWeight="SemiBold" Foreground="#EF4444" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -153,14 +173,14 @@
                     <Button Style="{StaticResource AlAtmani.SoftButton}"
                             Height="54"
                             Padding="24,0"
-                            Content="فتح وردية"
+                            Content="{DynamicResource Loc_5a9212f6}"
                             Margin="0,0,0,10"
                             Command="{Binding OpenShiftCommand}"
                             IsEnabled="{Binding IsShiftOpen, Converter={StaticResource BoolNegationConverter}}"/>
                     <Button Style="{StaticResource AlAtmani.SoftButton}"
                             Height="54"
                             Padding="24,0"
-                            Content="إنهاء الوردية"
+                            Content="{DynamicResource Loc_f1708be7}"
                             Command="{Binding CloseShiftCommand}"
                             IsEnabled="{Binding IsShiftOpen}"/>
                 </StackPanel>
@@ -207,13 +227,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="إجمالي المبيعات"
+                    <TextBlock Text="{DynamicResource Loc_b94c9b2f}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding CurrentShiftTotalSales, StringFormat={}{0:N2} ج.م}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding CurrentShiftTotalSales, StringFormat={}{0:N2}}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -234,13 +262,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="عدد المعاملات"
+                    <TextBlock Text="{DynamicResource Loc_f47efd01}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding CurrentShiftTransactions, StringFormat={}{0} معاملة}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding CurrentShiftTransactions}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_TransactionsCountSuffix}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -261,13 +297,21 @@
                                                  Height="32"
                                                  Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                     </Border>
-                    <TextBlock Text="النقدية"
+                    <TextBlock Text="{DynamicResource Loc_ac869787}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding CurrentShiftSales, StringFormat={}{0:N2} ج.م}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding CurrentShiftSales, StringFormat={}{0:N2}}"
+                                   FontSize="24"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -288,14 +332,22 @@
                                                  Height="32"
                                                  Foreground="#C2185B"/>
                     </Border>
-                    <TextBlock Text="البطاقات"
+                    <TextBlock Text="{DynamicResource Loc_d3cdbd4f}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding TotalCardSales, StringFormat={}{0:N2} ج.م}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Foreground="#C2185B"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding TotalCardSales, StringFormat={}{0:N2}}"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="#C2185B"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#C2185B"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -316,14 +368,22 @@
                                                  Height="32"
                                                  Foreground="#E60000"/>
                     </Border>
-                    <TextBlock Text="فودافون كاش"
+                    <TextBlock Text="{DynamicResource Loc_bcf9bd9c}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding TotalVodafoneCashSales, StringFormat={}{0:N2} ج.م}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Foreground="#E60000"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding TotalVodafoneCashSales, StringFormat={}{0:N2}}"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="#E60000"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#E60000"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -344,14 +404,22 @@
                                                  Height="32"
                                                  Foreground="#1877F2"/>
                     </Border>
-                    <TextBlock Text="انستا باي"
+                    <TextBlock Text="{DynamicResource Loc_280a6ce9}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding TotalInstaPaySales, StringFormat={}{0:N2} ج.م}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Foreground="#1877F2"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding TotalInstaPaySales, StringFormat={}{0:N2}}"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="#1877F2"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#1877F2"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -372,14 +440,22 @@
                                                  Height="32"
                                                  Foreground="#D97706"/>
                     </Border>
-                    <TextBlock Text="المبيعات الآجلة"
+                    <TextBlock Text="{DynamicResource Loc_f89f50ee}"
                                FontSize="14"
                                Opacity="0.7"/>
-                    <TextBlock Text="{Binding TotalDeferredSales, StringFormat={}{0:N2} ج.م}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Foreground="#D97706"
-                               Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="{Binding TotalDeferredSales, StringFormat={}{0:N2}}"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="#D97706"/>
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#D97706"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,3"/>
+                    </StackPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -398,11 +474,11 @@
                     </Grid.RowDefinitions>
                     
                     <DockPanel Grid.Row="0" Margin="0,0,0,16">
-                        <TextBlock Text="الورديات السابقة"
+                        <TextBlock Text="{DynamicResource Loc_3b07ee85}"
                                    Style="{StaticResource AlAtmani.SubHeaderText}"
                                    VerticalAlignment="Center"/>
                         
-                        <TextBox materialDesign:HintAssist.Hint="بحث بالكاشير أو رقم الوردية..."
+                        <TextBox materialDesign:HintAssist.Hint="{DynamicResource Loc_h_f7cc4607}"
                                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                  Padding="8,6"
@@ -424,39 +500,60 @@
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ScrollViewer.CanContentScroll="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="التاريخ"
+                            <DataGridTextColumn Header="{DynamicResource Loc_8456f22b}"
                                                 Binding="{Binding StartTime, StringFormat={}{0:yyyy-MM-dd}, Mode=OneWay}"
                                                 Width="*"/>
-                            <DataGridTextColumn Header="الكاشير"
+                            <DataGridTextColumn Header="{DynamicResource Loc_1567b6bf}"
                                                 Binding="{Binding User.FullName, Mode=OneWay}"
                                                 Width="*"/>
-                            <DataGridTextColumn Header="وقت البدء"
+                            <DataGridTextColumn Header="{DynamicResource Loc_0f23204f}"
                                                 Binding="{Binding StartTime, StringFormat={}{0:hh:mm tt}, Mode=OneWay}"
                                                 Width="*"/>
-                            <DataGridTextColumn Header="وقت الإنهاء"
+                            <DataGridTextColumn Header="{DynamicResource Loc_969f7774}"
                                                 Binding="{Binding EndTime, StringFormat={}{0:hh:mm tt}, Mode=OneWay}"
                                                 Width="*"/>
-                            <DataGridTextColumn Header="المبيعات"
-                                                Binding="{Binding TotalSales, StringFormat={}{0:N2} ج.م, Mode=OneWay}"
-                                                Width="*"/>
-                            <DataGridTextColumn Header="رصيد الإغلاق"
-                                                Binding="{Binding ClosingBalance, StringFormat={}{0:N2} ج.م, Mode=OneWay}"
-                                                Width="*"/>
-                            <DataGridTemplateColumn Header="العجز/الزيادة" Width="*">
+                            <DataGridTemplateColumn Header="{DynamicResource Loc_f155c092}" Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Difference, StringFormat={}{0:N2} ج.م}"
-                                                   FontWeight="SemiBold"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="{Binding Difference, Converter={StaticResource DifferenceToColorConverter}}">
-                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding TotalSales, StringFormat={}{0:N2}}" />
+                                            <TextBlock Text=" " />
+                                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}" FontSize="11" Foreground="Gray" />
+                                        </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="المعاملات"
+                            <DataGridTemplateColumn Header="{DynamicResource Loc_78e58007}" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding ClosingBalance, StringFormat={}{0:N2}}" />
+                                            <TextBlock Text=" " />
+                                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}" FontSize="11" Foreground="Gray" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="{DynamicResource Loc_b7b13d66}" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Difference, StringFormat={}{0:N2}}"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{Binding Difference, Converter={StaticResource DifferenceToColorConverter}}"/>
+                                            <TextBlock Text=" " />
+                                            <TextBlock Text="{DynamicResource Loc_CurrencySymbol}"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="11"
+                                                       Foreground="{Binding Difference, Converter={StaticResource DifferenceToColorConverter}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="{DynamicResource Loc_aa009f8e}"
                                                 Binding="{Binding TransactionCount, Mode=OneWay}"
                                                 Width="*"/>
-                            <DataGridTemplateColumn Header="الحالة" Width="*">
+                            <DataGridTemplateColumn Header="{DynamicResource Loc_1253eb56}" Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border Padding="12,4" CornerRadius="12" HorizontalAlignment="Left" VerticalAlignment="Center">

@@ -2,7 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      Title="المنتجات"
+      Title="{DynamicResource Loc_b25ceb8b}"
       FontFamily="Segoe UI, Tahoma"
       FlowDirection="RightToLeft"
       Loaded="Page_Loaded"
@@ -30,13 +30,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="إدارة المنتجات"
+                <TextBlock Grid.Column="0" Text="{DynamicResource Loc_00a78d32}"
                            FontSize="18" FontWeight="Bold"
                            VerticalAlignment="Center" Margin="0,0,16,0"/>
 
                 <TextBox Grid.Column="1"
                          x:Name="SearchBox"
-                         materialDesign:HintAssist.Hint="ابحث بالاسم أو الباركود..."
+                         materialDesign:HintAssist.Hint="{DynamicResource Loc_h_350a4a03}"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="14"
                          Height="48"
@@ -45,7 +45,7 @@
 
                 <ComboBox Grid.Column="2"
                           x:Name="CategoryFilterComboBox"
-                          materialDesign:HintAssist.Hint="التصنيف"
+                          materialDesign:HintAssist.Hint="{DynamicResource Loc_h_cf143297}"
                           ItemsSource="{Binding Categories}"
                           DisplayMemberPath="Name"
                           SelectedValuePath="Id"
@@ -55,7 +55,7 @@
                           Margin="0,0,16,0"/>
 
                 <Button Grid.Column="3"
-                        Content="مسح"
+                        Content="{DynamicResource Loc_ec2ce8be}"
                         Height="48"
                         Width="80"
                         Style="{StaticResource AlAtmani.SoftButton}"
@@ -96,7 +96,7 @@
                                     Visibility="{Binding FormImagePath, Converter={StaticResource NullToVisibilityConverter}}">
                             <materialDesign:PackIcon Kind="ImagePlus" Width="36" Height="36"
                                                      Foreground="{DynamicResource AlAtmani.AccentBrush}" Opacity="0.6"/>
-                            <TextBlock Text="اضغط لإضافة صورة" FontSize="10"
+                            <TextBlock Text="{DynamicResource Loc_bd1172d3}" FontSize="10"
                                        Foreground="{DynamicResource AlAtmani.TextSecondaryBrush}"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" Margin="4,4,4,0"/>
@@ -124,13 +124,13 @@
 
                     <!-- Row 1: Name(3), Barcode(2), Category(2), Unit(1) -->
                     <TextBox Grid.Column="0" Grid.ColumnSpan="3"
-                             materialDesign:HintAssist.Hint="اسم المنتج *"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_a9588915}"
                              Text="{Binding FormName, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,8,8"/>
 
                     <TextBox Grid.Column="3" Grid.ColumnSpan="2"
-                             materialDesign:HintAssist.Hint="الباركود *"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_2eae7a2f}"
                              Text="{Binding FormBarcode, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,8,8"/>
@@ -140,65 +140,65 @@
                               DisplayMemberPath="Name"
                               SelectedValuePath="Id"
                               SelectedValue="{Binding FormCategoryId}"
-                              materialDesign:HintAssist.Hint="التصنيف *"
+                              materialDesign:HintAssist.Hint="{DynamicResource Loc_h_2ed1bfc4}"
                               Style="{StaticResource MaterialDesignOutlinedComboBox}"
                               Margin="0,0,8,8"/>
 
                     <ComboBox Grid.Column="7" Grid.ColumnSpan="1"
                               ItemsSource="{Binding Units}"
                               SelectedItem="{Binding FormUnit}"
-                              materialDesign:HintAssist.Hint="الوحدة"
+                              materialDesign:HintAssist.Hint="{DynamicResource Loc_h_694ca78e}"
                               Style="{StaticResource MaterialDesignOutlinedComboBox}"
                               Margin="0,0,0,8"/>
 
                     <!-- Row 2: Purchase Price(2), Selling Price(2), Stock(2), MinStock(2) -->
                     <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                             materialDesign:HintAssist.Hint="سعر الشراء"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_02d15b5a}"
                              Text="{Binding FormPurchasePrice, StringFormat={}{0:0.##}}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,8,8"/>
 
                     <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                             materialDesign:HintAssist.Hint="سعر البيع"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_13e68467}"
                              Text="{Binding FormSellingPrice, StringFormat={}{0:0.##}}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,8,8"/>
 
                     <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
-                             materialDesign:HintAssist.Hint="الكمية في المخزون"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_582f9892}"
                              Text="{Binding FormStock}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,8,8"/>
 
                     <TextBox Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2"
-                             materialDesign:HintAssist.Hint="حد التنبيه (10 افتراضي)"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_ff468bdf}"
                              Text="{Binding FormMinStockLevel}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,0,8"/>
 
                     <!-- Row 3: Description(3), IsActive(1) + Buttons(4) -->
                     <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
-                             materialDesign:HintAssist.Hint="وصف المنتج (اختياري)"
+                             materialDesign:HintAssist.Hint="{DynamicResource Loc_h_0cceb08c}"
                              Text="{Binding FormDescription, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource MaterialDesignOutlinedTextBox}"
                              Margin="0,0,8,0"/>
 
                     <CheckBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1"
                               IsChecked="{Binding FormIsActive}"
-                              Content="نشط"
+                              Content="{DynamicResource Loc_8caaf953}"
                               Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                               Margin="0,0,8,0"/>
 
                     <StackPanel Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="4"
                                 Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="💾 حفظ"
+                        <Button Content="{DynamicResource Loc_2016d41d}"
                                 Style="{StaticResource AlAtmani.SoftButton}"
                                 Width="90"
                                 Background="{DynamicResource AlAtmani.AccentBrush}"
                                 Foreground="White"
                                 Command="{Binding SaveProductCommand}"
                                 Margin="0,0,8,0"/>
-                        <Button Content="✕ تفريغ"
+                        <Button Content="{DynamicResource Loc_a794990a}"
                                 Style="{StaticResource AlAtmani.SoftButton}"
                                 Width="90"
                                 Command="{Binding ClearFormCommand}"/>
@@ -223,7 +223,7 @@
                 <!-- Toolbar -->
                 <DockPanel Grid.Row="0"
                            Margin="0,0,0,16">
-                    <TextBlock Text="قائمة المنتجات"
+                    <TextBlock Text="{DynamicResource Loc_5618cdd4}"
                                FontSize="18"
                                FontWeight="SemiBold"
                                DockPanel.Dock="Left"
@@ -235,36 +235,36 @@
                         <Button Margin="0,0,8,0"
                                 Style="{StaticResource ModernButton}"
                                 Command="{Binding ImportExcelCommand}"
-                                ToolTip="استيراد من إكسيل"
+                                ToolTip="{DynamicResource Loc_17c6fd74}"
                                 Height="40">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FileExcelBox" Width="20" Height="20" Foreground="#10B981" Margin="0,0,8,0"/>
-                                    <TextBlock Text="استيراد"/>
+                                    <TextBlock Text="{DynamicResource Loc_37a02177}"/>
                                 </StackPanel>
                             </Button.Content>
                         </Button>
                         <Button Margin="0,0,8,0"
                                 Style="{StaticResource ModernButton}"
                                 Command="{Binding ExportExcelCommand}"
-                                ToolTip="تصدير إلى إكسيل"
+                                ToolTip="{DynamicResource Loc_c5acd61e}"
                                 Height="40">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FileExcelBox" Width="20" Height="20" Foreground="#10B981" Margin="0,0,8,0"/>
-                                    <TextBlock Text="تصدير إكسيل"/>
+                                    <TextBlock Text="{DynamicResource Loc_4803dfa2}"/>
                                 </StackPanel>
                             </Button.Content>
                         </Button>
                         <Button Margin="0,0,8,0"
                                 Style="{StaticResource ModernButton}"
                                 Command="{Binding ExportPdfCommand}"
-                                ToolTip="تصدير إلى PDF"
+                                ToolTip="{DynamicResource Loc_863139d2}"
                                 Height="40">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FilePdfBox" Width="20" Height="20" Foreground="#DC2626" Margin="0,0,8,0"/>
-                                    <TextBlock Text="تصدير PDF"/>
+                                    <TextBlock Text="{DynamicResource Loc_a6d89e37}"/>
                                 </StackPanel>
                             </Button.Content>
                         </Button>
@@ -275,14 +275,14 @@
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Refresh" Width="20" Height="20" Margin="0,0,8,0"/>
-                                    <TextBlock Text="تحديث"/>
+                                    <TextBlock Text="{DynamicResource Loc_061401dc}"/>
                                 </StackPanel>
                             </Button.Content>
                         </Button>
                     </StackPanel>
                 </DockPanel>
 
-                <!-- DataGrid - Enhanced -->
+                <!-- DataGrid - Enhanced with High Performance Virtualization -->
                 <DataGrid Grid.Row="1"
                           x:Name="ProductsDataGrid"
                           ItemsSource="{Binding FilteredProducts}"
@@ -294,6 +294,11 @@
                           SelectedItem="{Binding SelectedProduct}"
                           RowHeight="44"
                           FontSize="13"
+                          EnableRowVirtualization="True"
+                          EnableColumnVirtualization="True"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          ScrollViewer.CanContentScroll="True"
                           materialDesign:DataGridAssist.CellPadding="6,4,6,4"
                           materialDesign:DataGridAssist.ColumnHeaderPadding="8,6,8,6">
 
@@ -313,7 +318,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="ImageOutline" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الصورة" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_59df4772}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -337,7 +342,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="Barcode" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="رقم الباركود" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_a982dbb0}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -356,7 +361,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="PackageVariant" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="اسم المنتج" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_1ab39148}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -373,7 +378,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="TagMultiple" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="التصنيف" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_cf143297}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -396,14 +401,16 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="CartArrowDown" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="سعر الشراء" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_02d15b5a}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <Run Text="شراء: " Foreground="Gray" FontSize="11"/>
-                                        <Run Text="{Binding PurchasePrice, StringFormat={}{0:F2} ج.م}" FontWeight="Bold" Foreground="#F59E0B"/>
+                                        <Run Text="{DynamicResource Loc_46ec515d}" Foreground="Gray" FontSize="11"/>
+                                        <Run Text="{Binding PurchasePrice, StringFormat={}{0:F2}}" FontWeight="Bold" Foreground="#F59E0B"/>
+                                        <Run Text=" " />
+                                        <Run Text="{DynamicResource Loc_CurrencySymbol}" FontWeight="Bold" Foreground="#F59E0B" FontSize="11"/>
                                     </TextBlock>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -414,14 +421,16 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="CashRegister" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="سعر البيع" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_13e68467}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <Run Text="بيع: " Foreground="Gray" FontSize="11"/>
-                                        <Run Text="{Binding SellingPrice, StringFormat={}{0:F2} ج.م}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                        <Run Text="{DynamicResource Loc_67464c8e}" Foreground="Gray" FontSize="11"/>
+                                        <Run Text="{Binding SellingPrice, StringFormat={}{0:F2}}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
+                                        <Run Text=" " />
+                                        <Run Text="{DynamicResource Loc_CurrencySymbol}" FontWeight="Bold" Foreground="{DynamicResource AlAtmani.AccentBrush}" FontSize="11"/>
                                     </TextBlock>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -432,7 +441,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="Warehouse" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الكمية" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_5101659e}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -449,7 +458,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="ScaleBalance" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="وحدة القياس" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_561b69c0}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -467,7 +476,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="CheckCircle" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الحالة" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_1253eb56}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -485,7 +494,7 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="AlertCircle" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="تنبيه المخزون" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_1edc812b}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
@@ -511,21 +520,21 @@
                             <DataGridTemplateColumn.Header>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Kind="Settings" Width="18" Height="18" VerticalAlignment="Center"/>
-                                    <TextBlock Text="الإجراءات" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource Loc_6a2b6758}" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                ToolTip="تعديل" Width="34" Height="34" Margin="2,0"
+                                                ToolTip="{DynamicResource Loc_759fdc24}" Width="34" Height="34" Margin="2,0"
                                                 Command="{Binding DataContext.EditProductCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                 CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Pencil" Width="20" Height="20"
                                                                      Foreground="{DynamicResource AlAtmani.AccentBrush}"/>
                                         </Button>
                                         <Button Style="{StaticResource MaterialDesignIconButton}"
-                                                ToolTip="حذف" Width="34" Height="34" Margin="2,0"
+                                                ToolTip="{DynamicResource Loc_3b9854e1}" Width="34" Height="34" Margin="2,0"
                                                 Command="{Binding DataContext.DeleteProductCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                 CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"
@@ -549,7 +558,7 @@
                                              Height="80"
                                              Opacity="0.3"
                                              Margin="0,0,0,16"/>
-                    <TextBlock Text="لا توجد منتجات"
+                    <TextBlock Text="{DynamicResource Loc_53ecf7cd}"
                                FontSize="18"
                                Opacity="0.6"
                                HorizontalAlignment="Center"/>
