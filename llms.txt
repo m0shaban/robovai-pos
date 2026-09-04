@@ -22,15 +22,26 @@
 ## Pricing Plans (Egypt & Saudi Arabia / GCC)
 1. **14-Day Free Trial**:
    - Price: 0 EGP / 0 SAR.
-   - Fully functional trial for 14 days without requiring credit card or payment.
-2. **Annual Pro Subscription**:
-   - Price: 3,850 EGP/year (Egypt, regular 5,500 EGP) or 649 SAR/year (Saudi Arabia & GCC, regular 999 SAR).
-   - Promo Code: LAUNCH100 for extra launch discounts for the first 100 customers.
-   - Includes continuous updates, new features, and technical support via WhatsApp and AnyDesk.
-3. **Lifetime License (LifeTime Enterprise - Best Seller ⭐)**:
-   - Price: 11,999 EGP (Egypt, regular 16,500 EGP) or 1,899 SAR (Saudi Arabia & GCC, regular 2,800 SAR).
-   - Promo Code: LAUNCH100.
-   - One-time payment, lifetime software ownership, zero renewal fees, 1 year of free major updates and VIP support, and guaranteed 14-day money-back refund.
+   - Fully functional trial for 14 days without requiring credit card or prepayment.
+2. **Monthly Flex (Trial & Low Commitment)**:
+   - Price: 799 EGP/month (Egypt) or 199 SAR/month (Saudi Arabia & GCC).
+   - Single POS terminal, 100% offline, full sales/inventory modules, continuous support during active month.
+3. **6-Month Plan**:
+   - Price: 3,999 EGP (Egypt) or 999 SAR (Saudi Arabia & GCC).
+   - Balanced medium-term license with regular updates, Telegram bot alerts, and mobile WMS.
+4. **Annual Pro Subscription (Hero Tier ⭐)**:
+   - Price: 6,999 EGP/year (Egypt) or 1,799 SAR/year (Saudi Arabia & GCC).
+   - Single branch license, includes ALL major updates, tax/ZATCA compliance, priority support, and priority custom development.
+5. **Lifetime License (LifeTime Royalty 👑)**:
+   - Price: 19,999 EGP (Egypt) or 4,999 SAR (Saudi Arabia & GCC) one-time payment.
+   - Permanent ownership of software and local database for one POS terminal.
+   - Includes 1 full year of free major updates and VIP support.
+   - After Year 1: Software keeps working forever without stopping; optional Annual Maintenance Contract (AMC) for ongoing major updates & support is 3,999 EGP/year (999 SAR/year).
+
+## Add-ons & Scaling
+- **Additional POS Terminal (Same Branch)**: 1,999 EGP one-time (or 499 EGP/yr with Annual plan) / 499 SAR one-time (or 149 SAR/yr).
+- **Additional Branches**: 25% discount across any selected tier for Branch 2 onwards.
+- **Custom Development & Integrations**: Starting from 2,500 EGP / 750 SAR.
 
 ## Technical Specifications
 - **Operating System**: Windows 10, Windows 11, Windows Server (Desktop Client).
