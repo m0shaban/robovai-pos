@@ -392,11 +392,12 @@ ul { list-style: none; }
 
 /* --- Pricing Packages --- */
 .pricing-wrapper {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: stretch;
+    width: 100%;
 }
 .price-card {
-    padding: 24px 18px 20px; display: flex; flex-direction: column; position: relative;
-    border-radius: var(--radius-lg);
+    padding: 22px 14px 18px; display: flex; flex-direction: column; position: relative;
+    border-radius: var(--radius-lg); min-width: 0;
 }
 .price-card.star {
     border-color: rgba(56, 189, 248, 0.7);
