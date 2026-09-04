@@ -391,6 +391,7 @@ ul { list-style: none; }
 .card-inner:hover .card-img img { transform: scale(1.04); }
 
 /* --- Pricing Packages --- */
+#pricing { scroll-margin-top: 90px; }
 .pricing-wrapper {
     display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: stretch;
     width: 100%;
@@ -506,13 +507,15 @@ footer {
     .bento-grid { grid-template-columns: repeat(2, 1fr); }
     .span-2, .span-3 { grid-column: span 2; }
     .hub-showcase-grid { grid-template-columns: 1fr; }
-    .pricing-wrapper { grid-template-columns: repeat(2, 1fr); max-width: 820px; margin: 0 auto; }
+    #pricing { scroll-margin-top: 90px; }
+.pricing-wrapper { grid-template-columns: repeat(2, 1fr); max-width: 820px; margin: 0 auto; }
     .price-card.star { transform: scale(1); }
     .footer-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 680px) {
-    .pricing-wrapper { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+    #pricing { scroll-margin-top: 90px; }
+.pricing-wrapper { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
 }
 
 @media (max-width: 1100px) {
